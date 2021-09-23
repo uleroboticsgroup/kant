@@ -1,0 +1,3 @@
+string predicate_name ""
+---
+kant_interfaces/PddlPredicate[] pddl_predicates

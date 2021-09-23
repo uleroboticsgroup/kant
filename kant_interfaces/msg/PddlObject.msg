@@ -1,0 +1,2 @@
+kant_interfaces/PddlType type
+string name
