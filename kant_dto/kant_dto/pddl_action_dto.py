@@ -86,7 +86,7 @@ class PddlActionDto(Dto):
             List[PddlObjectDto]: list of action parameters
         """
 
-        return self._pddl_parameters
+        return self._parameters
 
     def set_parameters(self, parameters: List[PddlObjectDto]):
         """ parameters list setter
@@ -96,9 +96,9 @@ class PddlActionDto(Dto):
         """
 
         if parameters:
-            self._pddl_parameters = parameters
+            self._parameters = parameters
         else:
-            self._pddl_parameters = []
+            self._parameters = []
 
     def get_conditions(self) -> List[PddlConditionEffectDto]:
         """ conditions list getter
@@ -107,7 +107,7 @@ class PddlActionDto(Dto):
             List[PddlConditionEffectDto]: list of action conditions
         """
 
-        return self._pddl_conditions
+        return self._conditions
 
     def set_conditions(self, conditions: List[PddlConditionEffectDto]):
         """ conditions list setter
@@ -117,9 +117,9 @@ class PddlActionDto(Dto):
         """
 
         if conditions:
-            self._pddl_conditions = conditions
+            self._conditions = conditions
         else:
-            self._pddl_conditions = []
+            self._conditions = []
 
     def get_effects(self) -> List[PddlConditionEffectDto]:
         """ effects list getter
@@ -127,7 +127,7 @@ class PddlActionDto(Dto):
         Returns:
             List[PddlConditionEffectDto]: list of action effects
         """
-        return self._pddl_effects
+        return self._effects
 
     def set_effects(self, effects: List[PddlConditionEffectDto]):
         """ effects list setter
@@ -137,9 +137,9 @@ class PddlActionDto(Dto):
         """
 
         if effects:
-            self._pddl_effects = effects
+            self._effects = effects
         else:
-            self._pddl_effects = []
+            self._effects = []
 
     def __str__(self):
         string = "(:"
@@ -151,7 +151,7 @@ class PddlActionDto(Dto):
 
         # parameters
         string += "\n\t:parameters ("
-        for parameter in self._pddl_parameters:
+        for parameter in self._parameters:
             string += " ?" + parameter.get_name() + " - " + \
                 parameter.get_type().get_name()
         string += ")"
@@ -165,13 +165,13 @@ class PddlActionDto(Dto):
             string += "\n\t:condition (and"
         else:
             string += "\n\t:precondition (and"
-        for condi in self._pddl_conditions:
+        for condi in self._conditions:
             string += "\n\t\t" + str(condi)
         string += "\n\t)"
 
         # effects
         string += "\n\t:effect (and"
-        for effect in self._pddl_effects:
+        for effect in self._effects:
             string += "\n\t\t" + str(effect)
         string += "\n\t)"
 

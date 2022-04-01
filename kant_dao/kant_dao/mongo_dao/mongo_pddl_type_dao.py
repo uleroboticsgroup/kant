@@ -64,18 +64,18 @@ class MongoPddlTypeDao(PddlTypeDao, MongoDao):
             return True
         return False
 
-    def _get_model(self, pddl_type_dao: PddlTypeDto) -> PddlTypeModel:
+    def _get_model(self, pddl_type_dto: PddlTypeDto) -> PddlTypeModel:
         """ get the Mongoengine pddl type document corresponding to a give PddlTypeDto
 
         Args:
-            pddl_type_dao (PddlTypeDto): PddlTypeDto
+            pddl_type_dto (PddlTypeDto): PddlTypeDto
 
         Returns:
             Document: Mongoengine pddl type document
         """
 
         pddl_type_model = PddlTypeModel.objects(
-            name=pddl_type_dao.get_name())
+            name=pddl_type_dto.get_name())
 
         if not pddl_type_model:
             return None

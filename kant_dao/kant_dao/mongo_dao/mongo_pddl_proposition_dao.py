@@ -188,7 +188,8 @@ class MongoPddlPropositionDao(PddlPropositionDao, MongoDao):
         # getting proposition
         pddl_proposition_model = PddlPropositionModel.objects(
             predicate=pddl_proposition_dto.get_predicate().get_name(),
-            pddl_objects=pddl_objects_list)
+            pddl_objects=pddl_objects_list,
+            is_goal=pddl_proposition_dto.get_is_goal())
 
         # check if proposition exist
         if not pddl_proposition_model:

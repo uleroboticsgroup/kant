@@ -1,4 +1,4 @@
-# KANT (Knowledge mANagemenT)
+# KANT (Knowledge mAnagemeNT)
 
 This is a ROS 2 tool to manage PDDL-based knowledge from Python code. It is based on several software design patterns (DTO, DAO, Factory).
 
@@ -30,7 +30,7 @@ ROS 2 package of the ROS interfaces (msg, srv) used by KANT. They are mainly use
 ### kant_knowledge_base
 ROS 2 package that contains a node that acts as a knowledge base. As a result, PDDL knowledge is stored in memory.
 
-```ros2 run kant_knowledge_base knowledge_base_node```
+```ros2 run kant_knowledge_base knowledge_base_node.py```.
 
 ## Experiments
 

@@ -372,9 +372,9 @@ class KnowledgeBase:
 
         return action_list
 
-    def _prepare_condition_effect_to_save(self,
-                                          pddl_condi_effect_dto: PddlConditionEffectDto,
-                                          pddl_action_dto: PddlActionDto) -> bool:
+    def _propagate_condition_effect_save(self,
+                                         pddl_condi_effect_dto: PddlConditionEffectDto,
+                                         pddl_action_dto: PddlActionDto) -> bool:
         """ propagate saving of conditions/effects and check if they are correct.
             a condition/effect is correct if its objects types are the same as the
             types of its predicate, if its objects are action parameters, and if the time
@@ -459,7 +459,7 @@ class KnowledgeBase:
         # conditions and effects
         for pddl_condi_effect_dto in (pddl_action_dto.get_conditions() +
                                       pddl_action_dto.get_effects()):
-            succ = self._prepare_condition_effect_to_save(
+            succ = self._propagate_condition_effect_save(
                 pddl_condi_effect_dto, pddl_action_dto)
 
             if not succ:
@@ -606,6 +606,7 @@ class KnowledgeBase:
 
         if pddl_proposition_dto.get_is_goal():
             self.goals_list.append(pddl_proposition_dto)
+
         else:
             self.propositions_list.append(pddl_proposition_dto)
 

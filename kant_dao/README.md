@@ -1,15 +1,18 @@
 
 # kant_dao
 
-ROS 2 package that contains all Python code about PDDL DAO. There are two DAO families implemented:
-  - `MONGO`: this is a DAO family that uses MongoDB to storage the PDDL knowledge. Besides, the Mongoengine Python library is used to access MongoDB.
-  - `ROS2`: this is a DAO family that uses a ROS 2 node to storage the PDDL knowledge. ROS 2 services are used.
-
 ## Mongoengine Installation
 ```shell
 sudo pip3 install mongoengine
 sudo pip3 install dnspython
 ```
+
+## Mongocxx Installation
+```shell
+sudo chmod +x install_mongocxx.sh
+./install_mongocxx.sh
+```
+
 
 ## Mongo Installation
 ```shell
@@ -23,14 +26,17 @@ sudo systemctl start mongod
 ```
 
 ## Mongo Compass (Optional)
-```shell
-wget https://downloads.mongodb.com/compass/mongodb-compass_1.26.1_amd64.deb
-sudo dpkg -i mongodb-compass_1.26.1_amd64.deb
-mongodb-compass
-```
+https://docs.mongodb.com/compass/master/install/
+
 
 ## Example
+Shell 1
 ```shell
 sudo service mongod start
-ros2 run kant_dao example_node
+ros2 run kant_knowledge_base knowledge_base_node.py #(Optional, for node version)
+```
+
+Shell 2
+```shell
+ros2 run kant_dao example_node.py
 ```
