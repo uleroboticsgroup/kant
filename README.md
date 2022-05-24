@@ -1,15 +1,38 @@
 # KANT (Knowledge mAnagemeNT)
 
-This is a ROS 2 tool to manage PDDL-based knowledge from Python code. It is based on several software design patterns (DTO, DAO, Factory).
-
-![](./diagram.png)
+This is a ROS 2 tool to manage PDDL-based knowledge from Python and C++ code. It is based on several software design patterns (DTO, DAO, Factory).
 
 ## Table of Contents
 
 1. [Features](#features)
 2. [Installation](#installation)
+   - [Mongoengine](#mongoengine)
+   - [Mongocxx](#mongocxx)
+   - [Mongo Compass (Optional)](#mongo-compass-optional)
+   - [KANT](#kant)
 3. [Knowledge Base](#knowledge-base)
-4. [Experiments](#experiments)
+4. [Demos](#demos)
+   - [Python](#python)
+   - [Cpp](#cpp)
+5. [Experiments](#experiments)
+
+## Features
+
+![](./diagram.png)
+
+There are two DAO families implemented:
+
+- `MONGO`: this is a DAO family that uses MongoDB to storage the PDDL knowledge. Besides, the Mongoengine Python library is used to access MongoDB.
+- `ROS2`: this is a DAO family that uses a ROS 2 node to storage the PDDL knowledge. ROS 2 services are used.
+
+PDDL elements (DTOs) that can be used are:
+
+- types
+- objects
+- predicates
+- propositions
+- goals
+- actions (and durative)
 
 ## Installation
 
@@ -55,7 +78,7 @@ $ sudo systemctl start mongod
 
 https://docs.mongodb.com/compass/master/install/
 
-### Kant
+### KANT
 
 ```shell
 $ cd ~/ros2_ws/src
@@ -64,22 +87,6 @@ $ git clone git@github.com:uleroboticsgroup/kant.git
 $ cd ~/ros2_ws
 $ colcon build
 ```
-
-## Features
-
-There are two DAO families implemented:
-
-- `MONGO`: this is a DAO family that uses MongoDB to storage the PDDL knowledge. Besides, the Mongoengine Python library is used to access MongoDB.
-- `ROS2`: this is a DAO family that uses a ROS 2 node to storage the PDDL knowledge. ROS 2 services are used.
-
-PDDL elements (DTOs) that can be used are:
-
-- types
-- objects
-- predicates
-- propositions
-- goals
-- actions (and durative)
 
 ## Knowledge Base
 
@@ -95,6 +102,228 @@ $ sudo apt service mongod start
 
 ```shell
 $ ros2 run kant_knowledge_base knowledge_base_node.py
+```
+
+## Demos
+
+A Python and a C++ demo are included.
+
+### Python
+
+```python
+#!/usr/bin/env python3
+
+""" DAO Example Node """
+
+import rclpy
+
+from kant_dao.dao_factory import (
+    DaoFactoryMethod,
+    DaoFamilies
+)
+
+from kant_dto import (
+    PddlTypeDto,
+    PddlObjectDto,
+    PddlPredicateDto,
+    PddlPropositionDto,
+    PddlConditionEffectDto,
+    PddlActionDto
+)
+
+from simple_node import Node
+
+
+class ExampleNode(Node):
+    """ DAO Example Node Class """
+
+    def __init__(self):
+
+        super().__init__("example_node")
+
+        dao_factory_method = DaoFactoryMethod()
+
+        uri = "mongodb://localhost:27017/kant"
+        dao_family = DaoFamilies.MONGO
+
+        dao_factory = dao_factory_method.create_dao_factory(dao_family,
+                                                            uri=uri,
+                                                            node=self)
+
+        # creating DAOs
+        pddl_type_dao = dao_factory.create_pddl_type_dao()
+        pddl_object_dao = dao_factory.create_pddl_object_dao()
+        pddl_predicate_dao = dao_factory.create_pddl_predicate_dao()
+        pddl_proposition_dao = dao_factory.create_pddl_proposition_dao()
+        pddl_action_dao = dao_factory.create_pddl_action_dao()
+
+        # types
+        robot_type = PddlTypeDto("robot")
+        wp_type = PddlTypeDto("wp")
+
+        # predicates
+        robot_at = PddlPredicateDto(
+            "robot_at", [robot_type, wp_type])
+
+        # objects
+        rb1 = PddlObjectDto(robot_type, "rb1")
+        wp1 = PddlObjectDto(wp_type, "wp1")
+        wp2 = PddlObjectDto(wp_type, "wp2")
+
+        # propositions
+        pddl_proposition_dto = PddlPropositionDto(robot_at, [rb1, wp1])
+        pddl_goal_dto = PddlPropositionDto(robot_at, [rb1, wp2], is_goal=True)
+
+        # actions
+        r = PddlObjectDto(robot_type, "r")
+        s = PddlObjectDto(wp_type, "s")
+        d = PddlObjectDto(wp_type, "d")
+
+        condition_1 = PddlConditionEffectDto(robot_at,
+                                             [r, s],
+                                             time=PddlConditionEffectDto.AT_START)
+
+        effect_1 = PddlConditionEffectDto(robot_at,
+                                          [r, s],
+                                          time=PddlConditionEffectDto.AT_START,
+                                          is_negative=True)
+
+        effect_2 = PddlConditionEffectDto(robot_at,
+                                          [r, d],
+                                          time=PddlConditionEffectDto.AT_END)
+
+        pddl_action_dto = PddlActionDto(
+            "navigation", [r, s, d], [condition_1], [effect_1, effect_2])
+
+        # saving all
+        pddl_object_dao.save(rb1)
+        pddl_object_dao.save(wp1)
+        pddl_object_dao.save(wp2)
+
+        pddl_proposition_dao.save(pddl_proposition_dto)
+        pddl_proposition_dao.save(pddl_goal_dto)
+
+        pddl_action_dao.save(pddl_action_dto)
+
+
+def main(args=None):
+    rclpy.init(args=args)
+
+    node = ExampleNode()
+
+    # node.join_spin()
+
+    node.destroy_node()
+
+    rclpy.shutdown()
+
+
+if __name__ == "__main__":
+    main()
+```
+
+### Cpp
+
+```cpp
+
+#include <iostream>
+#include <memory>
+
+#include "simple_node/node.hpp"
+
+#include "kant_dto/pddl_action_dto.hpp"
+#include "kant_dto/pddl_object_dto.hpp"
+#include "kant_dto/pddl_predicate_dto.hpp"
+#include "kant_dto/pddl_proposition_dto.hpp"
+#include "kant_dto/pddl_type_dto.hpp"
+
+#include "kant_dao/dao_factory/dao_factory_method.hpp"
+
+using namespace kant::dto;
+
+class ExampleNode : public simple_node::Node {
+
+public:
+  ExampleNode() : simple_node::Node("example_node") {
+
+    kant::dao::dao_factory::DaoFactoryMethod dao_factory_method;
+
+    auto dao_factory = dao_factory_method.create_dao_factory(
+        kant::dao::dao_factory::DaoFamilies::MONGO, this,
+        "mongodb://localhost:27017/kant");
+
+    // creating DAOs
+    // auto *pddl_type_dao = dao_factory->create_pddl_type_dao();
+    auto *pddl_object_dao = dao_factory->create_pddl_object_dao();
+    // auto *pddl_predicate_dao = dao_factory->create_pddl_predicate_dao();
+    auto pddl_proposition_dao = dao_factory->create_pddl_proposition_dao();
+    auto *pddl_action_dao = dao_factory->create_pddl_action_dao();
+
+    // types
+    auto robot_type = std::make_shared<PddlTypeDto>(PddlTypeDto("robot"));
+    auto wp_type = std::make_shared<PddlTypeDto>(PddlTypeDto("wp"));
+
+    // predicates
+    auto robot_at = std::make_shared<PddlPredicateDto>(
+        PddlPredicateDto("robot_at", {robot_type, wp_type}));
+
+    // objects
+    auto rb1 =
+        std::make_shared<PddlObjectDto>(PddlObjectDto(robot_type, "rb1"));
+    auto wp1 = std::make_shared<PddlObjectDto>(PddlObjectDto(wp_type, "wp1"));
+    auto wp2 = std::make_shared<PddlObjectDto>(PddlObjectDto(wp_type, "wp2"));
+
+    // propositions
+    auto pddl_proposition_dto = std::make_shared<PddlPropositionDto>(
+        PddlPropositionDto(robot_at, {rb1, wp1}));
+    auto pddl_goal_dto = std::make_shared<PddlPropositionDto>(
+        PddlPropositionDto(robot_at, {rb1, wp2}, true));
+
+    // actions
+    std::shared_ptr<PddlObjectDto> r =
+        std::make_shared<PddlObjectDto>(PddlObjectDto(robot_type, "r"));
+
+    std::shared_ptr<PddlObjectDto> s =
+        std::make_shared<PddlObjectDto>(PddlObjectDto(wp_type, "s"));
+
+    std::shared_ptr<PddlObjectDto> d =
+        std::make_shared<PddlObjectDto>(PddlObjectDto(wp_type, "d"));
+
+    std::shared_ptr<PddlConditionEffectDto> condition_1 =
+        std::make_shared<PddlConditionEffectDto>(
+            PddlConditionEffectDto(robot_at, {r, s}, AT_START));
+
+    std::shared_ptr<PddlConditionEffectDto> effect_1 =
+        std::make_shared<PddlConditionEffectDto>(
+            PddlConditionEffectDto(robot_at, {r, s}, true, AT_END));
+
+    std::shared_ptr<PddlConditionEffectDto> effect_2 =
+        std::make_shared<PddlConditionEffectDto>(
+            PddlConditionEffectDto(robot_at, {r, d}, AT_END));
+
+    std::shared_ptr<PddlActionDto> pddl_action_dto =
+        std::make_shared<PddlActionDto>(
+            PddlActionDto("navigation", {r, s, d}, {condition_1},
+                          {effect_1, effect_2}, true));
+
+    // saving all
+    pddl_object_dao->save_update(rb1);
+    pddl_object_dao->save_update(wp1);
+    pddl_object_dao->save_update(wp2);
+
+    pddl_proposition_dao->save_update(pddl_proposition_dto);
+    pddl_proposition_dao->save_update(pddl_goal_dto);
+
+    pddl_action_dao->save_update(pddl_action_dto);
+  }
+};
+
+int main(int argc, char **argv) {
+  rclcpp::init(argc, argv);
+  auto node = std::make_shared<ExampleNode>();
+  rclcpp::shutdown();
+  return 0;
+}
 ```
 
 ## Experiments
