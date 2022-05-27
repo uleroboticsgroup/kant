@@ -1,5 +1,9 @@
 # KANT (Knowledge mAnagemeNT)
 
+<p align="center">
+  <img src="./images/logo.png" width="50%" />
+</p>
+
 This is a ROS 2 tool to manage PDDL-based knowledge from Python and C++ code. It is based on several software design patterns (DTO, DAO, Factory).
 
 ## Table of Contents
@@ -18,7 +22,7 @@ This is a ROS 2 tool to manage PDDL-based knowledge from Python and C++ code. It
 
 ## Features
 
-![](./diagram.png)
+![](./images/diagram.png)
 
 There are two DAO families implemented:
 
