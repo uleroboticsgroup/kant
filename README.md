@@ -12,6 +12,7 @@ This is a ROS 2 tool to manage PDDL-based knowledge from Python and C++ code. It
 2. [Installation](#installation)
    - [Mongoengine](#mongoengine)
    - [Mongocxx](#mongocxx)
+   - [MongoDB](#mongodb)
    - [Mongo Compass (Optional)](#mongo-compass-optional)
    - [KANT](#kant)
 3. [Knowledge Base](#knowledge-base)
@@ -66,7 +67,7 @@ $ rm r3.4.2.tar.gz
 $ rm -rf mongo-cxx-driver-r3.4.2
 ```
 
-### Mongo
+### MongoDB
 
 ```shell
 $ wget -qO - https://www.mongodb.org/static/pgp/server-4.4.asc | sudo apt-key add -
