@@ -15,14 +15,14 @@
 namespace kant {
 namespace dao {
 
-class ParamterLoader {
+class ParameterLoader {
 
 private:
   dao_factory::dao_factories::DaoFactory *dao_factory;
 
 public:
-  ParamterLoader(simple_node::Node *node);
-  ~ParamterLoader();
+  ParameterLoader(simple_node::Node *node);
+  ~ParameterLoader();
   dao_factory::dao_factories::DaoFactory *get_dao_factory();
 };
 

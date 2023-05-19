@@ -3,7 +3,7 @@
 
 using namespace kant::dao;
 
-ParamterLoader::ParamterLoader(simple_node::Node *node) {
+ParameterLoader::ParameterLoader(simple_node::Node *node) {
 
   // param names
   std::string dao_family_param_name = "dao_family";
@@ -29,8 +29,8 @@ ParamterLoader::ParamterLoader(simple_node::Node *node) {
       dao_factory::DaoFamilies(dao_family), node, mongo_uri);
 }
 
-ParamterLoader::~ParamterLoader() { delete this->dao_factory; }
+ParameterLoader::~ParameterLoader() { delete this->dao_factory; }
 
-dao_factory::dao_factories::DaoFactory *ParamterLoader::get_dao_factory() {
+dao_factory::dao_factories::DaoFactory *ParameterLoader::get_dao_factory() {
   return this->dao_factory;
 }
