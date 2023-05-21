@@ -5,6 +5,7 @@ project(kant_dao)
 if(NOT CMAKE_CXX_STANDARD)
   set(CMAKE_CXX_STANDARD 14)
 endif()
+
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wall -Wextra -Wpedantic)
 endif()
@@ -19,10 +20,14 @@ find_package(kant_interfaces REQUIRED)
 find_package(kant_knowledge_base REQUIRED)
 find_package(std_srvs REQUIRED)
 find_package(simple_node REQUIRED)
+find_package(libmongocxx REQUIRED)
+find_package(libbsoncxx REQUIRED)
 
 # C++
 include_directories(include)
 include_directories(src)
+include_directories(${LIBMONGOCXX_INCLUDE_DIRS})
+include_directories(${LIBBSONCXX_INCLUDE_DIRS})
 
 set(LIB ${CMAKE_PROJECT_NAME}_lib)
 set(SOURCES
@@ -41,48 +46,40 @@ set(SOURCES
   src/kant_dao/dao_factory/dao_factory_method.cpp
   src/kant_dao/parameter_loader.cpp
 )
-
 set(DEPENDENCIES
-    rclcpp 
-    kant_interfaces 
-    kant_dto
-    kant_knowledge_base
-    std_srvs
-    simple_node
+  rclcpp
+  kant_interfaces
+  kant_dto
+  kant_knowledge_base
+  std_srvs
+  simple_node
+  libmongocxx
+  libbsoncxx
 )
 
 add_library(${LIB} STATIC ${SOURCES})
-
-install(TARGETS ${LIB}
-  ARCHIVE DESTINATION lib
-  LIBRARY DESTINATION lib
-  RUNTIME DESTINATION bin
-)
-
-install(DIRECTORY include/
-  DESTINATION include/
-)
-
+target_link_libraries(${LIB} mongocxx bsoncxx)
 ament_target_dependencies(${LIB} ${DEPENDENCIES})
-
-target_include_directories(${LIB} PUBLIC "/usr/local/include/mongocxx/v_noabi")
-target_link_libraries(${LIB} mongocxx)
-
-target_include_directories(${LIB} PUBLIC "/usr/local/include/bsoncxx/v_noabi")
-target_link_libraries(${LIB} bsoncxx)
-
-
 ament_export_include_directories(include)
-ament_export_libraries(${LIB})
+ament_export_libraries(${LIB} mongocxx bsoncxx)
 ament_export_dependencies(${DEPENDENCIES})
 
+install(
+  TARGETS ${LIB}
+  EXPORT ${LIB}
+  LIBRARY DESTINATION lib
+  ARCHIVE DESTINATION lib
+  RUNTIME DESTINATION bin
+  INCLUDES DESTINATION include
+)
 
+# example node
 add_executable(example_node
   src/example_node.cpp
 )
 ament_target_dependencies(example_node ${DEPENDENCIES})
 target_link_libraries(example_node ${LIB})
-install(TARGETS 
+install(TARGETS
   example_node
   DESTINATION lib/${PROJECT_NAME}
 )
