@@ -134,9 +134,8 @@ bool Ros2PddlPropositionDao::save(
     std::shared_ptr<kant::dto::PddlPropositionDto> pddl_proposition_dto) {
 
   if (!this->ros2_exists(pddl_proposition_dto)) {
-    bool succ = this->ros2_update(pddl_proposition_dto,
-                                  kant_interfaces::msg::UpdateKnowledge::SAVE);
-    return succ;
+    return this->ros2_update(pddl_proposition_dto,
+                             kant_interfaces::msg::UpdateKnowledge::SAVE);
   }
 
   return false;
@@ -146,9 +145,8 @@ bool Ros2PddlPropositionDao::update(
     std::shared_ptr<kant::dto::PddlPropositionDto> pddl_proposition_dto) {
 
   if (this->ros2_exists(pddl_proposition_dto)) {
-    bool succ = this->ros2_update(pddl_proposition_dto,
-                                  kant_interfaces::msg::UpdateKnowledge::SAVE);
-    return succ;
+    return this->ros2_update(pddl_proposition_dto,
+                             kant_interfaces::msg::UpdateKnowledge::SAVE);
   }
 
   return false;
@@ -169,9 +167,8 @@ bool Ros2PddlPropositionDao::save_update(
 
 bool Ros2PddlPropositionDao::delete_one(
     std::shared_ptr<kant::dto::PddlPropositionDto> pddl_proposition_dto) {
-  bool succ = this->ros2_update(pddl_proposition_dto,
-                                kant_interfaces::msg::UpdateKnowledge::DELETE);
-  return succ;
+  return this->ros2_update(pddl_proposition_dto,
+                           kant_interfaces::msg::UpdateKnowledge::DELETE);
 }
 
 bool Ros2PddlPropositionDao::delete_all() {

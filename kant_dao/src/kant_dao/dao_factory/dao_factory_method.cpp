@@ -10,7 +10,7 @@ DaoFactoryMethod::DaoFactoryMethod() {}
 
 dao_factories::DaoFactory *
 DaoFactoryMethod::create_dao_factory(DaoFamilies family) {
-  return this->create_dao_factory(family, NULL, "");
+  return this->create_dao_factory(family, nullptr, "");
 }
 
 dao_factories::DaoFactory *
@@ -21,7 +21,7 @@ DaoFactoryMethod::create_dao_factory(DaoFamilies family,
 
 dao_factories::DaoFactory *
 DaoFactoryMethod::create_dao_factory(DaoFamilies family, std::string uri) {
-  return this->create_dao_factory(family, NULL, uri);
+  return this->create_dao_factory(family, nullptr, uri);
 }
 
 dao_factories::DaoFactory *
@@ -34,9 +34,8 @@ DaoFactoryMethod::create_dao_factory(DaoFamilies family,
 
   case DaoFamilies::MONGO:
     return new dao_factories::MongoDaoFactory(uri);
-    return NULL;
 
   default:
-    return NULL;
+    return nullptr;
   }
 }

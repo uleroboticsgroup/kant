@@ -22,7 +22,6 @@ private:
 
 public:
   ParameterLoader(simple_node::Node *node);
-  ~ParameterLoader();
   dao_factory::dao_factories::DaoFactory *get_dao_factory();
 };
 

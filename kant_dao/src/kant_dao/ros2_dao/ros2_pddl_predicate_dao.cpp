@@ -100,9 +100,8 @@ bool Ros2PddlPredicateDao::save(
     std::shared_ptr<kant::dto::PddlPredicateDto> pddl_predicate_dto) {
 
   if (this->get(pddl_predicate_dto->get_name()) == nullptr) {
-    bool succ = this->ros2_update(pddl_predicate_dto,
-                                  kant_interfaces::msg::UpdateKnowledge::SAVE);
-    return succ;
+    return this->ros2_update(pddl_predicate_dto,
+                             kant_interfaces::msg::UpdateKnowledge::SAVE);
   }
 
   return false;
@@ -111,9 +110,8 @@ bool Ros2PddlPredicateDao::save(
 bool Ros2PddlPredicateDao::update(
     std::shared_ptr<kant::dto::PddlPredicateDto> pddl_predicate_dto) {
   if (this->get(pddl_predicate_dto->get_name()) != nullptr) {
-    bool succ = this->ros2_update(pddl_predicate_dto,
-                                  kant_interfaces::msg::UpdateKnowledge::SAVE);
-    return succ;
+    return this->ros2_update(pddl_predicate_dto,
+                             kant_interfaces::msg::UpdateKnowledge::SAVE);
   }
 
   return false;
@@ -133,9 +131,8 @@ bool Ros2PddlPredicateDao::save_update(
 
 bool Ros2PddlPredicateDao::delete_one(
     std::shared_ptr<kant::dto::PddlPredicateDto> pddl_predicate_dto) {
-  bool succ = this->ros2_update(pddl_predicate_dto,
-                                kant_interfaces::msg::UpdateKnowledge::DELETE);
-  return succ;
+  return this->ros2_update(pddl_predicate_dto,
+                           kant_interfaces::msg::UpdateKnowledge::DELETE);
 }
 
 bool Ros2PddlPredicateDao::delete_all() {

@@ -58,20 +58,21 @@ set(DEPENDENCIES
 )
 
 add_library(${LIB} STATIC ${SOURCES})
+
+install(TARGETS ${LIB}
+  ARCHIVE DESTINATION lib
+  LIBRARY DESTINATION lib
+  RUNTIME DESTINATION bin
+)
+install(DIRECTORY include/
+  DESTINATION include
+)
+
 target_link_libraries(${LIB} mongocxx bsoncxx)
 ament_target_dependencies(${LIB} ${DEPENDENCIES})
 ament_export_include_directories(include)
 ament_export_libraries(${LIB} mongocxx bsoncxx)
 ament_export_dependencies(${DEPENDENCIES})
-
-install(
-  TARGETS ${LIB}
-  EXPORT ${LIB}
-  LIBRARY DESTINATION lib
-  ARCHIVE DESTINATION lib
-  RUNTIME DESTINATION bin
-  INCLUDES DESTINATION include
-)
 
 # example node
 add_executable(example_node

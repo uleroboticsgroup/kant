@@ -29,8 +29,6 @@ ParameterLoader::ParameterLoader(simple_node::Node *node) {
       dao_factory::DaoFamilies(dao_family), node, mongo_uri);
 }
 
-ParameterLoader::~ParameterLoader() { delete this->dao_factory; }
-
 dao_factory::dao_factories::DaoFactory *ParameterLoader::get_dao_factory() {
   return this->dao_factory;
 }

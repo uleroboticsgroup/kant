@@ -93,9 +93,8 @@ bool Ros2PddlTypeDao::save(
     std::shared_ptr<kant::dto::PddlTypeDto> pddl_type_dto) {
 
   if (this->get(pddl_type_dto->get_name()) == nullptr) {
-    bool succ = this->ros2_update(pddl_type_dto,
-                                  kant_interfaces::msg::UpdateKnowledge::SAVE);
-    return succ;
+    return this->ros2_update(pddl_type_dto,
+                             kant_interfaces::msg::UpdateKnowledge::SAVE);
   }
 
   return false;
@@ -104,9 +103,8 @@ bool Ros2PddlTypeDao::save(
 bool Ros2PddlTypeDao::update(
     std::shared_ptr<kant::dto::PddlTypeDto> pddl_type_dto) {
   if (this->get(pddl_type_dto->get_name()) != nullptr) {
-    bool succ = this->ros2_update(pddl_type_dto,
-                                  kant_interfaces::msg::UpdateKnowledge::SAVE);
-    return succ;
+    return this->ros2_update(pddl_type_dto,
+                             kant_interfaces::msg::UpdateKnowledge::SAVE);
   }
 
   return false;
@@ -126,9 +124,8 @@ bool Ros2PddlTypeDao::save_update(
 
 bool Ros2PddlTypeDao::delete_one(
     std::shared_ptr<kant::dto::PddlTypeDto> pddl_type_dto) {
-  bool succ = this->ros2_update(pddl_type_dto,
-                                kant_interfaces::msg::UpdateKnowledge::DELETE);
-  return succ;
+  return this->ros2_update(pddl_type_dto,
+                           kant_interfaces::msg::UpdateKnowledge::DELETE);
 }
 
 bool Ros2PddlTypeDao::delete_all() {
