@@ -79,14 +79,14 @@ MongoPddlPredicateDao::dto_to_mongo(kant::dto::Dto *dto) {
 std::shared_ptr<kant::dto::PddlPredicateDto>
 MongoPddlPredicateDao::mongo_to_dto(bsoncxx::document::view doc_value) {
 
-  std::string predicate_name = doc_value["_id"].get_utf8().value.to_string();
+  std::string predicate_name = std::string(doc_value["_id"].get_string().value);
 
   std::vector<std::shared_ptr<kant::dto::PddlTypeDto>> pddl_type_dto_list;
 
   for (const auto &mongo_pddl_type : doc_value["types"].get_array().value) {
 
     auto pddl_type_dto = std::make_shared<kant::dto::PddlTypeDto>(
-        kant::dto::PddlTypeDto(mongo_pddl_type.get_utf8().value.to_string()));
+        std::string(mongo_pddl_type.get_string().value));
 
     pddl_type_dto_list.push_back(pddl_type_dto);
   }

@@ -58,9 +58,9 @@ std::shared_ptr<kant::dto::PddlObjectDto>
 MongoPddlObjectDao::mongo_to_dto(bsoncxx::document::view doc_value) {
 
   auto pddl_type_dto = std::make_shared<kant::dto::PddlTypeDto>(
-      kant::dto::PddlTypeDto(doc_value["type"].get_utf8().value.to_string()));
+      std::string(doc_value["type"].get_string().value));
 
-  std::string object_name = doc_value["_id"].get_utf8().value.to_string();
+  std::string object_name = std::string(doc_value["_id"].get_string().value);
 
   std::shared_ptr<kant::dto::PddlObjectDto> pddl_object_dto =
       std::make_shared<kant::dto::PddlObjectDto>(

@@ -70,7 +70,7 @@ MongoPddlPropositionDao::mongo_to_dto(bsoncxx::document::view doc_value) {
 
   // PREDICATE
   std::string predicate_name =
-      doc_value["predicate"].get_utf8().value.to_string();
+      std::string(doc_value["predicate"].get_string().value);
 
   auto pddl_predicate_dto_list =
       this->mongo_pddl_predicate_dao->get(predicate_name);
@@ -81,7 +81,7 @@ MongoPddlPropositionDao::mongo_to_dto(bsoncxx::document::view doc_value) {
 
   for (const auto &mongo_pddl_object : doc_value["objects"].get_array().value) {
 
-    object_name = mongo_pddl_object.get_utf8().value.to_string();
+    object_name = std::string(mongo_pddl_object.get_string().value);
 
     auto pddl_object_dto = this->mongo_pddl_object_dao->get(object_name);
 

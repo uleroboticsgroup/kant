@@ -67,7 +67,7 @@ bsoncxx::document::value MongoPddlTypeDao::dto_to_mongo(kant::dto::Dto *dto) {
 std::shared_ptr<kant::dto::PddlTypeDto>
 MongoPddlTypeDao::mongo_to_dto(bsoncxx::document::view doc_value) {
 
-  std::string type_name = doc_value["_id"].get_utf8().value.to_string();
+  std::string type_name = std::string(doc_value["_id"].get_string().value);
 
   std::shared_ptr<kant::dto::PddlTypeDto> pddl_type_dto =
       std::make_shared<kant::dto::PddlTypeDto>(

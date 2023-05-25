@@ -53,24 +53,12 @@ bsoncxx::document::value MongoPddlActionDao::dto_to_mongo(kant::dto::Dto *dto) {
 
   bsoncxx::builder::basic::document basic_builder{};
 
-  basic_builder.append(
-      bsoncxx::builder::basic::kvp("_id", pddl_action_dto->get_name()));
-
-  basic_builder.append(bsoncxx::builder::basic::kvp(
-      "durative", pddl_action_dto->get_durative()));
-
-  basic_builder.append(bsoncxx::builder::basic::kvp(
-      "duration", pddl_action_dto->get_duration()));
-
   // PARAMETERS
   bsoncxx::builder::basic::array parameters_array_builder{};
 
   for (const auto &pddl_object_dto : pddl_action_dto->get_parameters()) {
     parameters_array_builder.append(this->dto_to_mongo(pddl_object_dto));
   }
-
-  basic_builder.append(
-      bsoncxx::builder::basic::kvp("parameters", parameters_array_builder));
 
   // CONDITIONS
   bsoncxx::builder::basic::array conditions_array_builder{};
@@ -88,9 +76,6 @@ bsoncxx::document::value MongoPddlActionDao::dto_to_mongo(kant::dto::Dto *dto) {
     conditions_array_builder.append(this->dto_to_mongo(pddl_condition_dto));
   }
 
-  basic_builder.append(
-      bsoncxx::builder::basic::kvp("conditions", conditions_array_builder));
-
   // EFFECTS
   bsoncxx::builder::basic::array effects_array_builder{};
 
@@ -107,18 +92,30 @@ bsoncxx::document::value MongoPddlActionDao::dto_to_mongo(kant::dto::Dto *dto) {
     effects_array_builder.append(this->dto_to_mongo(pddl_condition_dto));
   }
 
-  basic_builder.append(
-      bsoncxx::builder::basic::kvp("effects", effects_array_builder));
-
   // PREDICATES
   bsoncxx::builder::basic::array predicates_array_builder{};
 
-  for (std::string predicate_name : predicates) {
-    predicates_array_builder.append(predicate_name);
-  }
+  // builder
+  basic_builder.append(
+      bsoncxx::builder::basic::kvp("_id", pddl_action_dto->get_name()));
 
   basic_builder.append(
       bsoncxx::builder::basic::kvp("_predicates", predicates_array_builder));
+
+  basic_builder.append(
+      bsoncxx::builder::basic::kvp("conditions", conditions_array_builder));
+
+  basic_builder.append(bsoncxx::builder::basic::kvp(
+      "duration", pddl_action_dto->get_duration()));
+
+  basic_builder.append(bsoncxx::builder::basic::kvp(
+      "durative", pddl_action_dto->get_durative()));
+
+  basic_builder.append(
+      bsoncxx::builder::basic::kvp("effects", effects_array_builder));
+
+  basic_builder.append(
+      bsoncxx::builder::basic::kvp("parameters", parameters_array_builder));
 
   return basic_builder.extract();
 }
@@ -169,7 +166,7 @@ bsoncxx::builder::basic::document MongoPddlActionDao::dto_to_mongo(
 std::shared_ptr<kant::dto::PddlActionDto>
 MongoPddlActionDao::mongo_to_dto(bsoncxx::document::view doc_value) {
 
-  std::string action_name = doc_value["_id"].get_utf8().value.to_string();
+  std::string action_name = std::string(doc_value["_id"].get_string().value);
 
   std::shared_ptr<kant::dto::PddlActionDto> ppdl_action_dto =
       std::make_shared<kant::dto::PddlActionDto>(
@@ -222,7 +219,7 @@ std::shared_ptr<kant::dto::PddlConditionEffectDto>
 MongoPddlActionDao::ce_mongo_to_dto(bsoncxx::document::view doc_value) {
 
   std::string predicate_name =
-      doc_value["predicate"].get_utf8().value.to_string();
+      std::string(doc_value["predicate"].get_string().value);
 
   auto pddl_predicate_dto = this->mongo_pddl_predicate_dao->get(predicate_name);
 
@@ -233,7 +230,7 @@ MongoPddlActionDao::ce_mongo_to_dto(bsoncxx::document::view doc_value) {
   ppdl_condition_effect_dto->set_is_negative(
       doc_value["is_negative"].get_bool());
   ppdl_condition_effect_dto->set_time(
-      doc_value["time"].get_utf8().value.to_string());
+      std::string(doc_value["time"].get_string().value));
 
   // PARAMETERS
   std::vector<std::shared_ptr<kant::dto::PddlObjectDto>> pddl_object_dto_list;
@@ -253,8 +250,8 @@ MongoPddlActionDao::ce_mongo_to_dto(bsoncxx::document::view doc_value) {
 std::shared_ptr<kant::dto::PddlObjectDto>
 MongoPddlActionDao::p_mongo_to_dto(bsoncxx::document::view doc_value) {
 
-  std::string type_name = doc_value["type"].get_utf8().value.to_string();
-  std::string object_name = doc_value["name"].get_utf8().value.to_string();
+  std::string type_name = std::string(doc_value["type"].get_string().value);
+  std::string object_name = std::string(doc_value["name"].get_string().value);
 
   auto pddl_type_dto = std::make_shared<kant::dto::PddlTypeDto>(
       kant::dto::PddlTypeDto(type_name));
