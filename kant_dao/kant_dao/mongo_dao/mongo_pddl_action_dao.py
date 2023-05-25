@@ -5,7 +5,7 @@
 from typing import List
 
 from kant_dao.dao_interface import PddlActionDao
-from kant_dao.mongo_dao import(
+from kant_dao.mongo_dao import (
     MongoDao,
     MongoPddlTypeDao,
     MongoPddlPredicateDao
@@ -198,7 +198,7 @@ class MongoPddlActionDao(PddlActionDao, MongoDao):
 
             pddl_action_model.effects.append(pddl_effect_model)
 
-            if pddl_condition_model.predicate not in pddl_action_model._predicates:
+            if pddl_effect_model.predicate not in pddl_action_model._predicates:
                 pddl_action_model._predicates.append(
                     pddl_effect_model.predicate)
 
@@ -252,7 +252,7 @@ class MongoPddlActionDao(PddlActionDao, MongoDao):
         """
 
        # check if proposition is correct
-        if(len(pddl_condition_effect_dto.get_objects()) !=
+        if (len(pddl_condition_effect_dto.get_objects()) !=
            len(pddl_condition_effect_dto.get_predicate().get_types())):
             return False
 
@@ -284,9 +284,9 @@ class MongoPddlActionDao(PddlActionDao, MongoDao):
 
         for pddl_condi_effect_dto in (pddl_action_dto.get_conditions() +
                                       pddl_action_dto.get_effects()):
-            if(not pddl_action_dto.get_durative() and pddl_condi_effect_dto.get_time()):
+            if (not pddl_action_dto.get_durative() and pddl_condi_effect_dto.get_time()):
                 return False
-            elif(pddl_action_dto.get_durative() and not pddl_condi_effect_dto.get_time()):
+            elif (pddl_action_dto.get_durative() and not pddl_condi_effect_dto.get_time()):
                 return False
 
             if not self._check_pddl_condition_efect_dto(pddl_condi_effect_dto,
@@ -313,7 +313,7 @@ class MongoPddlActionDao(PddlActionDao, MongoDao):
         """
 
         # check if proposition is correct
-        if(len(pddl_condition_effect_model.parameters) !=
+        if (len(pddl_condition_effect_model.parameters) !=
            len(pddl_condition_effect_model.predicate.types)):
             return False
 
@@ -344,9 +344,9 @@ class MongoPddlActionDao(PddlActionDao, MongoDao):
 
         for pddl_condi_effect_model in (pddl_action_model.conditions +
                                         pddl_action_model.effects):
-            if(not pddl_action_model.durative and pddl_condi_effect_model.time):
+            if (not pddl_action_model.durative and pddl_condi_effect_model.time):
                 return False
-            elif(pddl_action_model.durative and not pddl_condi_effect_model.time):
+            elif (pddl_action_model.durative and not pddl_condi_effect_model.time):
                 return False
 
             if not self._check_pddl_condition_efect_model(pddl_condi_effect_model,
