@@ -89,17 +89,13 @@ class KnowledgeBase:
         # propagating deleting
         for pddl_object_dto in self.get_all_objects():
             if pddl_object_dto.get_type() == pddl_type_dto:
-                succ = self.delete_object(pddl_object_dto)
-
-                if not succ:
+                if not self.delete_object(pddl_object_dto):
                     return False
 
         for pddl_predicate_dto in self.get_all_predicates():
             for pddl_pred_type_dto in pddl_predicate_dto.get_types():
                 if pddl_pred_type_dto == pddl_type_dto:
-                    succ = self.delete_predicate(pddl_predicate_dto)
-
-                    if not succ:
+                    if not self.delete_predicate(pddl_predicate_dto):
                         return False
 
                     break
@@ -107,9 +103,7 @@ class KnowledgeBase:
         for pddl_action_dto in self.get_all_actions():
             for pddl_parameter_dto in pddl_action_dto.get_parameters():
                 if pddl_parameter_dto.get_type() == pddl_type_dto:
-                    succ = self.delete_action(pddl_action_dto)
-
-                    if not succ:
+                    if not self.delete_action(pddl_action_dto):
                         return False
 
                     break
@@ -126,9 +120,7 @@ class KnowledgeBase:
         """
 
         for pddl_type_dto in self.get_all_types():
-            succ = self.delete_type(pddl_type_dto)
-
-            if not succ:
+            if not self.delete_type(pddl_type_dto):
                 return False
 
         return True
@@ -173,8 +165,7 @@ class KnowledgeBase:
         """
 
         # propagating saving
-        succ = self.save_type(pddl_object_dto.get_type())
-        if not succ:
+        if not self.save_type(pddl_object_dto.get_type()):
             return False
 
         object_name = pddl_object_dto.get_name()
@@ -208,9 +199,7 @@ class KnowledgeBase:
         for pddl_proposition_dto in self.get_all_propositions():
             for pddl_prop_object_dto in pddl_proposition_dto.get_objects():
                 if pddl_prop_object_dto == pddl_object_dto:
-                    succ = self.delete_proposition(pddl_proposition_dto)
-
-                    if not succ:
+                    if not self.delete_proposition(pddl_proposition_dto):
                         return False
 
                     break
@@ -227,9 +216,7 @@ class KnowledgeBase:
         """
 
         for pddl_object_dto in self.get_all_objects():
-            succ = self.delete_object(pddl_object_dto)
-
-            if not succ:
+            if not self.delete_object(pddl_object_dto):
                 return False
 
         return True
@@ -276,9 +263,7 @@ class KnowledgeBase:
         # propagating saving
         pddl_type_dto_list = []
         for pddl_type_dto in pddl_predicate_dto.get_types():
-            succ = self.save_type(pddl_type_dto)
-
-            if not succ:
+            if not self.save_type(pddl_type_dto):
                 return False
 
             pddl_type_dto_list.append(self.get_type(
@@ -308,18 +293,14 @@ class KnowledgeBase:
         # propagating deleting
         for pddl_proposition_dto in self.get_all_propositions():
             if pddl_proposition_dto.get_predicate() == pddl_predicate_dto:
-                succ = self.delete_proposition(pddl_proposition_dto)
-
-                if not succ:
+                if not self.delete_proposition(pddl_proposition_dto):
                     return False
 
         for pddl_action_dto in self.get_all_actions():
             for pddl_condi_effect_dto in (pddl_action_dto.get_conditions() +
                                           pddl_action_dto.get_effects()):
                 if pddl_condi_effect_dto.get_predicate() == pddl_predicate_dto:
-                    succ = self.delete_action(pddl_action_dto)
-
-                    if not succ:
+                    if not self.delete_action(pddl_action_dto):
                         return False
 
                     break
@@ -336,9 +317,7 @@ class KnowledgeBase:
         """
 
         for pddl_predicate_dto in self.get_all_predicates():
-            succ = self.delete_predicate(pddl_predicate_dto)
-
-            if not succ:
+            if not self.delete_predicate(pddl_predicate_dto):
                 return False
 
         return True
@@ -390,9 +369,9 @@ class KnowledgeBase:
         # checking condition/effect
 
         # checking time and durative
-        if(not pddl_action_dto.get_durative() and pddl_condi_effect_dto.get_time()):
+        if (not pddl_action_dto.get_durative() and pddl_condi_effect_dto.get_time()):
             return False
-        elif(pddl_action_dto.get_durative() and not pddl_condi_effect_dto.get_time()):
+        elif (pddl_action_dto.get_durative() and not pddl_condi_effect_dto.get_time()):
             return False
 
         # checking objects
@@ -448,9 +427,7 @@ class KnowledgeBase:
 
         # propagating saving of parameter
         for pddl_parameter_dto in pddl_action_dto.get_parameters():
-            succ = self.save_type(pddl_parameter_dto.get_type())
-
-            if not succ:
+            if not self.save_type(pddl_parameter_dto.get_type()):
                 return False
 
             pddl_parameter_dto.set_type(self.get_type(
@@ -459,10 +436,8 @@ class KnowledgeBase:
         # conditions and effects
         for pddl_condi_effect_dto in (pddl_action_dto.get_conditions() +
                                       pddl_action_dto.get_effects()):
-            succ = self._propagate_condition_effect_save(
-                pddl_condi_effect_dto, pddl_action_dto)
-
-            if not succ:
+            if not self._propagate_condition_effect_save(
+                    pddl_condi_effect_dto, pddl_action_dto):
                 return False
 
         self.actions_dict[pddl_action_dto.get_name(
@@ -583,10 +558,8 @@ class KnowledgeBase:
 
         # propagating saving
 
-        succ = self.save_predicate(
-            pddl_proposition_dto.get_predicate())
-
-        if not succ:
+        if not self.save_predicate(
+                pddl_proposition_dto.get_predicate()):
             return False
 
         pddl_proposition_dto.set_predicate(self.get_predicate(
@@ -594,9 +567,7 @@ class KnowledgeBase:
 
         pddl_object_dto_list = []
         for pddl_object_dto in pddl_proposition_dto.get_objects():
-            succ = self.save_object(pddl_object_dto)
-
-            if not succ:
+            if not self.save_object(pddl_object_dto):
                 return False
 
             pddl_object_dto_list.append(self.get_object(

@@ -46,7 +46,7 @@ class MongoPddlPropositionDao(PddlPropositionDao, MongoDao):
         """
 
         # check if proposition is correct
-        if(len(pddl_proposition_model.pddl_objects) !=
+        if (len(pddl_proposition_model.pddl_objects) !=
            len(pddl_proposition_model.predicate.types)):
             return False
 
@@ -108,7 +108,7 @@ class MongoPddlPropositionDao(PddlPropositionDao, MongoDao):
         """
 
        # check if proposition is correct
-        if(len(pddl_proposition_dto.get_objects()) !=
+        if (len(pddl_proposition_dto.get_objects()) !=
            len(pddl_proposition_dto.get_predicate().get_types())):
             return False
 
@@ -231,7 +231,7 @@ class MongoPddlPropositionDao(PddlPropositionDao, MongoDao):
             List[PddlPropositionDto]: list of PddlPropositionDto
         """
 
-        if(is_goal is None):
+        if (is_goal is None):
             pddl_proposition_model = PddlPropositionModel.objects()
         else:
             pddl_proposition_model = PddlPropositionModel.objects(
@@ -291,9 +291,11 @@ class MongoPddlPropositionDao(PddlPropositionDao, MongoDao):
 
        # propagating saving
         for pddl_object_dto in pddl_proposition_dto.get_objects():
-            result = self._me_pddl_object_dao.save(pddl_object_dto)
-            if not result:
+            if not self._me_pddl_object_dao.save(pddl_object_dto):
                 return False
+
+        if not self._me_pddl_predicate_dao.save(pddl_proposition_dto.get_predicate()):
+            return False
 
         # saving
         pddl_proposition_model = self._dto_to_model(
