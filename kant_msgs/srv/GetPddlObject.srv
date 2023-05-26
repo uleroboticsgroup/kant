@@ -1,0 +1,3 @@
+string object_name ""
+---
+kant_msgs/PddlObject[] pddl_objects

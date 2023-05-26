@@ -7,4 +7,4 @@ uint8 BY_PREDICATE=4
 uint8 get_type 1
 string predicate_name ""
 ---
-kant_interfaces/PddlProposition[] pddl_propositions
+kant_msgs/PddlProposition[] pddl_propositions

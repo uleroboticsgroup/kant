@@ -7,11 +7,11 @@ from simple_node import Node
 from kant_dao.dao_interface import PddlTypeDao
 from kant_dto import PddlTypeDto
 
-from kant_interfaces.srv import (
+from kant_msgs.srv import (
     UpdatePddlType,
     GetPddlType
 )
-from kant_interfaces.msg import UpdateKnowledge
+from kant_msgs.msg import UpdateKnowledge
 from std_srvs.srv import Empty
 
 from kant_knowledge_base.parser import (

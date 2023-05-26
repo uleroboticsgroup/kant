@@ -13,7 +13,7 @@
   <depend>rclcpp</depend>
   <depend>rclpy</depend>
   <depend>kant_dto</depend>
-  <depend>kant_interfaces</depend>
+  <depend>kant_msgs</depend>
   <depend>std_srvs</depend>
   <depend>simple_node</depend>
 

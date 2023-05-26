@@ -1,12 +1,12 @@
 
 """ Dto Msg Parser """
 
-from kant_interfaces.msg import PddlType
-from kant_interfaces.msg import PddlObject
-from kant_interfaces.msg import PddlPredicate
-from kant_interfaces.msg import PddlProposition
-from kant_interfaces.msg import PddlConditionEffect
-from kant_interfaces.msg import PddlAction
+from kant_msgs.msg import PddlType
+from kant_msgs.msg import PddlObject
+from kant_msgs.msg import PddlPredicate
+from kant_msgs.msg import PddlProposition
+from kant_msgs.msg import PddlConditionEffect
+from kant_msgs.msg import PddlAction
 
 from kant_dto import (
     PddlTypeDto,

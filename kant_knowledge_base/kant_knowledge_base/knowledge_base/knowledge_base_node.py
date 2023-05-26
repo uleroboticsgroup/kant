@@ -2,9 +2,9 @@
 """ Knowledge Base Node """
 
 
-from kant_interfaces.msg import UpdateKnowledge
+from kant_msgs.msg import UpdateKnowledge
 
-from kant_interfaces.srv import (
+from kant_msgs.srv import (
     UpdatePddlAction,
     UpdatePddlType,
     UpdatePddlPredicate,

@@ -2,12 +2,12 @@
 import unittest
 from kant_knowledge_base.parser.msg_dto_parser import MsgDtoParser
 
-from kant_interfaces.msg import PddlType
-from kant_interfaces.msg import PddlObject
-from kant_interfaces.msg import PddlPredicate
-from kant_interfaces.msg import PddlProposition
-from kant_interfaces.msg import PddlConditionEffect
-from kant_interfaces.msg import PddlAction
+from kant_msgs.msg import PddlType
+from kant_msgs.msg import PddlObject
+from kant_msgs.msg import PddlPredicate
+from kant_msgs.msg import PddlProposition
+from kant_msgs.msg import PddlConditionEffect
+from kant_msgs.msg import PddlAction
 
 
 class TestMsgDtoParser(unittest.TestCase):

@@ -6,7 +6,7 @@
 using namespace kant::knowledge_base::parser;
 
 std::shared_ptr<kant::dto::PddlTypeDto>
-MsgDtoParser::type_msg_to_dto(kant_interfaces::msg::PddlType pddl_type_msg) {
+MsgDtoParser::type_msg_to_dto(kant_msgs::msg::PddlType pddl_type_msg) {
 
   std::shared_ptr<kant::dto::PddlTypeDto> dto;
 
@@ -17,7 +17,7 @@ MsgDtoParser::type_msg_to_dto(kant_interfaces::msg::PddlType pddl_type_msg) {
 }
 
 std::shared_ptr<kant::dto::PddlObjectDto> MsgDtoParser::object_msg_to_dto(
-    kant_interfaces::msg::PddlObject pddl_object_msg) {
+    kant_msgs::msg::PddlObject pddl_object_msg) {
 
   std::shared_ptr<kant::dto::PddlObjectDto> dto;
 
@@ -28,7 +28,7 @@ std::shared_ptr<kant::dto::PddlObjectDto> MsgDtoParser::object_msg_to_dto(
 }
 
 std::shared_ptr<kant::dto::PddlPredicateDto> MsgDtoParser::predicate_msg_to_dto(
-    kant_interfaces::msg::PddlPredicate pddl_predicate_msg) {
+    kant_msgs::msg::PddlPredicate pddl_predicate_msg) {
 
   std::shared_ptr<kant::dto::PddlPredicateDto> dto;
 
@@ -48,7 +48,7 @@ std::shared_ptr<kant::dto::PddlPredicateDto> MsgDtoParser::predicate_msg_to_dto(
 
 std::shared_ptr<kant::dto::PddlPropositionDto>
 MsgDtoParser::proposition_msg_to_dto(
-    kant_interfaces::msg::PddlProposition pddl_proposition_msg) {
+    kant_msgs::msg::PddlProposition pddl_proposition_msg) {
 
   std::shared_ptr<kant::dto::PddlPropositionDto> dto;
 
@@ -71,7 +71,7 @@ MsgDtoParser::proposition_msg_to_dto(
 
 std::shared_ptr<kant::dto::PddlConditionEffectDto>
 MsgDtoParser::condition_effect_msg_to_dto(
-    kant_interfaces::msg::PddlConditionEffect pddl_condition_effect_msg) {
+    kant_msgs::msg::PddlConditionEffect pddl_condition_effect_msg) {
 
   std::shared_ptr<kant::dto::PddlConditionEffectDto> dto;
 
@@ -95,7 +95,7 @@ MsgDtoParser::condition_effect_msg_to_dto(
 }
 
 std::shared_ptr<kant::dto::PddlActionDto> MsgDtoParser::action_msg_to_dto(
-    kant_interfaces::msg::PddlAction pddl_action_msg) {
+    kant_msgs::msg::PddlAction pddl_action_msg) {
 
   std::shared_ptr<kant::dto::PddlActionDto> dto;
 

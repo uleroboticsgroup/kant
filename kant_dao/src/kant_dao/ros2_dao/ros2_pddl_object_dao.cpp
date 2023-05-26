@@ -1,5 +1,5 @@
 
-#include "kant_interfaces/msg/update_knowledge.hpp"
+#include "kant_msgs/msg/update_knowledge.hpp"
 
 #include "kant_dao/ros2_dao/ros2_pddl_object_dao.hpp"
 
@@ -14,10 +14,10 @@ Ros2PddlObjectDao::Ros2PddlObjectDao(simple_node::Node *node) {
 
   // srv clients
   this->get_client =
-      node->create_client<kant_interfaces::srv::GetPddlObject>("get_objects");
+      node->create_client<kant_msgs::srv::GetPddlObject>("get_objects");
 
   this->update_client =
-      node->create_client<kant_interfaces::srv::UpdatePddlObject>(
+      node->create_client<kant_msgs::srv::UpdatePddlObject>(
           "update_object");
 
   this->delete_all_client =
@@ -28,7 +28,7 @@ std::vector<std::shared_ptr<kant::dto::PddlObjectDto>>
 Ros2PddlObjectDao::ros2_get(std::string object_name) {
 
   auto request =
-      std::make_shared<kant_interfaces::srv::GetPddlObject::Request>();
+      std::make_shared<kant_msgs::srv::GetPddlObject::Request>();
 
   request->object_name = object_name;
 
@@ -53,7 +53,7 @@ bool Ros2PddlObjectDao::ros2_update(
     int update_type) {
 
   auto request =
-      std::make_shared<kant_interfaces::srv::UpdatePddlObject::Request>();
+      std::make_shared<kant_msgs::srv::UpdatePddlObject::Request>();
 
   request->pddl_object =
       this->dto_msg_parser->object_dto_to_msg(pddl_object_dto);
@@ -99,7 +99,7 @@ bool Ros2PddlObjectDao::save(
 
   if (this->get(pddl_object_dto->get_name()) == nullptr) {
     return this->ros2_update(pddl_object_dto,
-                             kant_interfaces::msg::UpdateKnowledge::SAVE);
+                             kant_msgs::msg::UpdateKnowledge::SAVE);
   }
 
   return false;
@@ -109,7 +109,7 @@ bool Ros2PddlObjectDao::update(
     std::shared_ptr<kant::dto::PddlObjectDto> pddl_object_dto) {
   if (this->get(pddl_object_dto->get_name()) != nullptr) {
     return this->ros2_update(pddl_object_dto,
-                             kant_interfaces::msg::UpdateKnowledge::SAVE);
+                             kant_msgs::msg::UpdateKnowledge::SAVE);
   }
 
   return false;
@@ -130,7 +130,7 @@ bool Ros2PddlObjectDao::save_update(
 bool Ros2PddlObjectDao::delete_one(
     std::shared_ptr<kant::dto::PddlObjectDto> pddl_object_dto) {
   return this->ros2_update(pddl_object_dto,
-                           kant_interfaces::msg::UpdateKnowledge::DELETE);
+                           kant_msgs::msg::UpdateKnowledge::DELETE);
 }
 
 bool Ros2PddlObjectDao::delete_all() {

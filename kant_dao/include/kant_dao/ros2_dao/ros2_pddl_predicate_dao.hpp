@@ -8,8 +8,8 @@
 
 #include "simple_node/node.hpp"
 
-#include "kant_interfaces/srv/get_pddl_predicate.hpp"
-#include "kant_interfaces/srv/update_pddl_predicate.hpp"
+#include "kant_msgs/srv/get_pddl_predicate.hpp"
+#include "kant_msgs/srv/update_pddl_predicate.hpp"
 #include "std_srvs/srv/empty.hpp"
 
 #include "kant_knowledge_base/parser/dto_msg_parser.hpp"
@@ -27,8 +27,8 @@ private:
   std::unique_ptr<kant::knowledge_base::parser::DtoMsgParser> dto_msg_parser;
   std::unique_ptr<kant::knowledge_base::parser::MsgDtoParser> msg_dto_parser;
 
-  rclcpp::Client<kant_interfaces::srv::GetPddlPredicate>::SharedPtr get_client;
-  rclcpp::Client<kant_interfaces::srv::UpdatePddlPredicate>::SharedPtr
+  rclcpp::Client<kant_msgs::srv::GetPddlPredicate>::SharedPtr get_client;
+  rclcpp::Client<kant_msgs::srv::UpdatePddlPredicate>::SharedPtr
       update_client;
   rclcpp::Client<std_srvs::srv::Empty>::SharedPtr delete_all_client;
 

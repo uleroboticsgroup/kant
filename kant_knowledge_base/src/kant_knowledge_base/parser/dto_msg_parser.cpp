@@ -3,27 +3,27 @@
 
 using namespace kant::knowledge_base::parser;
 
-kant_interfaces::msg::PddlType DtoMsgParser::type_dto_to_msg(
+kant_msgs::msg::PddlType DtoMsgParser::type_dto_to_msg(
     std::shared_ptr<kant::dto::PddlTypeDto> pddl_type_dto) {
 
-  kant_interfaces::msg::PddlType msg;
+  kant_msgs::msg::PddlType msg;
   msg.name = pddl_type_dto->get_name();
   return msg;
 }
 
-kant_interfaces::msg::PddlObject DtoMsgParser::object_dto_to_msg(
+kant_msgs::msg::PddlObject DtoMsgParser::object_dto_to_msg(
     std::shared_ptr<kant::dto::PddlObjectDto> pddl_object_dto) {
 
-  kant_interfaces::msg::PddlObject msg;
+  kant_msgs::msg::PddlObject msg;
   msg.type = this->type_dto_to_msg(pddl_object_dto->get_type());
   msg.name = pddl_object_dto->get_name();
   return msg;
 }
 
-kant_interfaces::msg::PddlPredicate DtoMsgParser::predicate_dto_to_msg(
+kant_msgs::msg::PddlPredicate DtoMsgParser::predicate_dto_to_msg(
     std::shared_ptr<kant::dto::PddlPredicateDto> pddl_predicate_dto) {
 
-  kant_interfaces::msg::PddlPredicate msg;
+  kant_msgs::msg::PddlPredicate msg;
 
   msg.name = pddl_predicate_dto->get_name();
 
@@ -34,10 +34,10 @@ kant_interfaces::msg::PddlPredicate DtoMsgParser::predicate_dto_to_msg(
   return msg;
 }
 
-kant_interfaces::msg::PddlProposition DtoMsgParser::proposition_dto_to_msg(
+kant_msgs::msg::PddlProposition DtoMsgParser::proposition_dto_to_msg(
     std::shared_ptr<kant::dto::PddlPropositionDto> pddl_proposition_dto) {
 
-  kant_interfaces::msg::PddlProposition msg;
+  kant_msgs::msg::PddlProposition msg;
 
   msg.predicate =
       this->predicate_dto_to_msg(pddl_proposition_dto->get_predicate());
@@ -51,12 +51,12 @@ kant_interfaces::msg::PddlProposition DtoMsgParser::proposition_dto_to_msg(
   return msg;
 }
 
-kant_interfaces::msg::PddlConditionEffect
+kant_msgs::msg::PddlConditionEffect
 DtoMsgParser::condition_effect_dto_to_msg(
     std::shared_ptr<kant::dto::PddlConditionEffectDto>
         pddl_condition_effect_dto) {
 
-  kant_interfaces::msg::PddlConditionEffect msg;
+  kant_msgs::msg::PddlConditionEffect msg;
 
   msg.predicate =
       this->predicate_dto_to_msg(pddl_condition_effect_dto->get_predicate());
@@ -71,10 +71,10 @@ DtoMsgParser::condition_effect_dto_to_msg(
   return msg;
 }
 
-kant_interfaces::msg::PddlAction DtoMsgParser::action_dto_to_msg(
+kant_msgs::msg::PddlAction DtoMsgParser::action_dto_to_msg(
     std::shared_ptr<kant::dto::PddlActionDto> pddl_action_dto) {
 
-  kant_interfaces::msg::PddlAction msg;
+  kant_msgs::msg::PddlAction msg;
 
   msg.name = pddl_action_dto->get_name();
   msg.duration = pddl_action_dto->get_duration();

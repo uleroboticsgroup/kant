@@ -4,12 +4,12 @@
 
 #include <memory>
 
-#include "kant_interfaces/msg/pddl_action.hpp"
-#include "kant_interfaces/msg/pddl_condition_effect.hpp"
-#include "kant_interfaces/msg/pddl_object.hpp"
-#include "kant_interfaces/msg/pddl_predicate.hpp"
-#include "kant_interfaces/msg/pddl_proposition.hpp"
-#include "kant_interfaces/msg/pddl_type.hpp"
+#include "kant_msgs/msg/pddl_action.hpp"
+#include "kant_msgs/msg/pddl_condition_effect.hpp"
+#include "kant_msgs/msg/pddl_object.hpp"
+#include "kant_msgs/msg/pddl_predicate.hpp"
+#include "kant_msgs/msg/pddl_proposition.hpp"
+#include "kant_msgs/msg/pddl_type.hpp"
 
 #include "kant_dto/pddl_action_dto.hpp"
 #include "kant_dto/pddl_condition_effect_dto.hpp"
@@ -25,23 +25,23 @@ namespace parser {
 class MsgDtoParser {
 public:
   std::shared_ptr<kant::dto::PddlTypeDto>
-  type_msg_to_dto(kant_interfaces::msg::PddlType pddl_type_msg);
+  type_msg_to_dto(kant_msgs::msg::PddlType pddl_type_msg);
 
   std::shared_ptr<kant::dto::PddlObjectDto>
-  object_msg_to_dto(kant_interfaces::msg::PddlObject pddl_object_msg);
+  object_msg_to_dto(kant_msgs::msg::PddlObject pddl_object_msg);
 
   std::shared_ptr<kant::dto::PddlPredicateDto>
-  predicate_msg_to_dto(kant_interfaces::msg::PddlPredicate pddl_predicate_msg);
+  predicate_msg_to_dto(kant_msgs::msg::PddlPredicate pddl_predicate_msg);
 
   std::shared_ptr<kant::dto::PddlPropositionDto> proposition_msg_to_dto(
-      kant_interfaces::msg::PddlProposition pddl_proposition_msg);
+      kant_msgs::msg::PddlProposition pddl_proposition_msg);
 
   std::shared_ptr<kant::dto::PddlConditionEffectDto>
   condition_effect_msg_to_dto(
-      kant_interfaces::msg::PddlConditionEffect pddl_condition_effect_msg);
+      kant_msgs::msg::PddlConditionEffect pddl_condition_effect_msg);
 
   std::shared_ptr<kant::dto::PddlActionDto>
-  action_msg_to_dto(kant_interfaces::msg::PddlAction pddl_action_msg);
+  action_msg_to_dto(kant_msgs::msg::PddlAction pddl_action_msg);
 };
 
 } // namespace parser

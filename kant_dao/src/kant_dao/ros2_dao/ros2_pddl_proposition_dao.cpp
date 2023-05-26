@@ -1,5 +1,5 @@
 
-#include "kant_interfaces/msg/update_knowledge.hpp"
+#include "kant_msgs/msg/update_knowledge.hpp"
 
 #include "kant_dao/ros2_dao/ros2_pddl_proposition_dao.hpp"
 
@@ -14,11 +14,11 @@ Ros2PddlPropositionDao::Ros2PddlPropositionDao(simple_node::Node *node) {
 
   // srv clients
   this->get_client =
-      node->create_client<kant_interfaces::srv::GetPddlProposition>(
+      node->create_client<kant_msgs::srv::GetPddlProposition>(
           "get_propositions");
 
   this->update_client =
-      node->create_client<kant_interfaces::srv::UpdatePddlProposition>(
+      node->create_client<kant_msgs::srv::UpdatePddlProposition>(
           "update_proposition");
 
   this->delete_all_client =
@@ -29,7 +29,7 @@ std::vector<std::shared_ptr<kant::dto::PddlPropositionDto>>
 Ros2PddlPropositionDao::ros2_get(int get_type, std::string predicate_name) {
 
   auto request =
-      std::make_shared<kant_interfaces::srv::GetPddlProposition::Request>();
+      std::make_shared<kant_msgs::srv::GetPddlProposition::Request>();
 
   request->predicate_name = predicate_name;
   request->get_type = get_type;
@@ -56,7 +56,7 @@ bool Ros2PddlPropositionDao::ros2_update(
     int update_type) {
 
   auto request =
-      std::make_shared<kant_interfaces::srv::UpdatePddlProposition::Request>();
+      std::make_shared<kant_msgs::srv::UpdatePddlProposition::Request>();
 
   request->pddl_proposition =
       this->dto_msg_parser->proposition_dto_to_msg(pddl_proposition_dto);
@@ -97,7 +97,7 @@ std::vector<std::shared_ptr<kant::dto::PddlPropositionDto>>
 Ros2PddlPropositionDao::get_by_predicate(std::string predicate_name) {
 
   auto pddl_proposition_dto_list = this->ros2_get(
-      kant_interfaces::srv::GetPddlProposition::Request::BY_PREDICATE,
+      kant_msgs::srv::GetPddlProposition::Request::BY_PREDICATE,
       predicate_name);
 
   return pddl_proposition_dto_list;
@@ -107,7 +107,7 @@ std::vector<std::shared_ptr<kant::dto::PddlPropositionDto>>
 Ros2PddlPropositionDao::get_goals() {
 
   auto pddl_proposition_dto_list = this->ros2_get(
-      kant_interfaces::srv::GetPddlProposition::Request::GOALS, "");
+      kant_msgs::srv::GetPddlProposition::Request::GOALS, "");
 
   return pddl_proposition_dto_list;
 }
@@ -116,7 +116,7 @@ std::vector<std::shared_ptr<kant::dto::PddlPropositionDto>>
 Ros2PddlPropositionDao::get_no_goals() {
 
   auto pddl_proposition_dto_list = this->ros2_get(
-      kant_interfaces::srv::GetPddlProposition::Request::NO_GOALS, "");
+      kant_msgs::srv::GetPddlProposition::Request::NO_GOALS, "");
 
   return pddl_proposition_dto_list;
 }
@@ -125,7 +125,7 @@ std::vector<std::shared_ptr<kant::dto::PddlPropositionDto>>
 Ros2PddlPropositionDao::get_all() {
 
   auto pddl_proposition_dto_list = this->ros2_get(
-      kant_interfaces::srv::GetPddlProposition::Request::ALL, "");
+      kant_msgs::srv::GetPddlProposition::Request::ALL, "");
 
   return pddl_proposition_dto_list;
 }
@@ -135,7 +135,7 @@ bool Ros2PddlPropositionDao::save(
 
   if (!this->ros2_exists(pddl_proposition_dto)) {
     return this->ros2_update(pddl_proposition_dto,
-                             kant_interfaces::msg::UpdateKnowledge::SAVE);
+                             kant_msgs::msg::UpdateKnowledge::SAVE);
   }
 
   return false;
@@ -146,7 +146,7 @@ bool Ros2PddlPropositionDao::update(
 
   if (this->ros2_exists(pddl_proposition_dto)) {
     return this->ros2_update(pddl_proposition_dto,
-                             kant_interfaces::msg::UpdateKnowledge::SAVE);
+                             kant_msgs::msg::UpdateKnowledge::SAVE);
   }
 
   return false;
@@ -168,7 +168,7 @@ bool Ros2PddlPropositionDao::save_update(
 bool Ros2PddlPropositionDao::delete_one(
     std::shared_ptr<kant::dto::PddlPropositionDto> pddl_proposition_dto) {
   return this->ros2_update(pddl_proposition_dto,
-                           kant_interfaces::msg::UpdateKnowledge::DELETE);
+                           kant_msgs::msg::UpdateKnowledge::DELETE);
 }
 
 bool Ros2PddlPropositionDao::delete_all() {

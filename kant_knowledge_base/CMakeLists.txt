@@ -15,7 +15,7 @@ find_package(ament_cmake_python REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(rclpy REQUIRED)
 find_package(kant_dto REQUIRED)
-find_package(kant_interfaces REQUIRED)
+find_package(kant_msgs REQUIRED)
 find_package(std_srvs REQUIRED)
 find_package(simple_node REQUIRED)
 
@@ -33,7 +33,7 @@ set(SOURCES
 
 set(DEPENDENCIES
     rclcpp 
-    kant_interfaces 
+    kant_msgs 
     kant_dto
     std_srvs
     simple_node

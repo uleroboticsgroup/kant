@@ -1,5 +1,5 @@
 
-#include "kant_interfaces/msg/update_knowledge.hpp"
+#include "kant_msgs/msg/update_knowledge.hpp"
 
 #include "kant_dao/ros2_dao/ros2_pddl_predicate_dao.hpp"
 
@@ -14,11 +14,11 @@ Ros2PddlPredicateDao::Ros2PddlPredicateDao(simple_node::Node *node) {
 
   // srv clients
   this->get_client =
-      node->create_client<kant_interfaces::srv::GetPddlPredicate>(
+      node->create_client<kant_msgs::srv::GetPddlPredicate>(
           "get_predicates");
 
   this->update_client =
-      node->create_client<kant_interfaces::srv::UpdatePddlPredicate>(
+      node->create_client<kant_msgs::srv::UpdatePddlPredicate>(
           "update_predicate");
 
   this->delete_all_client =
@@ -29,7 +29,7 @@ std::vector<std::shared_ptr<kant::dto::PddlPredicateDto>>
 Ros2PddlPredicateDao::ros2_get(std::string predicate_name) {
 
   auto request =
-      std::make_shared<kant_interfaces::srv::GetPddlPredicate::Request>();
+      std::make_shared<kant_msgs::srv::GetPddlPredicate::Request>();
 
   request->predicate_name = predicate_name;
 
@@ -55,7 +55,7 @@ bool Ros2PddlPredicateDao::ros2_update(
     int update_type) {
 
   auto request =
-      std::make_shared<kant_interfaces::srv::UpdatePddlPredicate::Request>();
+      std::make_shared<kant_msgs::srv::UpdatePddlPredicate::Request>();
 
   request->pddl_predicate =
       this->dto_msg_parser->predicate_dto_to_msg(pddl_predicate_dto);
@@ -101,7 +101,7 @@ bool Ros2PddlPredicateDao::save(
 
   if (this->get(pddl_predicate_dto->get_name()) == nullptr) {
     return this->ros2_update(pddl_predicate_dto,
-                             kant_interfaces::msg::UpdateKnowledge::SAVE);
+                             kant_msgs::msg::UpdateKnowledge::SAVE);
   }
 
   return false;
@@ -111,7 +111,7 @@ bool Ros2PddlPredicateDao::update(
     std::shared_ptr<kant::dto::PddlPredicateDto> pddl_predicate_dto) {
   if (this->get(pddl_predicate_dto->get_name()) != nullptr) {
     return this->ros2_update(pddl_predicate_dto,
-                             kant_interfaces::msg::UpdateKnowledge::SAVE);
+                             kant_msgs::msg::UpdateKnowledge::SAVE);
   }
 
   return false;
@@ -132,7 +132,7 @@ bool Ros2PddlPredicateDao::save_update(
 bool Ros2PddlPredicateDao::delete_one(
     std::shared_ptr<kant::dto::PddlPredicateDto> pddl_predicate_dto) {
   return this->ros2_update(pddl_predicate_dto,
-                           kant_interfaces::msg::UpdateKnowledge::DELETE);
+                           kant_msgs::msg::UpdateKnowledge::DELETE);
 }
 
 bool Ros2PddlPredicateDao::delete_all() {

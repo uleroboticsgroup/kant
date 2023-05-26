@@ -7,16 +7,16 @@
 #include "simple_node/node.hpp"
 #include "std_srvs/srv/empty.hpp"
 
-#include "kant_interfaces/srv/get_pddl_action.hpp"
-#include "kant_interfaces/srv/get_pddl_object.hpp"
-#include "kant_interfaces/srv/get_pddl_predicate.hpp"
-#include "kant_interfaces/srv/get_pddl_proposition.hpp"
-#include "kant_interfaces/srv/get_pddl_type.hpp"
-#include "kant_interfaces/srv/update_pddl_action.hpp"
-#include "kant_interfaces/srv/update_pddl_object.hpp"
-#include "kant_interfaces/srv/update_pddl_predicate.hpp"
-#include "kant_interfaces/srv/update_pddl_proposition.hpp"
-#include "kant_interfaces/srv/update_pddl_type.hpp"
+#include "kant_msgs/srv/get_pddl_action.hpp"
+#include "kant_msgs/srv/get_pddl_object.hpp"
+#include "kant_msgs/srv/get_pddl_predicate.hpp"
+#include "kant_msgs/srv/get_pddl_proposition.hpp"
+#include "kant_msgs/srv/get_pddl_type.hpp"
+#include "kant_msgs/srv/update_pddl_action.hpp"
+#include "kant_msgs/srv/update_pddl_object.hpp"
+#include "kant_msgs/srv/update_pddl_predicate.hpp"
+#include "kant_msgs/srv/update_pddl_proposition.hpp"
+#include "kant_msgs/srv/update_pddl_type.hpp"
 
 #include "kant_knowledge_base/knowledge_base/knowledge_base.hpp"
 #include "kant_knowledge_base/parser/dto_msg_parser.hpp"
@@ -33,35 +33,35 @@ private:
   std::unique_ptr<kant::knowledge_base::knowledge_base::KnowledgeBase>
       knowledge_base;
 
-  rclcpp::Service<kant_interfaces::srv::GetPddlType>::SharedPtr
+  rclcpp::Service<kant_msgs::srv::GetPddlType>::SharedPtr
       get_types_service;
-  rclcpp::Service<kant_interfaces::srv::UpdatePddlType>::SharedPtr
+  rclcpp::Service<kant_msgs::srv::UpdatePddlType>::SharedPtr
       update_type_service;
   rclcpp::Service<std_srvs::srv::Empty>::SharedPtr delete_all_types_service;
 
-  rclcpp::Service<kant_interfaces::srv::GetPddlObject>::SharedPtr
+  rclcpp::Service<kant_msgs::srv::GetPddlObject>::SharedPtr
       get_objects_service;
-  rclcpp::Service<kant_interfaces::srv::UpdatePddlObject>::SharedPtr
+  rclcpp::Service<kant_msgs::srv::UpdatePddlObject>::SharedPtr
       update_object_service;
   rclcpp::Service<std_srvs::srv::Empty>::SharedPtr delete_all_objects_service;
 
-  rclcpp::Service<kant_interfaces::srv::GetPddlPredicate>::SharedPtr
+  rclcpp::Service<kant_msgs::srv::GetPddlPredicate>::SharedPtr
       get_predicates_service;
-  rclcpp::Service<kant_interfaces::srv::UpdatePddlPredicate>::SharedPtr
+  rclcpp::Service<kant_msgs::srv::UpdatePddlPredicate>::SharedPtr
       update_predicate_service;
   rclcpp::Service<std_srvs::srv::Empty>::SharedPtr
       delete_all_predicates_service;
 
-  rclcpp::Service<kant_interfaces::srv::GetPddlProposition>::SharedPtr
+  rclcpp::Service<kant_msgs::srv::GetPddlProposition>::SharedPtr
       get_propositions_service;
-  rclcpp::Service<kant_interfaces::srv::UpdatePddlProposition>::SharedPtr
+  rclcpp::Service<kant_msgs::srv::UpdatePddlProposition>::SharedPtr
       update_proposition_service;
   rclcpp::Service<std_srvs::srv::Empty>::SharedPtr
       delete_all_propositions_service;
 
-  rclcpp::Service<kant_interfaces::srv::GetPddlAction>::SharedPtr
+  rclcpp::Service<kant_msgs::srv::GetPddlAction>::SharedPtr
       get_actions_service;
-  rclcpp::Service<kant_interfaces::srv::UpdatePddlAction>::SharedPtr
+  rclcpp::Service<kant_msgs::srv::UpdatePddlAction>::SharedPtr
       update_action_service;
   rclcpp::Service<std_srvs::srv::Empty>::SharedPtr delete_all_actions_service;
 
@@ -69,66 +69,66 @@ public:
   KnowledgeBaseNode();
 
   void get_types(
-      const std::shared_ptr<kant_interfaces::srv::GetPddlType::Request> request,
-      std::shared_ptr<kant_interfaces::srv::GetPddlType::Response> response);
+      const std::shared_ptr<kant_msgs::srv::GetPddlType::Request> request,
+      std::shared_ptr<kant_msgs::srv::GetPddlType::Response> response);
   void update_type(
-      const std::shared_ptr<kant_interfaces::srv::UpdatePddlType::Request>
+      const std::shared_ptr<kant_msgs::srv::UpdatePddlType::Request>
           request,
-      std::shared_ptr<kant_interfaces::srv::UpdatePddlType::Response> response);
+      std::shared_ptr<kant_msgs::srv::UpdatePddlType::Response> response);
   void
   delete_all_types(const std::shared_ptr<std_srvs::srv::Empty::Request> request,
                    std::shared_ptr<std_srvs::srv::Empty::Response> response);
 
   void get_objects(
-      const std::shared_ptr<kant_interfaces::srv::GetPddlObject::Request>
+      const std::shared_ptr<kant_msgs::srv::GetPddlObject::Request>
           request,
-      std::shared_ptr<kant_interfaces::srv::GetPddlObject::Response> response);
+      std::shared_ptr<kant_msgs::srv::GetPddlObject::Response> response);
   void update_object(
-      const std::shared_ptr<kant_interfaces::srv::UpdatePddlObject::Request>
+      const std::shared_ptr<kant_msgs::srv::UpdatePddlObject::Request>
           request,
-      std::shared_ptr<kant_interfaces::srv::UpdatePddlObject::Response>
+      std::shared_ptr<kant_msgs::srv::UpdatePddlObject::Response>
           response);
   void delete_all_objects(
       const std::shared_ptr<std_srvs::srv::Empty::Request> request,
       std::shared_ptr<std_srvs::srv::Empty::Response> response);
 
   void get_predicates(
-      const std::shared_ptr<kant_interfaces::srv::GetPddlPredicate::Request>
+      const std::shared_ptr<kant_msgs::srv::GetPddlPredicate::Request>
           request,
-      std::shared_ptr<kant_interfaces::srv::GetPddlPredicate::Response>
+      std::shared_ptr<kant_msgs::srv::GetPddlPredicate::Response>
           response);
   void update_predicate(
-      const std::shared_ptr<kant_interfaces::srv::UpdatePddlPredicate::Request>
+      const std::shared_ptr<kant_msgs::srv::UpdatePddlPredicate::Request>
           request,
-      std::shared_ptr<kant_interfaces::srv::UpdatePddlPredicate::Response>
+      std::shared_ptr<kant_msgs::srv::UpdatePddlPredicate::Response>
           response);
   void delete_all_predicates(
       const std::shared_ptr<std_srvs::srv::Empty::Request> request,
       std::shared_ptr<std_srvs::srv::Empty::Response> response);
 
   void get_propositions(
-      const std::shared_ptr<kant_interfaces::srv::GetPddlProposition::Request>
+      const std::shared_ptr<kant_msgs::srv::GetPddlProposition::Request>
           request,
-      std::shared_ptr<kant_interfaces::srv::GetPddlProposition::Response>
+      std::shared_ptr<kant_msgs::srv::GetPddlProposition::Response>
           response);
   void update_proposition(
       const std::shared_ptr<
-          kant_interfaces::srv::UpdatePddlProposition::Request>
+          kant_msgs::srv::UpdatePddlProposition::Request>
           request,
-      std::shared_ptr<kant_interfaces::srv::UpdatePddlProposition::Response>
+      std::shared_ptr<kant_msgs::srv::UpdatePddlProposition::Response>
           response);
   void delete_all_propositions(
       const std::shared_ptr<std_srvs::srv::Empty::Request> request,
       std::shared_ptr<std_srvs::srv::Empty::Response> response);
 
   void get_actions(
-      const std::shared_ptr<kant_interfaces::srv::GetPddlAction::Request>
+      const std::shared_ptr<kant_msgs::srv::GetPddlAction::Request>
           request,
-      std::shared_ptr<kant_interfaces::srv::GetPddlAction::Response> response);
+      std::shared_ptr<kant_msgs::srv::GetPddlAction::Response> response);
   void update_action(
-      const std::shared_ptr<kant_interfaces::srv::UpdatePddlAction::Request>
+      const std::shared_ptr<kant_msgs::srv::UpdatePddlAction::Request>
           request,
-      std::shared_ptr<kant_interfaces::srv::UpdatePddlAction::Response>
+      std::shared_ptr<kant_msgs::srv::UpdatePddlAction::Response>
           response);
   void delete_all_actions(
       const std::shared_ptr<std_srvs::srv::Empty::Request> request,
