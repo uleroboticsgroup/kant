@@ -1,3 +1,17 @@
+// Copyright (C) 2023  Miguel Ángel González Santamarta
+
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include "kant_msgs/msg/update_knowledge.hpp"
 
@@ -14,8 +28,7 @@ Ros2PddlPredicateDao::Ros2PddlPredicateDao(simple_node::Node *node) {
 
   // srv clients
   this->get_client =
-      node->create_client<kant_msgs::srv::GetPddlPredicate>(
-          "get_predicates");
+      node->create_client<kant_msgs::srv::GetPddlPredicate>("get_predicates");
 
   this->update_client =
       node->create_client<kant_msgs::srv::UpdatePddlPredicate>(
@@ -28,8 +41,7 @@ Ros2PddlPredicateDao::Ros2PddlPredicateDao(simple_node::Node *node) {
 std::vector<std::shared_ptr<kant::dto::PddlPredicateDto>>
 Ros2PddlPredicateDao::ros2_get(std::string predicate_name) {
 
-  auto request =
-      std::make_shared<kant_msgs::srv::GetPddlPredicate::Request>();
+  auto request = std::make_shared<kant_msgs::srv::GetPddlPredicate::Request>();
 
   request->predicate_name = predicate_name;
 

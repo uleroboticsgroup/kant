@@ -1,3 +1,17 @@
+// Copyright (C) 2023  Miguel Ángel González Santamarta
+
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include "kant_msgs/msg/update_knowledge.hpp"
 
@@ -17,8 +31,7 @@ Ros2PddlActionDao::Ros2PddlActionDao(simple_node::Node *node) {
       node->create_client<kant_msgs::srv::GetPddlAction>("get_actions");
 
   this->update_client =
-      node->create_client<kant_msgs::srv::UpdatePddlAction>(
-          "update_action");
+      node->create_client<kant_msgs::srv::UpdatePddlAction>("update_action");
 
   this->delete_all_client =
       node->create_client<std_srvs::srv::Empty>("delete_all_actions");
@@ -27,8 +40,7 @@ Ros2PddlActionDao::Ros2PddlActionDao(simple_node::Node *node) {
 std::vector<std::shared_ptr<kant::dto::PddlActionDto>>
 Ros2PddlActionDao::ros2_get(std::string action_name) {
 
-  auto request =
-      std::make_shared<kant_msgs::srv::GetPddlAction::Request>();
+  auto request = std::make_shared<kant_msgs::srv::GetPddlAction::Request>();
 
   request->action_name = action_name;
 
@@ -52,8 +64,7 @@ bool Ros2PddlActionDao::ros2_update(
     std::shared_ptr<kant::dto::PddlActionDto> pddl_action_dto,
     int update_type) {
 
-  auto request =
-      std::make_shared<kant_msgs::srv::UpdatePddlAction::Request>();
+  auto request = std::make_shared<kant_msgs::srv::UpdatePddlAction::Request>();
 
   request->pddl_action =
       this->dto_msg_parser->action_dto_to_msg(pddl_action_dto);

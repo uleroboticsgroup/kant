@@ -1,3 +1,17 @@
+// Copyright (C) 2023  Miguel Ángel González Santamarta
+
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include "kant_msgs/msg/update_knowledge.hpp"
 
@@ -17,8 +31,7 @@ Ros2PddlObjectDao::Ros2PddlObjectDao(simple_node::Node *node) {
       node->create_client<kant_msgs::srv::GetPddlObject>("get_objects");
 
   this->update_client =
-      node->create_client<kant_msgs::srv::UpdatePddlObject>(
-          "update_object");
+      node->create_client<kant_msgs::srv::UpdatePddlObject>("update_object");
 
   this->delete_all_client =
       node->create_client<std_srvs::srv::Empty>("delete_all_objects");
@@ -27,8 +40,7 @@ Ros2PddlObjectDao::Ros2PddlObjectDao(simple_node::Node *node) {
 std::vector<std::shared_ptr<kant::dto::PddlObjectDto>>
 Ros2PddlObjectDao::ros2_get(std::string object_name) {
 
-  auto request =
-      std::make_shared<kant_msgs::srv::GetPddlObject::Request>();
+  auto request = std::make_shared<kant_msgs::srv::GetPddlObject::Request>();
 
   request->object_name = object_name;
 
@@ -52,8 +64,7 @@ bool Ros2PddlObjectDao::ros2_update(
     std::shared_ptr<kant::dto::PddlObjectDto> pddl_object_dto,
     int update_type) {
 
-  auto request =
-      std::make_shared<kant_msgs::srv::UpdatePddlObject::Request>();
+  auto request = std::make_shared<kant_msgs::srv::UpdatePddlObject::Request>();
 
   request->pddl_object =
       this->dto_msg_parser->object_dto_to_msg(pddl_object_dto);

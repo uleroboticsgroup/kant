@@ -1,3 +1,17 @@
+// Copyright (C) 2023  Miguel Ángel González Santamarta
+
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include <functional>
 #include <vector>
@@ -22,10 +36,9 @@ KnowledgeBaseNode::KnowledgeBaseNode() : Node("knowledge_base_node") {
   this->knowledge_base =
       std::make_unique<kant::knowledge_base::knowledge_base::KnowledgeBase>();
 
-  this->get_types_service =
-      this->create_service<kant_msgs::srv::GetPddlType>(
-          "get_types", std::bind(&KnowledgeBaseNode::get_types, this,
-                                 std::placeholders::_1, std::placeholders::_2));
+  this->get_types_service = this->create_service<kant_msgs::srv::GetPddlType>(
+      "get_types", std::bind(&KnowledgeBaseNode::get_types, this,
+                             std::placeholders::_1, std::placeholders::_2));
   this->update_type_service =
       this->create_service<kant_msgs::srv::UpdatePddlType>(
           "update_type",
@@ -131,8 +144,7 @@ void KnowledgeBaseNode::get_types(
 }
 
 void KnowledgeBaseNode::update_type(
-    const std::shared_ptr<kant_msgs::srv::UpdatePddlType::Request>
-        request,
+    const std::shared_ptr<kant_msgs::srv::UpdatePddlType::Request> request,
     std::shared_ptr<kant_msgs::srv::UpdatePddlType::Response> response) {
 
   bool succ = false;
@@ -195,10 +207,8 @@ void KnowledgeBaseNode::get_objects(
 }
 
 void KnowledgeBaseNode::update_object(
-    const std::shared_ptr<kant_msgs::srv::UpdatePddlObject::Request>
-        request,
-    std::shared_ptr<kant_msgs::srv::UpdatePddlObject::Response>
-        response) {
+    const std::shared_ptr<kant_msgs::srv::UpdatePddlObject::Request> request,
+    std::shared_ptr<kant_msgs::srv::UpdatePddlObject::Response> response) {
 
   bool succ = false;
 
@@ -230,10 +240,8 @@ void KnowledgeBaseNode::delete_all_objects(
 // PDDL PREDICATES
 //***********************
 void KnowledgeBaseNode::get_predicates(
-    const std::shared_ptr<kant_msgs::srv::GetPddlPredicate::Request>
-        request,
-    std::shared_ptr<kant_msgs::srv::GetPddlPredicate::Response>
-        response) {
+    const std::shared_ptr<kant_msgs::srv::GetPddlPredicate::Request> request,
+    std::shared_ptr<kant_msgs::srv::GetPddlPredicate::Response> response) {
 
   if (!request->predicate_name.empty()) {
 
@@ -262,10 +270,8 @@ void KnowledgeBaseNode::get_predicates(
 }
 
 void KnowledgeBaseNode::update_predicate(
-    const std::shared_ptr<kant_msgs::srv::UpdatePddlPredicate::Request>
-        request,
-    std::shared_ptr<kant_msgs::srv::UpdatePddlPredicate::Response>
-        response) {
+    const std::shared_ptr<kant_msgs::srv::UpdatePddlPredicate::Request> request,
+    std::shared_ptr<kant_msgs::srv::UpdatePddlPredicate::Response> response) {
 
   bool succ = false;
 
@@ -297,16 +303,13 @@ void KnowledgeBaseNode::delete_all_predicates(
 // PDDL PROPOSITIONS
 //***********************
 void KnowledgeBaseNode::get_propositions(
-    const std::shared_ptr<kant_msgs::srv::GetPddlProposition::Request>
-        request,
-    std::shared_ptr<kant_msgs::srv::GetPddlProposition::Response>
-        response) {
+    const std::shared_ptr<kant_msgs::srv::GetPddlProposition::Request> request,
+    std::shared_ptr<kant_msgs::srv::GetPddlProposition::Response> response) {
 
   std::vector<std::shared_ptr<kant::dto::PddlPropositionDto>>
       pddl_proposition_dtos;
 
-  if (request->get_type ==
-      kant_msgs::srv::GetPddlProposition::Request::ALL) {
+  if (request->get_type == kant_msgs::srv::GetPddlProposition::Request::ALL) {
 
     pddl_proposition_dtos = this->knowledge_base->get_all_propositions();
 
@@ -338,8 +341,7 @@ void KnowledgeBaseNode::get_propositions(
 void KnowledgeBaseNode::update_proposition(
     const std::shared_ptr<kant_msgs::srv::UpdatePddlProposition::Request>
         request,
-    std::shared_ptr<kant_msgs::srv::UpdatePddlProposition::Response>
-        response) {
+    std::shared_ptr<kant_msgs::srv::UpdatePddlProposition::Response> response) {
 
   bool succ = false;
 
@@ -401,10 +403,8 @@ void KnowledgeBaseNode::get_actions(
 }
 
 void KnowledgeBaseNode::update_action(
-    const std::shared_ptr<kant_msgs::srv::UpdatePddlAction::Request>
-        request,
-    std::shared_ptr<kant_msgs::srv::UpdatePddlAction::Response>
-        response) {
+    const std::shared_ptr<kant_msgs::srv::UpdatePddlAction::Request> request,
+    std::shared_ptr<kant_msgs::srv::UpdatePddlAction::Response> response) {
 
   bool succ = false;
 

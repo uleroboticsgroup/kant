@@ -1,3 +1,17 @@
+// Copyright (C) 2023  Miguel Ángel González Santamarta
+
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include "kant_msgs/msg/update_knowledge.hpp"
 
@@ -13,9 +27,8 @@ Ros2PddlPropositionDao::Ros2PddlPropositionDao(simple_node::Node *node) {
       std::make_unique<kant::knowledge_base::parser::MsgDtoParser>();
 
   // srv clients
-  this->get_client =
-      node->create_client<kant_msgs::srv::GetPddlProposition>(
-          "get_propositions");
+  this->get_client = node->create_client<kant_msgs::srv::GetPddlProposition>(
+      "get_propositions");
 
   this->update_client =
       node->create_client<kant_msgs::srv::UpdatePddlProposition>(
@@ -96,9 +109,9 @@ bool Ros2PddlPropositionDao::ros2_exists(
 std::vector<std::shared_ptr<kant::dto::PddlPropositionDto>>
 Ros2PddlPropositionDao::get_by_predicate(std::string predicate_name) {
 
-  auto pddl_proposition_dto_list = this->ros2_get(
-      kant_msgs::srv::GetPddlProposition::Request::BY_PREDICATE,
-      predicate_name);
+  auto pddl_proposition_dto_list =
+      this->ros2_get(kant_msgs::srv::GetPddlProposition::Request::BY_PREDICATE,
+                     predicate_name);
 
   return pddl_proposition_dto_list;
 }
@@ -106,8 +119,8 @@ Ros2PddlPropositionDao::get_by_predicate(std::string predicate_name) {
 std::vector<std::shared_ptr<kant::dto::PddlPropositionDto>>
 Ros2PddlPropositionDao::get_goals() {
 
-  auto pddl_proposition_dto_list = this->ros2_get(
-      kant_msgs::srv::GetPddlProposition::Request::GOALS, "");
+  auto pddl_proposition_dto_list =
+      this->ros2_get(kant_msgs::srv::GetPddlProposition::Request::GOALS, "");
 
   return pddl_proposition_dto_list;
 }
@@ -115,8 +128,8 @@ Ros2PddlPropositionDao::get_goals() {
 std::vector<std::shared_ptr<kant::dto::PddlPropositionDto>>
 Ros2PddlPropositionDao::get_no_goals() {
 
-  auto pddl_proposition_dto_list = this->ros2_get(
-      kant_msgs::srv::GetPddlProposition::Request::NO_GOALS, "");
+  auto pddl_proposition_dto_list =
+      this->ros2_get(kant_msgs::srv::GetPddlProposition::Request::NO_GOALS, "");
 
   return pddl_proposition_dto_list;
 }
@@ -124,8 +137,8 @@ Ros2PddlPropositionDao::get_no_goals() {
 std::vector<std::shared_ptr<kant::dto::PddlPropositionDto>>
 Ros2PddlPropositionDao::get_all() {
 
-  auto pddl_proposition_dto_list = this->ros2_get(
-      kant_msgs::srv::GetPddlProposition::Request::ALL, "");
+  auto pddl_proposition_dto_list =
+      this->ros2_get(kant_msgs::srv::GetPddlProposition::Request::ALL, "");
 
   return pddl_proposition_dto_list;
 }
