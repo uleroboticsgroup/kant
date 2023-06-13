@@ -13,32 +13,19 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-#ifndef KANT_PDDL_OBJECT_DAO_HPP
-#define KANT_PDDL_OBJECT_DAO_HPP
+#ifndef KANT_DAO_HPP
+#define KANT_DAO_HPP
 
 #include <string>
-
-#include "kant_dao/dao_interface/dao.hpp"
-#include "kant_dto/pddl_object_dto.hpp"
+#include <vector>
 
 namespace kant {
 namespace dao {
 namespace dao_interface {
 
-class PddlObjectDao : Dao {
+class Dao {
 public:
-  virtual std::shared_ptr<kant::dto::PddlObjectDto>
-  get(std::string object_name) = 0;
-  virtual std::vector<std::shared_ptr<kant::dto::PddlObjectDto>> get_all() = 0;
-
-  virtual bool save(std::shared_ptr<kant::dto::PddlObjectDto> pdd_dto) = 0;
-  virtual bool update(std::shared_ptr<kant::dto::PddlObjectDto> pdd_dto) = 0;
-  virtual bool
-  save_update(std::shared_ptr<kant::dto::PddlObjectDto> pdd_dto) = 0;
-
-  virtual bool
-  delete_one(std::shared_ptr<kant::dto::PddlObjectDto> pdd_dto) = 0;
-  virtual bool delete_all() = 0;
+  virtual ~Dao() = default;
 };
 
 } // namespace dao_interface

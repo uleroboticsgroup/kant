@@ -19,13 +19,14 @@
 #include <string>
 #include <vector>
 
+#include "kant_dao/dao_interface/dao.hpp"
 #include "kant_dto/pddl_proposition_dto.hpp"
 
 namespace kant {
 namespace dao {
 namespace dao_interface {
 
-class PddlPropositionDao {
+class PddlPropositionDao : Dao {
 public:
   virtual std::vector<std::shared_ptr<kant::dto::PddlPropositionDto>>
   get_by_predicate(std::string predicate_name) = 0;

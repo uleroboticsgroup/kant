@@ -18,13 +18,14 @@
 
 #include <string>
 
+#include "kant_dao/dao_interface/dao.hpp"
 #include "kant_dto/pddl_type_dto.hpp"
 
 namespace kant {
 namespace dao {
 namespace dao_interface {
 
-class PddlTypeDao {
+class PddlTypeDao : Dao {
 public:
   virtual std::shared_ptr<kant::dto::PddlTypeDto>
   get(std::string type_name) = 0;

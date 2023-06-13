@@ -19,13 +19,14 @@
 #include <string>
 #include <vector>
 
+#include "kant_dao/dao_interface/dao.hpp"
 #include "kant_dto/pddl_action_dto.hpp"
 
 namespace kant {
 namespace dao {
 namespace dao_interface {
 
-class PddlActionDao {
+class PddlActionDao : Dao {
 public:
   virtual std::shared_ptr<kant::dto::PddlActionDto>
   get(std::string action_name) = 0;
