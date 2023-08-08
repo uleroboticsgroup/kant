@@ -1,7 +1,7 @@
 # KANT (Knowledge mAnagemeNT)
 
 <p align="center">
-  <img src="./images/logo.png" width="50%" />
+  <img src="./docs/logo.png" width="50%" />
 </p>
 
 This is a ROS 2 tool to manage PDDL-based knowledge from Python and C++ code. It is based on several software design patterns (DTO, DAO, Factory).
@@ -24,7 +24,7 @@ This is a ROS 2 tool to manage PDDL-based knowledge from Python and C++ code. It
 
 ## Features
 
-![](./images/diagram.png)
+![](./docs/diagram.png)
 
 There are two DAO families implemented:
 
@@ -332,7 +332,7 @@ int main(int argc, char **argv) {
 
 ## Experiments
 
-The In-Memory (ROS2) and MongoDB (MONGO) DAO families have been compared. The results of the performed experiment are presented [here](./Experiments/README.md).
+The In-Memory (ROS2) and MongoDB (MONGO) DAO families have been compared. The results of the performed experiment are presented [here](./experiments/README.md).
 
 ## Citations
 
