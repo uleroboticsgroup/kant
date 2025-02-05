@@ -14,7 +14,7 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 
-""" Knowledge Base """
+"""Knowledge Base"""
 
 from typing import List
 
@@ -24,12 +24,12 @@ from kant_dto import (
     PddlPredicateDto,
     PddlPropositionDto,
     PddlActionDto,
-    PddlConditionEffectDto
+    PddlConditionEffectDto,
 )
 
 
 class KnowledgeBase:
-    """ Knowledge Base Class """
+    """Knowledge Base Class"""
 
     def __init__(self):
         self.types_dict = {}
@@ -40,7 +40,7 @@ class KnowledgeBase:
         self.propositions_list = []
 
     def get_type(self, type_name: str) -> PddlTypeDto:
-        """ get the PddlTypeDto with a given type name
+        """get the PddlTypeDto with a given type name
 
         Args:
             type_name (str): type name
@@ -55,7 +55,7 @@ class KnowledgeBase:
         return None
 
     def get_all_types(self) -> List[PddlTypeDto]:
-        """ get all PddlTypeDto
+        """get all PddlTypeDto
 
         Returns:
             List[PddlTypeDto]: list of PddlTypeDto
@@ -69,7 +69,7 @@ class KnowledgeBase:
         return type_list
 
     def save_type(self, pddl_type_dto: PddlTypeDto) -> bool:
-        """ save or update a pddl type
+        """save or update a pddl type
 
         Args:
             pddl_type_dto (PddlTypeDto): PddlTypeDto
@@ -88,7 +88,7 @@ class KnowledgeBase:
         return True
 
     def delete_type(self, pddl_type_dto: PddlTypeDto) -> bool:
-        """ delete a pddl type
+        """delete a pddl type
             if not exists, returns false
 
         Args:
@@ -128,7 +128,7 @@ class KnowledgeBase:
         return True
 
     def delete_all_types(self) -> bool:
-        """ delete a all pddl types
+        """delete a all pddl types
 
         Returns:
             bool: succeed
@@ -141,7 +141,7 @@ class KnowledgeBase:
         return True
 
     def get_object(self, object_name: str) -> PddlObjectDto:
-        """ get the PddlObjectDto with a given object name
+        """get the PddlObjectDto with a given object name
 
         Args:
             object_name (str): object name
@@ -156,7 +156,7 @@ class KnowledgeBase:
         return None
 
     def get_all_objects(self) -> List[PddlObjectDto]:
-        """ get all PddlObjectDto
+        """get all PddlObjectDto
 
         Returns:
             List[PddlObjectDto]: list of PddlObjectDto
@@ -170,7 +170,7 @@ class KnowledgeBase:
         return object_list
 
     def save_object(self, pddl_object_dto: PddlObjectDto) -> bool:
-        """ save or update a pddl object
+        """save or update a pddl object
 
         Args:
             pddl_object_dto (PddlObjectDto): PddlObjectDto
@@ -185,8 +185,7 @@ class KnowledgeBase:
 
         object_name = pddl_object_dto.get_name()
 
-        pddl_object_dto.set_type(self.get_type(
-            pddl_object_dto.get_type().get_name()))
+        pddl_object_dto.set_type(self.get_type(pddl_object_dto.get_type().get_name()))
 
         if not object_name in self.objects_dict:
             self.objects_dict[object_name] = pddl_object_dto
@@ -197,7 +196,7 @@ class KnowledgeBase:
         return True
 
     def delete_object(self, pddl_object_dto: PddlObjectDto) -> bool:
-        """ delete a pddl object
+        """delete a pddl object
             if not exists, returns false
 
         Args:
@@ -224,7 +223,7 @@ class KnowledgeBase:
         return True
 
     def delete_all_objects(self) -> bool:
-        """ delete a all pddl objects
+        """delete a all pddl objects
 
         Returns:
             bool: succeed
@@ -237,7 +236,7 @@ class KnowledgeBase:
         return True
 
     def get_predicate(self, predicate_name: str) -> PddlPredicateDto:
-        """ get the PddlPredicateDto with a given predicate name
+        """get the PddlPredicateDto with a given predicate name
 
         Args:
             predicate_name (str): predicate name
@@ -252,7 +251,7 @@ class KnowledgeBase:
         return None
 
     def get_all_predicates(self) -> List[PddlPredicateDto]:
-        """ get all PddlPredicateDto
+        """get all PddlPredicateDto
 
         Returns:
             List[PddlPredicateDto]: list of PddlPredicateDto
@@ -266,7 +265,7 @@ class KnowledgeBase:
         return predicate_list
 
     def save_predicate(self, pddl_predicate_dto: PddlPredicateDto) -> bool:
-        """ save or update a pddl predicate
+        """save or update a pddl predicate
 
         Args:
             pddl_predicate_dto (PddlPredicateDto): PddlPredicateDto
@@ -281,18 +280,16 @@ class KnowledgeBase:
             if not self.save_type(pddl_type_dto):
                 return False
 
-            pddl_type_dto_list.append(self.get_type(
-                pddl_type_dto.get_name()))
+            pddl_type_dto_list.append(self.get_type(pddl_type_dto.get_name()))
 
         pddl_predicate_dto.set_types(pddl_type_dto_list)
 
-        self.predicates_dict[pddl_predicate_dto.get_name(
-        )] = pddl_predicate_dto
+        self.predicates_dict[pddl_predicate_dto.get_name()] = pddl_predicate_dto
 
         return True
 
     def delete_predicate(self, pddl_predicate_dto: PddlPredicateDto) -> bool:
-        """ delete a pddl predicate
+        """delete a pddl predicate
             if not exists, returns false
 
         Args:
@@ -312,8 +309,9 @@ class KnowledgeBase:
                     return False
 
         for pddl_action_dto in self.get_all_actions():
-            for pddl_condi_effect_dto in (pddl_action_dto.get_conditions() +
-                                          pddl_action_dto.get_effects()):
+            for pddl_condi_effect_dto in (
+                pddl_action_dto.get_conditions() + pddl_action_dto.get_effects()
+            ):
                 if pddl_condi_effect_dto.get_predicate() == pddl_predicate_dto:
                     if not self.delete_action(pddl_action_dto):
                         return False
@@ -325,7 +323,7 @@ class KnowledgeBase:
         return True
 
     def delete_all_predicates(self) -> bool:
-        """ delete a all pddl predicates
+        """delete a all pddl predicates
 
         Returns:
             bool: succeed
@@ -338,7 +336,7 @@ class KnowledgeBase:
         return True
 
     def get_action(self, action_name: str) -> PddlActionDto:
-        """ get the PddlActionDto with a given action name
+        """get the PddlActionDto with a given action name
 
         Args:
             action_name (str): action name
@@ -353,7 +351,7 @@ class KnowledgeBase:
         return None
 
     def get_all_actions(self) -> List[PddlActionDto]:
-        """ get all PddlActionDto
+        """get all PddlActionDto
 
         Returns:
             List[PddlActionDto]: list of PddlActionDto
@@ -366,10 +364,12 @@ class KnowledgeBase:
 
         return action_list
 
-    def _propagate_condition_effect_save(self,
-                                         pddl_condi_effect_dto: PddlConditionEffectDto,
-                                         pddl_action_dto: PddlActionDto) -> bool:
-        """ propagate saving of conditions/effects and check if they are correct.
+    def _propagate_condition_effect_save(
+        self,
+        pddl_condi_effect_dto: PddlConditionEffectDto,
+        pddl_action_dto: PddlActionDto,
+    ) -> bool:
+        """propagate saving of conditions/effects and check if they are correct.
             a condition/effect is correct if its objects types are the same as the
             types of its predicate, if its objects are action parameters, and if the time
             and durative are correct
@@ -384,9 +384,9 @@ class KnowledgeBase:
         # checking condition/effect
 
         # checking time and durative
-        if (not pddl_action_dto.get_durative() and pddl_condi_effect_dto.get_time()):
+        if not pddl_action_dto.get_durative() and pddl_condi_effect_dto.get_time():
             return False
-        elif (pddl_action_dto.get_durative() and not pddl_condi_effect_dto.get_time()):
+        elif pddl_action_dto.get_durative() and not pddl_condi_effect_dto.get_time():
             return False
 
         # checking objects
@@ -398,7 +398,9 @@ class KnowledgeBase:
             return False
 
         # checking types and parameters
-        for pddl_object_dto, pddl_type_dto in zip(pddl_object_dto_list, pddl_type_dto_list):
+        for pddl_object_dto, pddl_type_dto in zip(
+            pddl_object_dto_list, pddl_type_dto_list
+        ):
 
             if pddl_object_dto.get_type() != pddl_type_dto:
                 return False
@@ -409,14 +411,14 @@ class KnowledgeBase:
         # propagating saving of condition/effect
 
         # condition/effect predicate
-        succ = self.save_predicate(
-            pddl_condi_effect_dto.get_predicate())
+        succ = self.save_predicate(pddl_condi_effect_dto.get_predicate())
 
         if not succ:
             return False
 
-        pddl_condi_effect_dto.set_predicate(self.get_predicate(
-            pddl_condi_effect_dto.get_predicate().get_name()))
+        pddl_condi_effect_dto.set_predicate(
+            self.get_predicate(pddl_condi_effect_dto.get_predicate().get_name())
+        )
 
         # condition/effect objects
         for pddl_object_dto in pddl_object_dto_list:
@@ -425,13 +427,12 @@ class KnowledgeBase:
             if not succ:
                 return False
 
-            pddl_object_dto.set_type(self.get_type(
-                pddl_object_dto.get_type().get_name()))
+            pddl_object_dto.set_type(self.get_type(pddl_object_dto.get_type().get_name()))
 
         return True
 
     def save_action(self, pddl_action_dto: PddlActionDto) -> bool:
-        """ save or update a pddl action
+        """save or update a pddl action
 
         Args:
             pddl_action_dto (PddlActionDto): PddlActionDto
@@ -445,23 +446,25 @@ class KnowledgeBase:
             if not self.save_type(pddl_parameter_dto.get_type()):
                 return False
 
-            pddl_parameter_dto.set_type(self.get_type(
-                pddl_parameter_dto.get_type().get_name()))
+            pddl_parameter_dto.set_type(
+                self.get_type(pddl_parameter_dto.get_type().get_name())
+            )
 
         # conditions and effects
-        for pddl_condi_effect_dto in (pddl_action_dto.get_conditions() +
-                                      pddl_action_dto.get_effects()):
+        for pddl_condi_effect_dto in (
+            pddl_action_dto.get_conditions() + pddl_action_dto.get_effects()
+        ):
             if not self._propagate_condition_effect_save(
-                    pddl_condi_effect_dto, pddl_action_dto):
+                pddl_condi_effect_dto, pddl_action_dto
+            ):
                 return False
 
-        self.actions_dict[pddl_action_dto.get_name(
-        )] = pddl_action_dto
+        self.actions_dict[pddl_action_dto.get_name()] = pddl_action_dto
 
         return True
 
     def delete_action(self, pddl_action_dto: PddlActionDto) -> bool:
-        """ delete a pddl action
+        """delete a pddl action
             if not exists, returns false
 
         Args:
@@ -479,7 +482,7 @@ class KnowledgeBase:
         return True
 
     def delete_all_actions(self) -> bool:
-        """ delete a all pddl actions
+        """delete a all pddl actions
 
         Returns:
             bool: succeed
@@ -490,7 +493,7 @@ class KnowledgeBase:
         return True
 
     def get_propositions(self, predicate_name: str) -> List[PddlPropositionDto]:
-        """ get the PddlPropositionDto with a given predicate name
+        """get the PddlPropositionDto with a given predicate name
 
         Args:
             action_name (str): action name
@@ -508,7 +511,7 @@ class KnowledgeBase:
         return proposition_list
 
     def get_propositions_goals(self) -> List[PddlPropositionDto]:
-        """ get all goal PddlPropositionDto
+        """get all goal PddlPropositionDto
 
         Returns:
             List[PddlPropositionDto]: list of PddlPropositionDto
@@ -517,7 +520,7 @@ class KnowledgeBase:
         return self.goals_list
 
     def get_propositions_no_goals(self) -> List[PddlPropositionDto]:
-        """ get all no goal PddlPropositionDto
+        """get all no goal PddlPropositionDto
 
         Returns:
             List[PddlPropositionDto]: list of PddlPropositionDto
@@ -526,7 +529,7 @@ class KnowledgeBase:
         return self.propositions_list
 
     def get_all_propositions(self) -> List[PddlPropositionDto]:
-        """ get all PddlPropositionDto
+        """get all PddlPropositionDto
 
         Returns:
             List[PddlPropositionDto]: list of PddlPropositionDto
@@ -535,7 +538,7 @@ class KnowledgeBase:
         return self.goals_list + self.propositions_list
 
     def _check_proposition(self, pddl_proposition_dto: PddlPropositionDto) -> bool:
-        """ check if a proposition (of condition/effect) is correct
+        """check if a proposition (of condition/effect) is correct
             comparing the types of its objects with the types of its
             predicate
 
@@ -552,14 +555,16 @@ class KnowledgeBase:
         if len(pddl_object_dto_list) != len(pddl_type_dto_list):
             return False
 
-        for pddl_object_dto, pddl_type_dto in zip(pddl_object_dto_list, pddl_type_dto_list):
+        for pddl_object_dto, pddl_type_dto in zip(
+            pddl_object_dto_list, pddl_type_dto_list
+        ):
             if pddl_object_dto.get_type() != pddl_type_dto:
                 return False
 
         return True
 
     def save_proposition(self, pddl_proposition_dto: PddlPropositionDto) -> bool:
-        """ save or update a pddl action
+        """save or update a pddl action
 
         Args:
             pddl_proposition_dto (PddlPropositionDto): PddlPropositionDto
@@ -573,20 +578,19 @@ class KnowledgeBase:
 
         # propagating saving
 
-        if not self.save_predicate(
-                pddl_proposition_dto.get_predicate()):
+        if not self.save_predicate(pddl_proposition_dto.get_predicate()):
             return False
 
-        pddl_proposition_dto.set_predicate(self.get_predicate(
-            pddl_proposition_dto.get_predicate().get_name()))
+        pddl_proposition_dto.set_predicate(
+            self.get_predicate(pddl_proposition_dto.get_predicate().get_name())
+        )
 
         pddl_object_dto_list = []
         for pddl_object_dto in pddl_proposition_dto.get_objects():
             if not self.save_object(pddl_object_dto):
                 return False
 
-            pddl_object_dto_list.append(self.get_object(
-                pddl_object_dto.get_name()))
+            pddl_object_dto_list.append(self.get_object(pddl_object_dto.get_name()))
 
         pddl_proposition_dto.set_objects(pddl_object_dto_list)
 
@@ -599,7 +603,7 @@ class KnowledgeBase:
         return True
 
     def delete_proposition(self, pddl_proposition_dto: PddlPropositionDto) -> bool:
-        """ delete a pddl proposition
+        """delete a pddl proposition
             if not exists, returns false
 
         Args:
@@ -624,7 +628,7 @@ class KnowledgeBase:
         return True
 
     def delete_all_propositions(self) -> bool:
-        """ delete a all pddl propositions
+        """delete a all pddl propositions
 
         Returns:
             bool: succeed

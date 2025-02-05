@@ -14,7 +14,7 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 
-""" Ros2 Dao Facory """
+"""Ros2 Dao Factory"""
 
 from rclpy.node import Node
 
@@ -23,20 +23,20 @@ from kant_dao.ros2_dao import (
     Ros2PddlObjectDao,
     Ros2PddlPredicateDao,
     Ros2PddlPropositionDao,
-    Ros2PddlActionDao
+    Ros2PddlActionDao,
 )
 
 from kant_dao.dao_factory.dao_factories.dao_factory import DaoFactory
 
 
 class Ros2DaoFactory(DaoFactory):
-    """ Ros2 Dao Facory Class """
+    """Ros2 Dao Factory Class"""
 
     def __init__(self, node: Node):
         self.set_node(node)
 
     def get_node(self) -> Node:
-        """ node getter
+        """node getter
 
         Returns:
             None: node
@@ -45,7 +45,7 @@ class Ros2DaoFactory(DaoFactory):
         return self._node
 
     def set_node(self, node: Node):
-        """ node setter
+        """node setter
 
         Args:
             node (None): Node
@@ -54,7 +54,7 @@ class Ros2DaoFactory(DaoFactory):
         self._node = node
 
     def create_pddl_type_dao(self) -> Ros2PddlTypeDao:
-        """ create a kant dao type object
+        """create a kant dao type object
 
         Returns:
             Ros2PddlTypeDao: kant dao for pddl type
@@ -63,7 +63,7 @@ class Ros2DaoFactory(DaoFactory):
         return Ros2PddlTypeDao(self._node)
 
     def create_pddl_predicate_dao(self) -> Ros2PddlPredicateDao:
-        """ create a kant dao predicate object
+        """create a kant dao predicate object
 
         Returns:
             Ros2PddlPredicateDao: kant dao for pddl predicate
@@ -72,7 +72,7 @@ class Ros2DaoFactory(DaoFactory):
         return Ros2PddlPredicateDao(self._node)
 
     def create_pddl_action_dao(self) -> Ros2PddlActionDao:
-        """ create a kant dao action object
+        """create a kant dao action object
 
         Returns:
             Ros2PddlActionDao: kant dao for pddl action
@@ -81,7 +81,7 @@ class Ros2DaoFactory(DaoFactory):
         return Ros2PddlActionDao(self._node)
 
     def create_pddl_object_dao(self) -> Ros2PddlObjectDao:
-        """ create a kant dao object object
+        """create a kant dao object object
 
         Returns:
             Ros2PddlObjectDao: kant dao for pddl object
@@ -90,7 +90,7 @@ class Ros2DaoFactory(DaoFactory):
         return Ros2PddlObjectDao(self._node)
 
     def create_pddl_proposition_dao(self) -> Ros2PddlPropositionDao:
-        """ create a kant dao proposition object
+        """create a kant dao proposition object
 
         Returns:
             Ros2PddlPropositionDao: kant dao for pddl proposition

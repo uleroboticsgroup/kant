@@ -23,7 +23,7 @@ from kant_dto import (
     PddlPredicateDto,
     PddlPropositionDto,
     PddlConditionEffectDto,
-    PddlActionDto
+    PddlActionDto,
 )
 
 
@@ -43,39 +43,37 @@ class TestDtoMsgParser(unittest.TestCase):
         self.wp2 = PddlObjectDto(self.wp_type, "wp2")
 
         # predicates
-        self.robot_at = PddlPredicateDto(
-            "robot_at", [self.robot_type, self.wp_type])
-        self.wp_checked = PddlPredicateDto(
-            "wp_checked", [self.robot_type, self.wp_type])
+        self.robot_at = PddlPredicateDto("robot_at", [self.robot_type, self.wp_type])
+        self.wp_checked = PddlPredicateDto("wp_checked", [self.robot_type, self.wp_type])
 
         # propositions
-        self.rb1_robot_at = PddlPropositionDto(
-            self.robot_at, [self.rb1, self.wp1])
+        self.rb1_robot_at = PddlPropositionDto(self.robot_at, [self.rb1, self.wp1])
 
         # goals
         self.rb1_wp2_wp_checked_goal = PddlPropositionDto(
-            self.wp_checked, [self.rb1, self.wp2], is_goal=True)
+            self.wp_checked, [self.rb1, self.wp2], is_goal=True
+        )
 
         # actions
         r = PddlObjectDto(self.robot_type, "r")
         s = PddlObjectDto(self.wp_type, "s")
         d = PddlObjectDto(self.wp_type, "d")
 
-        condition_1 = PddlConditionEffectDto(self.robot_at,
-                                             [r, s],
-                                             time=PddlConditionEffectDto.AT_START)
+        condition_1 = PddlConditionEffectDto(
+            self.robot_at, [r, s], time=PddlConditionEffectDto.AT_START
+        )
 
-        effect_1 = PddlConditionEffectDto(self.robot_at,
-                                          [r, s],
-                                          time=PddlConditionEffectDto.AT_START,
-                                          is_negative=True)
+        effect_1 = PddlConditionEffectDto(
+            self.robot_at, [r, s], time=PddlConditionEffectDto.AT_START, is_negative=True
+        )
 
-        effect_2 = PddlConditionEffectDto(self.robot_at,
-                                          [r, d],
-                                          time=PddlConditionEffectDto.AT_END)
+        effect_2 = PddlConditionEffectDto(
+            self.robot_at, [r, d], time=PddlConditionEffectDto.AT_END
+        )
 
         self.navigation_action = PddlActionDto(
-            "navigation", [r, s, d], [condition_1], [effect_1, effect_2])
+            "navigation", [r, s, d], [condition_1], [effect_1, effect_2]
+        )
 
     def test_parse_type(self):
         msg = self.parser.type_dto_to_msg(self.robot_type)
@@ -120,43 +118,28 @@ class TestDtoMsgParser(unittest.TestCase):
         self.assertEqual("d", msg.parameters[2].name)
         self.assertEqual("wp", msg.parameters[2].type.name)
 
-        self.assertEqual(
-            "robot_at", msg.coditions[0].predicate.name)
+        self.assertEqual("robot_at", msg.coditions[0].predicate.name)
         self.assertFalse(msg.coditions[0].is_negative)
-        self.assertEqual(
-            "r", msg.coditions[0].objects[0].name)
-        self.assertEqual(
-            "robot", msg.coditions[0].objects[0].type.name)
-        self.assertEqual(
-            "s", msg.coditions[0].objects[1].name)
-        self.assertEqual(
-            "wp", msg.coditions[0].objects[1].type.name)
+        self.assertEqual("r", msg.coditions[0].objects[0].name)
+        self.assertEqual("robot", msg.coditions[0].objects[0].type.name)
+        self.assertEqual("s", msg.coditions[0].objects[1].name)
+        self.assertEqual("wp", msg.coditions[0].objects[1].type.name)
         self.assertEqual("at start", msg.coditions[0].time)
 
-        self.assertEqual(
-            "robot_at", msg.effects[0].predicate.name)
+        self.assertEqual("robot_at", msg.effects[0].predicate.name)
         self.assertTrue(msg.effects[0].is_negative)
-        self.assertEqual(
-            "r", msg.effects[0].objects[0].name)
-        self.assertEqual(
-            "robot", msg.effects[0].objects[0].type.name)
-        self.assertEqual(
-            "s", msg.effects[0].objects[1].name)
-        self.assertEqual(
-            "wp", msg.effects[0].objects[1].type.name)
+        self.assertEqual("r", msg.effects[0].objects[0].name)
+        self.assertEqual("robot", msg.effects[0].objects[0].type.name)
+        self.assertEqual("s", msg.effects[0].objects[1].name)
+        self.assertEqual("wp", msg.effects[0].objects[1].type.name)
         self.assertEqual("at start", msg.effects[0].time)
 
-        self.assertEqual(
-            "robot_at", msg.effects[1].predicate.name)
+        self.assertEqual("robot_at", msg.effects[1].predicate.name)
         self.assertFalse(msg.effects[1].is_negative)
-        self.assertEqual(
-            "r", msg.effects[1].objects[0].name)
-        self.assertEqual(
-            "robot", msg.effects[1].objects[0].type.name)
-        self.assertEqual(
-            "d", msg.effects[1].objects[1].name)
-        self.assertEqual(
-            "wp", msg.effects[1].objects[1].type.name)
+        self.assertEqual("r", msg.effects[1].objects[0].name)
+        self.assertEqual("robot", msg.effects[1].objects[0].type.name)
+        self.assertEqual("d", msg.effects[1].objects[1].name)
+        self.assertEqual("wp", msg.effects[1].objects[1].type.name)
         self.assertEqual("at end", msg.effects[1].time)
 
     def test_parse_action(self):
@@ -178,41 +161,26 @@ class TestDtoMsgParser(unittest.TestCase):
         self.assertEqual("d", msg.parameters[2].name)
         self.assertEqual("wp", msg.parameters[2].type.name)
 
-        self.assertEqual(
-            "robot_at", msg.coditions[0].predicate.name)
+        self.assertEqual("robot_at", msg.coditions[0].predicate.name)
         self.assertFalse(msg.coditions[0].is_negative)
-        self.assertEqual(
-            "r", msg.coditions[0].objects[0].name)
-        self.assertEqual(
-            "robot", msg.coditions[0].objects[0].type.name)
-        self.assertEqual(
-            "s", msg.coditions[0].objects[1].name)
-        self.assertEqual(
-            "wp", msg.coditions[0].objects[1].type.name)
+        self.assertEqual("r", msg.coditions[0].objects[0].name)
+        self.assertEqual("robot", msg.coditions[0].objects[0].type.name)
+        self.assertEqual("s", msg.coditions[0].objects[1].name)
+        self.assertEqual("wp", msg.coditions[0].objects[1].type.name)
         self.assertEqual("", msg.coditions[0].time)
 
-        self.assertEqual(
-            "robot_at", msg.effects[0].predicate.name)
+        self.assertEqual("robot_at", msg.effects[0].predicate.name)
         self.assertTrue(msg.effects[0].is_negative)
-        self.assertEqual(
-            "r", msg.effects[0].objects[0].name)
-        self.assertEqual(
-            "robot", msg.effects[0].objects[0].type.name)
-        self.assertEqual(
-            "s", msg.effects[0].objects[1].name)
-        self.assertEqual(
-            "wp", msg.effects[0].objects[1].type.name)
+        self.assertEqual("r", msg.effects[0].objects[0].name)
+        self.assertEqual("robot", msg.effects[0].objects[0].type.name)
+        self.assertEqual("s", msg.effects[0].objects[1].name)
+        self.assertEqual("wp", msg.effects[0].objects[1].type.name)
         self.assertEqual("", msg.effects[0].time)
 
-        self.assertEqual(
-            "robot_at", msg.effects[1].predicate.name)
+        self.assertEqual("robot_at", msg.effects[1].predicate.name)
         self.assertFalse(msg.effects[1].is_negative)
-        self.assertEqual(
-            "r", msg.effects[1].objects[0].name)
-        self.assertEqual(
-            "robot", msg.effects[1].objects[0].type.name)
-        self.assertEqual(
-            "d", msg.effects[1].objects[1].name)
-        self.assertEqual(
-            "wp", msg.effects[1].objects[1].type.name)
+        self.assertEqual("r", msg.effects[1].objects[0].name)
+        self.assertEqual("robot", msg.effects[1].objects[0].type.name)
+        self.assertEqual("d", msg.effects[1].objects[1].name)
+        self.assertEqual("wp", msg.effects[1].objects[1].type.name)
         self.assertEqual("", msg.effects[1].time)

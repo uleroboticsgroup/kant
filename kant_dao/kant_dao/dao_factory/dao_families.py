@@ -14,13 +14,13 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 
-""" Dao Familis Enumeration """
+"""Dao Familis Enumeration"""
 
 from enum import IntEnum, auto
 
 
 class DaoFamilies(IntEnum):
-    """ Enum Class of Dao Families """
+    """Enum Class of Dao Families"""
 
     def _generate_next_value_(self, _start, count, _last_values):
         """Generate consecutive automatic numbers starting from zero."""

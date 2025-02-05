@@ -14,7 +14,7 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 
-""" Dao Facory Interface """
+"""Dao Factory Interface"""
 
 from abc import ABC, abstractmethod
 from kant_dao.dao_interface import (
@@ -22,16 +22,16 @@ from kant_dao.dao_interface import (
     PddlObjectDao,
     PddlPredicateDao,
     PddlPropositionDao,
-    PddlActionDao
+    PddlActionDao,
 )
 
 
 class DaoFactory(ABC):
-    """ Dao Facory Abstract Class """
+    """Dao Factory Abstract Class"""
 
     @abstractmethod
     def create_pddl_type_dao(self) -> PddlTypeDao:
-        """ create a pddl dao type object
+        """create a pddl dao type object
 
         Returns:
             PddlTypeDao: dao for pddl type
@@ -39,7 +39,7 @@ class DaoFactory(ABC):
 
     @abstractmethod
     def create_pddl_predicate_dao(self) -> PddlPredicateDao:
-        """ create a pddl dao predicate object
+        """create a pddl dao predicate object
 
         Returns:
             PddlPredicateDao: dao for pddl predicate
@@ -47,7 +47,7 @@ class DaoFactory(ABC):
 
     @abstractmethod
     def create_pddl_action_dao(self) -> PddlActionDao:
-        """ create a pddl dao action object
+        """create a pddl dao action object
 
         Returns:
             PddlActionDao: dao for pddl action
@@ -55,7 +55,7 @@ class DaoFactory(ABC):
 
     @abstractmethod
     def create_pddl_object_dao(self) -> PddlObjectDao:
-        """ create a pddl dao object object
+        """create a pddl dao object object
 
         Returns:
             PddlObjectDao: dao for pddl object
@@ -63,7 +63,7 @@ class DaoFactory(ABC):
 
     @abstractmethod
     def create_pddl_proposition_dao(self) -> PddlPropositionDao:
-        """ create a pddl dao type object
+        """create a pddl dao type object
 
         Returns:
             PddlPropositionDao: dao for pddl proposition

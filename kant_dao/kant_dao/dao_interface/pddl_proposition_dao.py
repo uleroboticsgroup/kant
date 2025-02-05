@@ -14,7 +14,7 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 
-""" Pddl Proposition Dao Interface """
+"""Pddl Proposition Dao Interface"""
 
 from abc import abstractmethod
 from typing import List
@@ -23,11 +23,11 @@ from kant_dao.dao_interface import Dao
 
 
 class PddlPropositionDao(Dao):
-    """ Pddl Proposition Dao Abstract Class """
+    """Pddl Proposition Dao Abstract Class"""
 
     @abstractmethod
     def get_by_predicate(self, predicate_name: str) -> List[PddlPropositionDto]:
-        """ get all PddlPropositionDto with a given pddl predicate name
+        """get all PddlPropositionDto with a given pddl predicate name
 
         Args:
             predicate_name (str): pddl predicate name
@@ -38,7 +38,7 @@ class PddlPropositionDao(Dao):
 
     @abstractmethod
     def get_goals(self) -> List[PddlPropositionDto]:
-        """ get all PddlPropositionDto that are goals
+        """get all PddlPropositionDto that are goals
 
         Returns:
             List[PddlPropositionDto]: list of PddlPropositionDto
@@ -46,7 +46,7 @@ class PddlPropositionDao(Dao):
 
     @abstractmethod
     def get_no_goals(self) -> List[PddlPropositionDto]:
-        """ get all PddlPropositionDto that are not goals
+        """get all PddlPropositionDto that are not goals
 
         Returns:
             List[PddlPropositionDto]: list of PddlPropositionDto
@@ -54,7 +54,7 @@ class PddlPropositionDao(Dao):
 
     @abstractmethod
     def get_all(self) -> List[PddlPropositionDto]:
-        """ get all PddlPropositionDto
+        """get all PddlPropositionDto
 
         Returns:
             List[PddlPropositionDto]: list of PddlPropositionDto

@@ -14,7 +14,7 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 
-""" Dto Msg Parser """
+"""Dto Msg Parser"""
 
 from kant_msgs.msg import PddlType
 from kant_msgs.msg import PddlObject
@@ -29,15 +29,15 @@ from kant_dto import (
     PddlPredicateDto,
     PddlPropositionDto,
     PddlConditionEffectDto,
-    PddlActionDto
+    PddlActionDto,
 )
 
 
 class DtoMsgParser:
-    """ Dto Msg Parser Class """
+    """Dto Msg Parser Class"""
 
     def type_dto_to_msg(self, pddl_type_dto: PddlTypeDto) -> PddlType:
-        """ convert a PddlTypeDto into a PddlType msg
+        """convert a PddlTypeDto into a PddlType msg
 
         Args:
             pddl_type_dto (PddlTypeDto): PddlTypeDto
@@ -53,7 +53,7 @@ class DtoMsgParser:
         return msg
 
     def object_dto_to_msg(self, pddl_object_dto: PddlObjectDto) -> PddlObject:
-        """ convert a PddlObjectDto into a PddlObject msg
+        """convert a PddlObjectDto into a PddlObject msg
 
         Args:
             pddl_object_dto (PddlObjectDto): PddlObjectDto
@@ -70,7 +70,7 @@ class DtoMsgParser:
         return msg
 
     def predicate_dto_to_msg(self, pddl_predicate_dto: PddlPredicateDto) -> PddlPredicate:
-        """ convert a PddlPredicateDto into a PddlPredicate msg
+        """convert a PddlPredicateDto into a PddlPredicate msg
 
         Args:
             pddl_predicate_dto (PddlPredicateDto): PddlPredicateDto
@@ -89,8 +89,10 @@ class DtoMsgParser:
 
         return msg
 
-    def proposition_dto_to_msg(self, pddl_proposition_dto: PddlPropositionDto) -> PddlProposition:
-        """ convert a PddlPropositionDto into a PddlProposition msg
+    def proposition_dto_to_msg(
+        self, pddl_proposition_dto: PddlPropositionDto
+    ) -> PddlProposition:
+        """convert a PddlPropositionDto into a PddlProposition msg
 
         Args:
             pddl_proposition_dto (PddlPropositionDto): PddlPropositionDto
@@ -101,8 +103,7 @@ class DtoMsgParser:
 
         msg = PddlProposition()
 
-        msg.predicate = self.predicate_dto_to_msg(
-            pddl_proposition_dto.get_predicate())
+        msg.predicate = self.predicate_dto_to_msg(pddl_proposition_dto.get_predicate())
 
         msg.is_goal = pddl_proposition_dto.get_is_goal()
 
@@ -112,10 +113,10 @@ class DtoMsgParser:
 
         return msg
 
-    def condition_effect_dto_to_msg(self,
-                                    pddl_condition_effect_dto:
-                                        PddlConditionEffectDto) -> PddlConditionEffect:
-        """ convert a PddlConditionEffectDto into a PddlConditionEffect msg
+    def condition_effect_dto_to_msg(
+        self, pddl_condition_effect_dto: PddlConditionEffectDto
+    ) -> PddlConditionEffect:
+        """convert a PddlConditionEffectDto into a PddlConditionEffect msg
 
         Args:
             pddl_condition_effect_dto (PddlConditionEffectDto): PddlConditionEffectDto
@@ -127,7 +128,8 @@ class DtoMsgParser:
         msg = PddlConditionEffect()
 
         msg.predicate = self.predicate_dto_to_msg(
-            pddl_condition_effect_dto.get_predicate())
+            pddl_condition_effect_dto.get_predicate()
+        )
 
         msg.is_negative = pddl_condition_effect_dto.get_is_negative()
         msg.time = pddl_condition_effect_dto.get_time()
@@ -139,7 +141,7 @@ class DtoMsgParser:
         return msg
 
     def action_dto_to_msg(self, pddl_action_dto: PddlActionDto) -> PddlAction:
-        """ convert a PddlActionDto into a PddlAction msg
+        """convert a PddlActionDto into a PddlAction msg
 
         Args:
             pddl_action_dto (PddlActionDto): PddlActionDto
@@ -160,12 +162,10 @@ class DtoMsgParser:
 
         msg.coditions = []
         for pddl_condition_dto in pddl_action_dto.get_conditions():
-            msg.coditions.append(
-                self.condition_effect_dto_to_msg(pddl_condition_dto))
+            msg.coditions.append(self.condition_effect_dto_to_msg(pddl_condition_dto))
 
         msg.effects = []
         for pddl_effect_dto in pddl_action_dto.get_effects():
-            msg.effects.append(
-                self.condition_effect_dto_to_msg(pddl_effect_dto))
+            msg.effects.append(self.condition_effect_dto_to_msg(pddl_effect_dto))
 
         return msg

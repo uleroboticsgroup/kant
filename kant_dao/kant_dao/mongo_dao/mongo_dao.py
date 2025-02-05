@@ -14,7 +14,7 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 
-""" Mongo Dao Interface """
+"""Mongo Dao Interface"""
 
 from abc import ABC, abstractmethod
 from mongoengine import Document, disconnect, connect
@@ -22,20 +22,19 @@ from kant_dto import Dto
 
 
 class MongoDao(ABC):
-    """ Mongo Dao Abstract Class """
+    """Mongo Dao Abstract Class"""
 
     def __init__(self, uri: str = "mongodb://localhost:27017/kant"):
         self.set_uri(uri)
 
     def connect(self):
-        """ connect to current uri
-        """
+        """connect to current uri"""
 
         disconnect()
         connect(host=self._uri)
 
     def get_uri(self) -> str:
-        """ uri getter
+        """uri getter
 
         Returns:
             str: Mongo uri
@@ -44,7 +43,7 @@ class MongoDao(ABC):
         return self._uri
 
     def set_uri(self, uri: str):
-        """ uri setter
+        """uri setter
 
         Args:
             uri (str): Mongo uri
@@ -54,7 +53,7 @@ class MongoDao(ABC):
 
     @abstractmethod
     def _get_model(self, dto: Dto) -> Document:
-        """ get the Mongoengine document corresponding to a give Dto
+        """get the Mongoengine document corresponding to a give Dto
 
         Args:
             dto (Dto): Dto
@@ -65,7 +64,7 @@ class MongoDao(ABC):
 
     @abstractmethod
     def _model_to_dto(self, pddl_mongoengine: Document) -> Dto:
-        """ convert a Mongoengine document into a Dto
+        """convert a Mongoengine document into a Dto
 
         Args:
             pddl_mongoengine (Document): Mongoengine document
@@ -76,7 +75,7 @@ class MongoDao(ABC):
 
     @abstractmethod
     def _dto_to_model(self, dto: Dto) -> Document:
-        """ convert a Dto into a Mongoengine document
+        """convert a Dto into a Mongoengine document
 
         Args:
             dto (Dto): Dto
@@ -87,7 +86,7 @@ class MongoDao(ABC):
 
     @abstractmethod
     def _exist_in_mongo(self, dto: Dto) -> bool:
-        """ check if Dto exists
+        """check if Dto exists
 
         Args:
             dto (Dto): Dto

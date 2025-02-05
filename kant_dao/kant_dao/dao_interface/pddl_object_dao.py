@@ -14,7 +14,7 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 
-""" Pddl Object Dao Interface """
+"""Pddl Object Dao Interface"""
 
 from abc import abstractmethod
 from kant_dto import PddlObjectDto
@@ -22,11 +22,11 @@ from kant_dao.dao_interface import Dao
 
 
 class PddlObjectDao(Dao):
-    """ Pddl Object Dao Interface Abstract Class"""
+    """Pddl Object Dao Interface Abstract Class"""
 
     @abstractmethod
     def get(self, object_name: str) -> PddlObjectDto:
-        """ get a PddlObjectDto with a given object name
+        """get a PddlObjectDto with a given object name
             return None if there is no pddl with that object name
 
         Args:

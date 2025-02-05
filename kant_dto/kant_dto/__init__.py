@@ -1,4 +1,3 @@
-
 from kant_dto.dto import Dto
 from kant_dto.pddl_type_dto import PddlTypeDto
 from kant_dto.pddl_object_dto import PddlObjectDto

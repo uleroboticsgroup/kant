@@ -1,4 +1,3 @@
-
 from kant_dao.ros2_dao.ros2_pddl_type_dao import Ros2PddlTypeDao
 from kant_dao.ros2_dao.ros2_pddl_object_dao import Ros2PddlObjectDao
 from kant_dao.ros2_dao.ros2_pddl_predicate_dao import Ros2PddlPredicateDao

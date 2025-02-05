@@ -14,7 +14,7 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 
-""" Pddl Predicate Dto """
+"""Pddl Predicate Dto"""
 
 from typing import List
 from kant_dto.dto import Dto
@@ -22,7 +22,7 @@ from kant_dto.pddl_type_dto import PddlTypeDto
 
 
 class PddlPredicateDto(Dto):
-    """ Pddl Predicate Dto Class """
+    """Pddl Predicate Dto Class"""
 
     def __init__(self, name: str, types: List[PddlTypeDto] = None):
 
@@ -32,7 +32,7 @@ class PddlPredicateDto(Dto):
         Dto.__init__(self)
 
     def get_name(self) -> str:
-        """ pddl predicate name getter
+        """pddl predicate name getter
 
         Returns:
             str: predicate name
@@ -41,7 +41,7 @@ class PddlPredicateDto(Dto):
         return self._name
 
     def set_name(self, name: str):
-        """ pddl predicate name setter
+        """pddl predicate name setter
 
         Args:
             name (str): pddl predicate name
@@ -50,7 +50,7 @@ class PddlPredicateDto(Dto):
         self._name = name
 
     def get_types(self) -> List[PddlTypeDto]:
-        """ pddl types list getter
+        """pddl types list getter
 
         Returns:
             List[PddlTypeDto]: list of pddl types
@@ -59,7 +59,7 @@ class PddlPredicateDto(Dto):
         return self._types
 
     def set_types(self, types: List[PddlTypeDto]):
-        """ pddl types list setter
+        """pddl types list setter
 
         Args:
             types (List[PddlTypeDto]): list of pddl types

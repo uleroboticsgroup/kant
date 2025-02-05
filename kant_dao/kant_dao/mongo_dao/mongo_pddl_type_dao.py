@@ -14,7 +14,7 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 
-""" Mongo Pddl Type Dao """
+"""Mongo Pddl Type Dao"""
 
 from typing import List
 
@@ -27,7 +27,7 @@ from kant_dto import PddlTypeDto
 
 
 class MongoPddlTypeDao(PddlTypeDao, MongoDao):
-    """ Mongo Pddl Type Dao Class """
+    """Mongo Pddl Type Dao Class"""
 
     def __init__(self, uri: str = None, connect: bool = True):
 
@@ -37,9 +37,8 @@ class MongoPddlTypeDao(PddlTypeDao, MongoDao):
         if connect:
             self.connect()
 
-    def _model_to_dto(self, pddl_type_model:
-                      PddlTypeModel) -> PddlTypeDto:
-        """ convert a Mongoengine pddl type document into a PddlTypeDto
+    def _model_to_dto(self, pddl_type_model: PddlTypeModel) -> PddlTypeDto:
+        """convert a Mongoengine pddl type document into a PddlTypeDto
 
         Args:
             pddl_type_model (PddlTypeModel): Mongoengine pddl type document
@@ -52,7 +51,7 @@ class MongoPddlTypeDao(PddlTypeDao, MongoDao):
         return pddl_type_dto
 
     def _dto_to_model(self, pddl_type_dto: PddlTypeDto) -> PddlTypeModel:
-        """ convert a PddlTypeDto into a Mongoengine pddl type document
+        """convert a PddlTypeDto into a Mongoengine pddl type document
 
         Args:
             pddl_type_dto (PddlTypeDto): PddlTypeDto
@@ -66,7 +65,7 @@ class MongoPddlTypeDao(PddlTypeDao, MongoDao):
         return pddl_type_model
 
     def _exist_in_mongo(self, pddl_type_dto: PddlTypeDto) -> bool:
-        """ check if PddlTypeDto exists
+        """check if PddlTypeDto exists
 
         Args:
             pddl_type_dto (PddlTypeDto): PddlTypeDto
@@ -80,7 +79,7 @@ class MongoPddlTypeDao(PddlTypeDao, MongoDao):
         return False
 
     def _get_model(self, pddl_type_dto: PddlTypeDto) -> PddlTypeModel:
-        """ get the Mongoengine pddl type document corresponding to a give PddlTypeDto
+        """get the Mongoengine pddl type document corresponding to a give PddlTypeDto
 
         Args:
             pddl_type_dto (PddlTypeDto): PddlTypeDto
@@ -89,8 +88,7 @@ class MongoPddlTypeDao(PddlTypeDao, MongoDao):
             Document: Mongoengine pddl type document
         """
 
-        pddl_type_model = PddlTypeModel.objects(
-            name=pddl_type_dto.get_name())
+        pddl_type_model = PddlTypeModel.objects(name=pddl_type_dto.get_name())
 
         if not pddl_type_model:
             return None
@@ -98,7 +96,7 @@ class MongoPddlTypeDao(PddlTypeDao, MongoDao):
         return pddl_type_model[0]
 
     def get(self, type_name: str) -> PddlTypeDto:
-        """ get a PddlTypeDto with a given type name
+        """get a PddlTypeDto with a given type name
             return None if there is no pddl with that type name
 
         Args:
@@ -108,8 +106,7 @@ class MongoPddlTypeDao(PddlTypeDao, MongoDao):
             PddlTypeDto: PddlTypeDto of the pddl type name
         """
 
-        pddl_type_model = PddlTypeModel.objects(
-            name=type_name)
+        pddl_type_model = PddlTypeModel.objects(name=type_name)
 
         if pddl_type_model:
             pddl_type_model = pddl_type_model[0]
@@ -118,7 +115,7 @@ class MongoPddlTypeDao(PddlTypeDao, MongoDao):
         return None
 
     def get_all(self) -> List[PddlTypeDto]:
-        """ get all PddlTypeDto
+        """get all PddlTypeDto
 
         Returns:
             List[PddlTypeDto]: list of all PddlTypeDto
@@ -134,7 +131,7 @@ class MongoPddlTypeDao(PddlTypeDao, MongoDao):
         return pddl_type_dto_list
 
     def _save(self, pddl_type_dto: PddlTypeDto) -> bool:
-        """ save a PddlTypeDto
+        """save a PddlTypeDto
             if the PddlTypeDto is already saved return False, else return True
 
         Args:
@@ -152,7 +149,7 @@ class MongoPddlTypeDao(PddlTypeDao, MongoDao):
         return True
 
     def _update(self, pddl_type_dto: PddlTypeDto) -> bool:
-        """ update a PddlTypeDto
+        """update a PddlTypeDto
             if the PddlTypeDto is not saved return False, else return True
 
         Args:
@@ -173,7 +170,7 @@ class MongoPddlTypeDao(PddlTypeDao, MongoDao):
         return False
 
     def save(self, pddl_type_dto: PddlTypeDto) -> bool:
-        """ save or update a PddlTypeDto
+        """save or update a PddlTypeDto
             if the PddlTypeDto is not saved it will be saved, else it will be updated
 
         Args:
@@ -189,7 +186,7 @@ class MongoPddlTypeDao(PddlTypeDao, MongoDao):
         return self._save(pddl_type_dto)
 
     def delete(self, pddl_type_dto: PddlTypeDto) -> bool:
-        """ delete a PddlTypeDto
+        """delete a PddlTypeDto
             if the PddlTypeDto is not saved return False, else return True
 
         Args:
@@ -209,7 +206,7 @@ class MongoPddlTypeDao(PddlTypeDao, MongoDao):
         return False
 
     def delete_all(self) -> bool:
-        """ delete all pddl types
+        """delete all pddl types
 
         Returns:
             bool: succeed

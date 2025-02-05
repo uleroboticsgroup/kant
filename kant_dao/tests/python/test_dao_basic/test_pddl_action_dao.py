@@ -1,15 +1,12 @@
 import unittest
-from kant_dao.dao_factory import (
-    DaoFactoryMethod,
-    DaoFamilies
-)
+from kant_dao.dao_factory import DaoFactoryMethod, DaoFamilies
 
 from kant_dto import (
     PddlTypeDto,
     PddlObjectDto,
     PddlPredicateDto,
     PddlConditionEffectDto,
-    PddlActionDto
+    PddlActionDto,
 )
 
 
@@ -17,8 +14,7 @@ class TestPddlActionDao(unittest.TestCase):
 
     def setUp(self):
         dao_factory_method = DaoFactoryMethod()
-        dao_factory = dao_factory_method.create_dao_factory(
-            DaoFamilies.MONGO)
+        dao_factory = dao_factory_method.create_dao_factory(DaoFamilies.MONGO)
 
         self.pddl_type_dao = dao_factory.create_pddl_type_dao()
         self.pddl_predicate_dao = dao_factory.create_pddl_predicate_dao()
@@ -26,28 +22,27 @@ class TestPddlActionDao(unittest.TestCase):
 
         self._robot_type = PddlTypeDto("robot")
         self._wp_type = PddlTypeDto("wp")
-        self._robot_at = PddlPredicateDto(
-            "robot_at", [self._robot_type, self._wp_type])
+        self._robot_at = PddlPredicateDto("robot_at", [self._robot_type, self._wp_type])
 
         r = PddlObjectDto(self._robot_type, "r")
         s = PddlObjectDto(self._wp_type, "s")
         d = PddlObjectDto(self._wp_type, "d")
 
-        self._condition_1 = PddlConditionEffectDto(self._robot_at,
-                                                   [r, s],
-                                                   time=PddlConditionEffectDto.AT_START)
+        self._condition_1 = PddlConditionEffectDto(
+            self._robot_at, [r, s], time=PddlConditionEffectDto.AT_START
+        )
 
-        self._effect_1 = PddlConditionEffectDto(self._robot_at,
-                                                [r, s],
-                                                time=PddlConditionEffectDto.AT_START,
-                                                is_negative=True)
+        self._effect_1 = PddlConditionEffectDto(
+            self._robot_at, [r, s], time=PddlConditionEffectDto.AT_START, is_negative=True
+        )
 
-        self._effect_2 = PddlConditionEffectDto(self._robot_at,
-                                                [r, d],
-                                                time=PddlConditionEffectDto.AT_END)
+        self._effect_2 = PddlConditionEffectDto(
+            self._robot_at, [r, d], time=PddlConditionEffectDto.AT_END
+        )
 
         self.pddl_action_dto = PddlActionDto(
-            "navigation", [r, s, d], [self._condition_1], [self._effect_1, self._effect_2])
+            "navigation", [r, s, d], [self._condition_1], [self._effect_1, self._effect_2]
+        )
 
     def tearDown(self):
         self.pddl_action_dao.delete_all()
@@ -59,14 +54,12 @@ class TestPddlActionDao(unittest.TestCase):
         self.assertTrue(result)
 
     def test_pddl_action_dao_save_false_incorrect_condition_types(self):
-        self.pddl_action_dto.get_conditions(
-        )[0].get_objects().reverse()
+        self.pddl_action_dto.get_conditions()[0].get_objects().reverse()
         result = self.pddl_action_dao._save(self.pddl_action_dto)
         self.assertFalse(result)
 
     def test_pddl_action_dao_save_false_incorrect_condition_len(self):
-        self.pddl_action_dto.get_conditions(
-        )[0].set_objects([])
+        self.pddl_action_dto.get_conditions()[0].set_objects([])
         result = self.pddl_action_dao._save(self.pddl_action_dto)
         self.assertFalse(result)
 
@@ -123,7 +116,8 @@ class TestPddlActionDao(unittest.TestCase):
         self.pddl_action_dao._save(self.pddl_action_dto)
 
         self.pddl_action_dto = self.pddl_action_dao.get("navigation")
-        self.assertEqual("""\
+        self.assertEqual(
+            """\
 (:durative-action navigation
 \t:parameters ( ?r - robot ?s - wp ?d - wp)
 \t:duration (= ?duration 10)
@@ -135,7 +129,8 @@ class TestPddlActionDao(unittest.TestCase):
 \t\t(at end (robot_at ?r ?d))
 \t)
 )""",
-                         str(self.pddl_action_dto))
+            str(self.pddl_action_dto),
+        )
 
     def test_pddl_action_dao_get_all_0(self):
         pddl_action_dto_list = self.pddl_action_dao.get_all()
@@ -143,12 +138,12 @@ class TestPddlActionDao(unittest.TestCase):
 
     def test_pddl_action_dao_update_true(self):
         self.pddl_action_dao._save(self.pddl_action_dto)
-        self.pddl_action_dto.get_effects()[0].set_time(
-            PddlConditionEffectDto.AT_END)
+        self.pddl_action_dto.get_effects()[0].set_time(PddlConditionEffectDto.AT_END)
         result = self.pddl_action_dao._update(self.pddl_action_dto)
         self.assertTrue(result)
         self.pddl_action_dto = self.pddl_action_dao.get("navigation")
-        self.assertEqual("""\
+        self.assertEqual(
+            """\
 (:durative-action navigation
 \t:parameters ( ?r - robot ?s - wp ?d - wp)
 \t:duration (= ?duration 10)
@@ -160,7 +155,8 @@ class TestPddlActionDao(unittest.TestCase):
 \t\t(at end (robot_at ?r ?d))
 \t)
 )""",
-                         str(self.pddl_action_dto))
+            str(self.pddl_action_dto),
+        )
 
     def test_pddl_action_dao_update_flase(self):
         result = self.pddl_action_dao._update(self.pddl_action_dto)
@@ -186,7 +182,8 @@ class TestPddlActionDao(unittest.TestCase):
         self.assertTrue(result)
 
         self.pddl_action_dto = self.pddl_action_dao.get("navigation")
-        self.assertEqual("""\
+        self.assertEqual(
+            """\
 (:action navigation
 \t:parameters ( ?r - robot ?s - wp ?d - wp)
 \t:precondition (and
@@ -197,7 +194,8 @@ class TestPddlActionDao(unittest.TestCase):
 \t\t(robot_at ?r ?d)
 \t)
 )""",
-                         str(self.pddl_action_dto))
+            str(self.pddl_action_dto),
+        )
 
     def test_pddl_action_dao_delete_false_action_not_exist(self):
         result = self.pddl_action_dao.delete(self.pddl_action_dto)

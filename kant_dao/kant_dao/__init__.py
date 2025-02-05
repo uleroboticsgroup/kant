@@ -1,2 +1,1 @@
-
-from .parameter_loader import ParameterLoader
+from kant_dao.parameter_loader import ParameterLoader

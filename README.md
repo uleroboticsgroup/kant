@@ -117,7 +117,7 @@ A Python and a C++ demo are included.
 ```python
 #!/usr/bin/env python3
 
-""" DAO Example Node """
+"""DAO Example Node"""
 
 import rclpy
 
@@ -139,7 +139,7 @@ from simple_node import Node
 
 
 class ExampleNode(Node):
-    """ DAO Example Node Class """
+    """DAO Example Node Class"""
 
     def __init__(self):
 

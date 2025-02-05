@@ -14,7 +14,7 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 
-""" Pddl Action Dto """
+"""Pddl Action Dto"""
 
 from typing import List
 from kant_dto.dto import Dto
@@ -23,13 +23,16 @@ from kant_dto.pddl_object_dto import PddlObjectDto
 
 
 class PddlActionDto(Dto):
-    """ Pddl Action Dto Class """
+    """Pddl Action Dto Class"""
 
-    def __init__(self, name: str,
-                 parameters: List[PddlObjectDto] = None,
-                 conditions: List[PddlConditionEffectDto] = None,
-                 effects: List[PddlConditionEffectDto] = None,
-                 durative: bool = True):
+    def __init__(
+        self,
+        name: str,
+        parameters: List[PddlObjectDto] = None,
+        conditions: List[PddlConditionEffectDto] = None,
+        effects: List[PddlConditionEffectDto] = None,
+        durative: bool = True,
+    ):
 
         self.set_name(name)
         self.set_parameters(parameters)
@@ -41,7 +44,7 @@ class PddlActionDto(Dto):
         Dto.__init__(self)
 
     def get_name(self) -> str:
-        """ pdd action name getter
+        """pdd action name getter
 
         Returns:
             str: pddl action name
@@ -50,7 +53,7 @@ class PddlActionDto(Dto):
         return self._name
 
     def set_name(self, name: str):
-        """ pddl action name setter
+        """pddl action name setter
 
         Args:
             name (str): pddl action name
@@ -59,7 +62,7 @@ class PddlActionDto(Dto):
         self._name = name
 
     def get_durative(self) -> bool:
-        """ durative getter
+        """durative getter
 
         Returns:
             bool: is this a durative action
@@ -68,7 +71,7 @@ class PddlActionDto(Dto):
         return self._durative
 
     def set_durative(self, durative: bool):
-        """ durative setter
+        """durative setter
 
         Args:
             durative (bool): is this a durative action
@@ -77,7 +80,7 @@ class PddlActionDto(Dto):
         self._durative = durative
 
     def get_duration(self) -> int:
-        """ duration getter
+        """duration getter
 
         Returns:
             int: action duration
@@ -86,7 +89,7 @@ class PddlActionDto(Dto):
         return self._duration
 
     def set_duration(self, duration: int):
-        """ duration setter
+        """duration setter
 
         Args:
             duration (int): action duration
@@ -95,7 +98,7 @@ class PddlActionDto(Dto):
         self._duration = duration
 
     def get_parameters(self) -> List[PddlObjectDto]:
-        """ parameters list getter
+        """parameters list getter
 
         Returns:
             List[PddlObjectDto]: list of action parameters
@@ -104,7 +107,7 @@ class PddlActionDto(Dto):
         return self._parameters
 
     def set_parameters(self, parameters: List[PddlObjectDto]):
-        """ parameters list setter
+        """parameters list setter
 
         Args:
             parameters (List[PddlObjectDto]): list of action parameters
@@ -116,7 +119,7 @@ class PddlActionDto(Dto):
             self._parameters = []
 
     def get_conditions(self) -> List[PddlConditionEffectDto]:
-        """ conditions list getter
+        """conditions list getter
 
         Returns:
             List[PddlConditionEffectDto]: list of action conditions
@@ -125,7 +128,7 @@ class PddlActionDto(Dto):
         return self._conditions
 
     def set_conditions(self, conditions: List[PddlConditionEffectDto]):
-        """ conditions list setter
+        """conditions list setter
 
         Args:
             conditions (List[PddlConditionEffectDto]): list of action conditions
@@ -137,7 +140,7 @@ class PddlActionDto(Dto):
             self._conditions = []
 
     def get_effects(self) -> List[PddlConditionEffectDto]:
-        """ effects list getter
+        """effects list getter
 
         Returns:
             List[PddlConditionEffectDto]: list of action effects
@@ -145,7 +148,7 @@ class PddlActionDto(Dto):
         return self._effects
 
     def set_effects(self, effects: List[PddlConditionEffectDto]):
-        """ effects list setter
+        """effects list setter
 
         Args:
             effects (List[PddlConditionEffectDto]): list of action effects
@@ -167,8 +170,9 @@ class PddlActionDto(Dto):
         # parameters
         string += "\n\t:parameters ("
         for parameter in self._parameters:
-            string += " ?" + parameter.get_name() + " - " + \
-                parameter.get_type().get_name()
+            string += (
+                " ?" + parameter.get_name() + " - " + parameter.get_type().get_name()
+            )
         string += ")"
 
         # duration

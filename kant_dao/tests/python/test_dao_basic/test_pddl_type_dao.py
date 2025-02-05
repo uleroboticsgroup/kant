@@ -1,8 +1,5 @@
 import unittest
-from kant_dao.dao_factory import (
-    DaoFactoryMethod,
-    DaoFamilies
-)
+from kant_dao.dao_factory import DaoFactoryMethod, DaoFamilies
 from kant_dto import PddlTypeDto
 
 
@@ -10,8 +7,7 @@ class TestPddlTypeDao(unittest.TestCase):
 
     def setUp(self):
         dao_factory_method = DaoFactoryMethod()
-        dao_factory = dao_factory_method.create_dao_factory(
-            DaoFamilies.MONGO)
+        dao_factory = dao_factory_method.create_dao_factory(DaoFamilies.MONGO)
 
         self.pddl_type_dao = dao_factory.create_pddl_type_dao()
         self.pddl_type_dto = PddlTypeDto("robot")
@@ -80,11 +76,11 @@ class TestPddlTypeDao(unittest.TestCase):
 
 
 # if __name__ == "__main__":
-    #cov = coverage.Coverage()
-    # cov.start()
-    # suite = unittest.TestLoader().loadTestsFromTestCase(TestPddlDaoType)
-    # unittest.TextTestRunner(verbosity=2).run(suite)
-    # cov.stop()
-    # cov.save()
-    # cov.html_report()
-    # cov.report()
+# cov = coverage.Coverage()
+# cov.start()
+# suite = unittest.TestLoader().loadTestsFromTestCase(TestPddlDaoType)
+# unittest.TextTestRunner(verbosity=2).run(suite)
+# cov.stop()
+# cov.save()
+# cov.html_report()
+# cov.report()

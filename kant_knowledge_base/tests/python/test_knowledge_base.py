@@ -23,7 +23,7 @@ from kant_dto import (
     PddlPredicateDto,
     PddlPropositionDto,
     PddlConditionEffectDto,
-    PddlActionDto
+    PddlActionDto,
 )
 
 
@@ -43,52 +43,46 @@ class TestKnowledgeBase(unittest.TestCase):
         self.wp2 = PddlObjectDto(self.wp_type, "wp2")
 
         # predicates
-        self.robot_at = PddlPredicateDto(
-            "robot_at", [self.robot_type, self.wp_type])
-        self.wp_checked = PddlPredicateDto(
-            "wp_checked", [self.robot_type, self.wp_type])
+        self.robot_at = PddlPredicateDto("robot_at", [self.robot_type, self.wp_type])
+        self.wp_checked = PddlPredicateDto("wp_checked", [self.robot_type, self.wp_type])
 
-        self.empty_wp = PddlPredicateDto(
-            "empty_wp", [self.wp_type])
+        self.empty_wp = PddlPredicateDto("empty_wp", [self.wp_type])
 
         # propositions
-        self.rb1_robot_at = PddlPropositionDto(
-            self.robot_at, [self.rb1, self.wp1])
-        self.wp1_empty_wp = PddlPropositionDto(
-            self.empty_wp, [self.wp1])
+        self.rb1_robot_at = PddlPropositionDto(self.robot_at, [self.rb1, self.wp1])
+        self.wp1_empty_wp = PddlPropositionDto(self.empty_wp, [self.wp1])
 
         # goals
         self.rb1_wp2_wp_checked_goal = PddlPropositionDto(
-            self.wp_checked, [self.rb1, self.wp2], is_goal=True)
+            self.wp_checked, [self.rb1, self.wp2], is_goal=True
+        )
 
         # actions
         r = PddlObjectDto(self.robot_type, "r")
         s = PddlObjectDto(self.wp_type, "s")
         d = PddlObjectDto(self.wp_type, "d")
 
-        condition_1 = PddlConditionEffectDto(self.robot_at,
-                                             [r, s],
-                                             time=PddlConditionEffectDto.AT_START)
+        condition_1 = PddlConditionEffectDto(
+            self.robot_at, [r, s], time=PddlConditionEffectDto.AT_START
+        )
 
-        effect_1 = PddlConditionEffectDto(self.robot_at,
-                                          [r, s],
-                                          time=PddlConditionEffectDto.AT_START,
-                                          is_negative=True)
+        effect_1 = PddlConditionEffectDto(
+            self.robot_at, [r, s], time=PddlConditionEffectDto.AT_START, is_negative=True
+        )
 
-        effect_2 = PddlConditionEffectDto(self.robot_at,
-                                          [r, d],
-                                          time=PddlConditionEffectDto.AT_END)
+        effect_2 = PddlConditionEffectDto(
+            self.robot_at, [r, d], time=PddlConditionEffectDto.AT_END
+        )
 
         self.navigation_action = PddlActionDto(
-            "navigation", [r, s, d], [condition_1], [effect_1, effect_2])
+            "navigation", [r, s, d], [condition_1], [effect_1, effect_2]
+        )
 
         w = PddlObjectDto(self.wp_type, "w")
-        effect_3 = PddlConditionEffectDto(self.empty_wp,
-                                          [w],
-                                          time=PddlConditionEffectDto.AT_START,
-                                          is_negative=True)
-        self.empty_wp_action = PddlActionDto(
-            "empty_wp", [w], [], [effect_3])
+        effect_3 = PddlConditionEffectDto(
+            self.empty_wp, [w], time=PddlConditionEffectDto.AT_START, is_negative=True
+        )
+        self.empty_wp_action = PddlActionDto("empty_wp", [w], [], [effect_3])
 
     def tearDown(self):
         self.knowledge_base.delete_all_actions()
@@ -202,8 +196,7 @@ class TestKnowledgeBase(unittest.TestCase):
         self.assertTrue(succ)
         dto = self.knowledge_base.get_propositions_no_goals()[0]
         self.assertEqual("(robot_at rb1 wp1)", str(dto))
-        self.assertEqual(
-            1, len(self.knowledge_base.get_propositions_no_goals()))
+        self.assertEqual(1, len(self.knowledge_base.get_propositions_no_goals()))
         dto = self.knowledge_base.get_object("rb1")
         self.assertEqual("rb1 - robot", str(dto))
         dto = self.knowledge_base.get_object("wp1")
@@ -217,31 +210,26 @@ class TestKnowledgeBase(unittest.TestCase):
         self.assertTrue(succ)
         dto = self.knowledge_base.get_propositions_no_goals()[0]
         self.assertEqual("(robot_at rb1 wp1)", str(dto))
-        self.assertEqual(
-            1, len(self.knowledge_base.get_propositions_no_goals()))
+        self.assertEqual(1, len(self.knowledge_base.get_propositions_no_goals()))
 
     def test_save_proposition_no_goal_false_bad_types(self):
         self.robot_at.get_types().reverse()
         succ = self.knowledge_base.save_proposition(self.rb1_robot_at)
         self.assertFalse(succ)
-        self.assertEqual(
-            0, len(self.knowledge_base.get_propositions_no_goals()))
+        self.assertEqual(0, len(self.knowledge_base.get_propositions_no_goals()))
 
     def test_save_proposition_no_goal_false_bad_len(self):
         self.robot_at.set_types([])
         succ = self.knowledge_base.save_proposition(self.rb1_robot_at)
         self.assertFalse(succ)
-        self.assertEqual(
-            0, len(self.knowledge_base.get_propositions_no_goals()))
+        self.assertEqual(0, len(self.knowledge_base.get_propositions_no_goals()))
 
     def test_save_proposition_goal_true(self):
-        succ = self.knowledge_base.save_proposition(
-            self.rb1_wp2_wp_checked_goal)
+        succ = self.knowledge_base.save_proposition(self.rb1_wp2_wp_checked_goal)
         self.assertTrue(succ)
         dto = self.knowledge_base.get_propositions_goals()[0]
         self.assertEqual("(wp_checked rb1 wp2)", str(dto))
-        self.assertEqual(
-            1, len(self.knowledge_base.get_propositions_goals()))
+        self.assertEqual(1, len(self.knowledge_base.get_propositions_goals()))
 
     def test_delete_proposition_goal_true(self):
         self.knowledge_base.save_proposition(self.rb1_robot_at)
@@ -257,14 +245,12 @@ class TestKnowledgeBase(unittest.TestCase):
     def test_delete_proposition_no_goal_true(self):
         self.knowledge_base.save_proposition(self.rb1_wp2_wp_checked_goal)
         self.assertEqual(1, len(self.knowledge_base.get_all_propositions()))
-        succ = self.knowledge_base.delete_proposition(
-            self.rb1_wp2_wp_checked_goal)
+        succ = self.knowledge_base.delete_proposition(self.rb1_wp2_wp_checked_goal)
         self.assertTrue(succ)
         self.assertEqual(0, len(self.knowledge_base.get_all_propositions()))
 
     def test_delete_proposition_no_goal_false(self):
-        succ = self.knowledge_base.delete_proposition(
-            self.rb1_wp2_wp_checked_goal)
+        succ = self.knowledge_base.delete_proposition(self.rb1_wp2_wp_checked_goal)
         self.assertFalse(succ)
 
     def test_delete_all_propositions(self):
@@ -278,7 +264,8 @@ class TestKnowledgeBase(unittest.TestCase):
         succ = self.knowledge_base.save_action(self.navigation_action)
         self.assertTrue(succ)
         dto = self.knowledge_base.get_action("navigation")
-        self.assertEqual("""\
+        self.assertEqual(
+            """\
 (:durative-action navigation
 \t:parameters ( ?r - robot ?s - wp ?d - wp)
 \t:duration (= ?duration 10)
@@ -290,7 +277,8 @@ class TestKnowledgeBase(unittest.TestCase):
 \t\t(at end (robot_at ?r ?d))
 \t)
 )""",
-                         str(dto))
+            str(dto),
+        )
         self.assertEqual(1, len(self.knowledge_base.get_all_actions()))
         dto = self.knowledge_base.get_predicate("robot_at")
         self.assertEqual("(robot_at ?r0 - robot ?w1 - wp)", str(dto))
@@ -303,7 +291,8 @@ class TestKnowledgeBase(unittest.TestCase):
         succ = self.knowledge_base.save_action(self.navigation_action)
         self.assertTrue(succ)
         dto = self.knowledge_base.get_action("navigation")
-        self.assertEqual("""\
+        self.assertEqual(
+            """\
 (:durative-action navigation
 \t:parameters ( ?r - robot ?s - wp ?d - wp)
 \t:duration (= ?duration 10)
@@ -315,18 +304,17 @@ class TestKnowledgeBase(unittest.TestCase):
 \t\t(at end (robot_at ?r ?d))
 \t)
 )""",
-                         str(dto))
+            str(dto),
+        )
         self.assertEqual(1, len(self.knowledge_base.get_all_actions()))
 
     def test_save_action_false_bad_condition_types(self):
-        self.navigation_action.get_conditions(
-        )[0].get_objects().reverse()
+        self.navigation_action.get_conditions()[0].get_objects().reverse()
         succ = self.knowledge_base.save_action(self.navigation_action)
         self.assertFalse(succ)
 
     def test_save_action_false_bad_condition_len(self):
-        self.navigation_action.get_conditions(
-        )[0].set_objects([])
+        self.navigation_action.get_conditions()[0].set_objects([])
         succ = self.knowledge_base.save_action(self.navigation_action)
         self.assertFalse(succ)
 
@@ -351,14 +339,12 @@ class TestKnowledgeBase(unittest.TestCase):
         self.assertFalse(succ)
 
     def test_save_action_false_bad_effect_types(self):
-        self.navigation_action.get_effects(
-        )[0].get_objects().reverse()
+        self.navigation_action.get_effects()[0].get_objects().reverse()
         succ = self.knowledge_base.save_action(self.navigation_action)
         self.assertFalse(succ)
 
     def test_save_action_false_bad_effect_len(self):
-        self.navigation_action.get_effects(
-        )[0].set_objects([])
+        self.navigation_action.get_effects()[0].set_objects([])
         succ = self.knowledge_base.save_action(self.navigation_action)
         self.assertFalse(succ)
 

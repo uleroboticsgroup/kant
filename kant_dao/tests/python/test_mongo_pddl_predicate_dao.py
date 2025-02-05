@@ -15,10 +15,7 @@
 
 
 from test_dao_basic.test_pddl_predicate_dao import TestPddlPredicateDao
-from kant_dao.dao_factory import (
-    DaoFactoryMethod,
-    DaoFamilies
-)
+from kant_dao.dao_factory import DaoFactoryMethod, DaoFamilies
 
 
 class TestMongoPddlPredicateDao(TestPddlPredicateDao):
@@ -26,8 +23,7 @@ class TestMongoPddlPredicateDao(TestPddlPredicateDao):
     def setUp(self):
         super().setUp()
         dao_factory_method = DaoFactoryMethod()
-        dao_factory = dao_factory_method.create_dao_factory(
-            DaoFamilies.MONGO)
+        dao_factory = dao_factory_method.create_dao_factory(DaoFamilies.MONGO)
 
         dao_factory.set_uri("mongodb://localhost:27017/kant_tests")
 
@@ -35,4 +31,4 @@ class TestMongoPddlPredicateDao(TestPddlPredicateDao):
         self.pddl_predicate_dao = dao_factory.create_pddl_predicate_dao()
 
 
-del (TestPddlPredicateDao)
+del TestPddlPredicateDao

@@ -14,7 +14,7 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 
-""" Ros2 Pddl Predicate Dao """
+"""Ros2 Pddl Predicate Dao"""
 
 from typing import List
 from simple_node import Node
@@ -22,21 +22,15 @@ from simple_node import Node
 from kant_dao.dao_interface import PddlPredicateDao
 from kant_dto import PddlPredicateDto
 
-from kant_msgs.srv import (
-    UpdatePddlPredicate,
-    GetPddlPredicate
-)
+from kant_msgs.srv import UpdatePddlPredicate, GetPddlPredicate
 from kant_msgs.msg import UpdateKnowledge
 from std_srvs.srv import Empty
 
-from kant_knowledge_base.parser import (
-    DtoMsgParser,
-    MsgDtoParser
-)
+from kant_knowledge_base.parser import DtoMsgParser, MsgDtoParser
 
 
 class Ros2PddlPredicateDao(PddlPredicateDao):
-    """ Ros2 Pddl Predicate Dao Class """
+    """Ros2 Pddl Predicate Dao Class"""
 
     def __init__(self, node: Node):
 
@@ -49,17 +43,16 @@ class Ros2PddlPredicateDao(PddlPredicateDao):
         self.msg_dto_parser = MsgDtoParser()
 
         # srv clients
-        self._get_client = self.node.create_client(
-            GetPddlPredicate, "get_predicates")
+        self._get_client = self.node.create_client(GetPddlPredicate, "get_predicates")
 
         self._update_client = self.node.create_client(
-            UpdatePddlPredicate, "update_predicate")
+            UpdatePddlPredicate, "update_predicate"
+        )
 
-        self._delete_all_client = self.node.create_client(
-            Empty, "delete_all_predicates")
+        self._delete_all_client = self.node.create_client(Empty, "delete_all_predicates")
 
     def _ros2_get(self, predicate_name: str = "") -> List[PddlPredicateDto]:
-        """ ros2_get method
+        """ros2_get method
 
         Args:
             predicate_name (str): predicate name
@@ -79,15 +72,16 @@ class Ros2PddlPredicateDao(PddlPredicateDao):
 
         for pddl_predicate_msg in result.pddl_predicates:
             pddl_predicate_dto = self.msg_dto_parser.predicate_msg_to_dto(
-                pddl_predicate_msg)
+                pddl_predicate_msg
+            )
             pddl_predicate_dto_list.append(pddl_predicate_dto)
 
         return pddl_predicate_dto_list
 
-    def _ros2_update(self,
-                     pddl_predicate_dto: PddlPredicateDto,
-                     update_type: int) -> bool:
-        """ ros2_update method
+    def _ros2_update(
+        self, pddl_predicate_dto: PddlPredicateDto, update_type: int
+    ) -> bool:
+        """ros2_update method
 
         Args:
             pddl_predicate_dto (PddlPredicateDto): PddlPredicateDto to update
@@ -98,8 +92,7 @@ class Ros2PddlPredicateDao(PddlPredicateDao):
 
         req = UpdatePddlPredicate.Request()
 
-        req.pddl_predicate = self.dto_msg_parser.predicate_dto_to_msg(
-            pddl_predicate_dto)
+        req.pddl_predicate = self.dto_msg_parser.predicate_dto_to_msg(pddl_predicate_dto)
         req.update_konwledge.update_type = update_type
 
         self._update_client.wait_for_service()
@@ -108,7 +101,7 @@ class Ros2PddlPredicateDao(PddlPredicateDao):
         return result.success
 
     def _ros2_delete_all(self):
-        """ ros2_delete_all method
+        """ros2_delete_all method
 
         Returns:
             bool: succeed
@@ -120,7 +113,7 @@ class Ros2PddlPredicateDao(PddlPredicateDao):
         self._delete_all_client.call(req)
 
     def get(self, predicate_name: str) -> PddlPredicateDto:
-        """ get a PddlPredicateDto with a given predicate name
+        """get a PddlPredicateDto with a given predicate name
             return None if there is no pddl with that predicate name
 
         Args:
@@ -138,7 +131,7 @@ class Ros2PddlPredicateDao(PddlPredicateDao):
         return None
 
     def get_all(self) -> List[PddlPredicateDto]:
-        """ get all PddlPredicateDto
+        """get all PddlPredicateDto
 
         Returns:
             List[PddlPredicateDto]: list of all PddlPredicateDto
@@ -149,7 +142,7 @@ class Ros2PddlPredicateDao(PddlPredicateDao):
         return pddl_predicate_dto_list
 
     def _save(self, pddl_predicate_dto: PddlPredicateDto) -> bool:
-        """ save a PddlPredicateDto
+        """save a PddlPredicateDto
             if the PddlPredicateDto is already saved return False, else return True
 
         Args:
@@ -160,14 +153,13 @@ class Ros2PddlPredicateDao(PddlPredicateDao):
         """
 
         if not self.get(pddl_predicate_dto.get_name()):
-            succ = self._ros2_update(
-                pddl_predicate_dto, UpdateKnowledge.SAVE)
+            succ = self._ros2_update(pddl_predicate_dto, UpdateKnowledge.SAVE)
             return succ
 
         return False
 
     def _update(self, pddl_predicate_dto: PddlPredicateDto) -> bool:
-        """ update a PddlPredicateDto
+        """update a PddlPredicateDto
             if the PddlPredicateDto is not saved return False, else return True
 
         Args:
@@ -178,14 +170,13 @@ class Ros2PddlPredicateDao(PddlPredicateDao):
         """
 
         if self.get(pddl_predicate_dto.get_name()):
-            succ = self._ros2_update(
-                pddl_predicate_dto, UpdateKnowledge.SAVE)
+            succ = self._ros2_update(pddl_predicate_dto, UpdateKnowledge.SAVE)
             return succ
 
         return False
 
     def save(self, pddl_predicate_dto: PddlPredicateDto) -> bool:
-        """ save or update a PddlPredicateDto
+        """save or update a PddlPredicateDto
             if the PddlPredicateDto is not saved it will be saved, else it will be updated
 
         Args:
@@ -203,7 +194,7 @@ class Ros2PddlPredicateDao(PddlPredicateDao):
         return succ
 
     def delete(self, pddl_predicate_dto: PddlPredicateDto) -> bool:
-        """ delete a PddlPredicateDto
+        """delete a PddlPredicateDto
             if the PddlPredicateDto is not saved return False, else return True
 
         Args:
@@ -213,12 +204,11 @@ class Ros2PddlPredicateDao(PddlPredicateDao):
             bool: succeed
         """
 
-        succ = self._ros2_update(
-            pddl_predicate_dto, UpdateKnowledge.DELETE)
+        succ = self._ros2_update(pddl_predicate_dto, UpdateKnowledge.DELETE)
         return succ
 
     def delete_all(self) -> bool:
-        """ delete all pddl predicates
+        """delete all pddl predicates
 
         Returns:
             bool: succeed

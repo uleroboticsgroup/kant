@@ -1,4 +1,3 @@
-
 from kant_dao.dao_interface.dao import Dao
 from kant_dao.dao_interface.pddl_type_dao import PddlTypeDao
 from kant_dao.dao_interface.pddl_object_dao import PddlObjectDao

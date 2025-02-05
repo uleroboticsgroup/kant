@@ -14,7 +14,7 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 
-""" Pddl Condition/Effect Dto """
+"""Pddl Condition/Effect Dto"""
 
 from typing import List
 from kant_dto.pddl_proposition_dto import PddlPropositionDto
@@ -23,17 +23,19 @@ from kant_dto.pddl_object_dto import PddlObjectDto
 
 
 class PddlConditionEffectDto(PddlPropositionDto):
-    """ Pddl Condition/Effect Class Dto """
+    """Pddl Condition/Effect Class Dto"""
 
     AT_START = "at start"
     AT_END = "at end"
     OVER_ALL = "over all"
 
-    def __init__(self,
-                 pddl_predicate_dto: PddlPredicateDto,
-                 pddl_objects_list: List[PddlObjectDto] = None,
-                 time: str = None,
-                 is_negative: bool = False):
+    def __init__(
+        self,
+        pddl_predicate_dto: PddlPredicateDto,
+        pddl_objects_list: List[PddlObjectDto] = None,
+        time: str = None,
+        is_negative: bool = False,
+    ):
 
         self.set_time(time)
         self.set_is_negative(is_negative)
@@ -41,7 +43,7 @@ class PddlConditionEffectDto(PddlPropositionDto):
         super().__init__(pddl_predicate_dto, pddl_objects_list)
 
     def get_time(self) -> str:
-        """ time getter
+        """time getter
 
         Returns:
             str: time the condition/effect will be resolved
@@ -50,7 +52,7 @@ class PddlConditionEffectDto(PddlPropositionDto):
         return self._time
 
     def set_time(self, time: str):
-        """ time setter
+        """time setter
 
         Args:
             time (str): time the condition/effect will be resolved
@@ -59,7 +61,7 @@ class PddlConditionEffectDto(PddlPropositionDto):
         self._time = time
 
     def get_is_negative(self) -> bool:
-        """ is negative getter
+        """is negative getter
 
         Returns:
             bool: is this condition/effect negative
@@ -68,7 +70,7 @@ class PddlConditionEffectDto(PddlPropositionDto):
         return self._is_negative
 
     def set_is_negative(self, is_negative: bool):
-        """ is negative setter
+        """is negative setter
 
         Args:
             is_negative (bool): is this condition/effect negative
@@ -108,8 +110,9 @@ class PddlConditionEffectDto(PddlPropositionDto):
             if not other.get_time() == self.get_time():
                 return False
 
-            for pddl_object, other_pddl_object in zip(self.get_objects(),
-                                                      other.get_objects()):
+            for pddl_object, other_pddl_object in zip(
+                self.get_objects(), other.get_objects()
+            ):
                 if not pddl_object == other_pddl_object:
                     return False
 

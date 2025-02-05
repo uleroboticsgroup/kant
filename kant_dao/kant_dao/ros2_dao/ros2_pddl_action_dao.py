@@ -14,7 +14,7 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 
-""" Ros2 Pddl Action Dao """
+"""Ros2 Pddl Action Dao"""
 
 from typing import List
 from simple_node import Node
@@ -22,21 +22,15 @@ from simple_node import Node
 from kant_dao.dao_interface import PddlActionDao
 from kant_dto import PddlActionDto
 
-from kant_msgs.srv import (
-    UpdatePddlAction,
-    GetPddlAction
-)
+from kant_msgs.srv import UpdatePddlAction, GetPddlAction
 from kant_msgs.msg import UpdateKnowledge
 from std_srvs.srv import Empty
 
-from kant_knowledge_base.parser import (
-    DtoMsgParser,
-    MsgDtoParser
-)
+from kant_knowledge_base.parser import DtoMsgParser, MsgDtoParser
 
 
 class Ros2PddlActionDao(PddlActionDao):
-    """ Ros2 Pddl Action Dao Class """
+    """Ros2 Pddl Action Dao Class"""
 
     def __init__(self, node: Node):
 
@@ -49,17 +43,14 @@ class Ros2PddlActionDao(PddlActionDao):
         self.msg_dto_parser = MsgDtoParser()
 
         # srv clients
-        self._get_client = self.node.create_client(
-            GetPddlAction, "get_actions")
+        self._get_client = self.node.create_client(GetPddlAction, "get_actions")
 
-        self._update_client = self.node.create_client(
-            UpdatePddlAction, "update_action")
+        self._update_client = self.node.create_client(UpdatePddlAction, "update_action")
 
-        self._delete_all_client = self.node.create_client(
-            Empty, "delete_all_actions")
+        self._delete_all_client = self.node.create_client(Empty, "delete_all_actions")
 
     def _ros2_get(self, action_name: str = "") -> List[PddlActionDto]:
-        """ ros2_get method
+        """ros2_get method
 
         Args:
             action_name (str): action name
@@ -78,16 +69,13 @@ class Ros2PddlActionDao(PddlActionDao):
         pddl_action_dto_list = []
 
         for pddl_action_msg in result.pddl_actions:
-            pddl_action_dto = self.msg_dto_parser.action_msg_to_dto(
-                pddl_action_msg)
+            pddl_action_dto = self.msg_dto_parser.action_msg_to_dto(pddl_action_msg)
             pddl_action_dto_list.append(pddl_action_dto)
 
         return pddl_action_dto_list
 
-    def _ros2_update(self,
-                     pddl_action_dto: PddlActionDto,
-                     update_type: int) -> bool:
-        """ ros2_delete_all method
+    def _ros2_update(self, pddl_action_dto: PddlActionDto, update_type: int) -> bool:
+        """ros2_delete_all method
 
         Args:
             pddl_action_dto (PddlActionDto): PddlActionDto to update
@@ -98,8 +86,7 @@ class Ros2PddlActionDao(PddlActionDao):
 
         req = UpdatePddlAction.Request()
 
-        req.pddl_action = self.dto_msg_parser.action_dto_to_msg(
-            pddl_action_dto)
+        req.pddl_action = self.dto_msg_parser.action_dto_to_msg(pddl_action_dto)
         req.update_konwledge.update_type = update_type
 
         self._update_client.wait_for_service()
@@ -108,7 +95,7 @@ class Ros2PddlActionDao(PddlActionDao):
         return result.success
 
     def _ros2_delete_all(self):
-        """ asyn delete_all method
+        """asyn delete_all method
 
         Returns:
             bool: succeed
@@ -120,7 +107,7 @@ class Ros2PddlActionDao(PddlActionDao):
         self._delete_all_client.call(req)
 
     def get(self, action_name: str) -> PddlActionDto:
-        """ get a PddlActionDto with a given action name
+        """get a PddlActionDto with a given action name
             return None if there is no pddl with that action name
 
         Args:
@@ -138,7 +125,7 @@ class Ros2PddlActionDao(PddlActionDao):
         return None
 
     def get_all(self) -> List[PddlActionDto]:
-        """ get all PddlActionDto
+        """get all PddlActionDto
 
         Returns:
             List[PddlActionDto]: list of all PddlActionDto
@@ -149,7 +136,7 @@ class Ros2PddlActionDao(PddlActionDao):
         return pddl_action_dto_list
 
     def _save(self, pddl_action_dto: PddlActionDto) -> bool:
-        """ save a PddlActionDto
+        """save a PddlActionDto
             if the PddlActionDto is already saved return False, else return True
 
         Args:
@@ -160,14 +147,13 @@ class Ros2PddlActionDao(PddlActionDao):
         """
 
         if not self.get(pddl_action_dto.get_name()):
-            succ = self._ros2_update(
-                pddl_action_dto, UpdateKnowledge.SAVE)
+            succ = self._ros2_update(pddl_action_dto, UpdateKnowledge.SAVE)
             return succ
 
         return False
 
     def _update(self, pddl_action_dto: PddlActionDto) -> bool:
-        """ update a PddlActionDto
+        """update a PddlActionDto
             if the PddlActionDto is not saved return False, else return True
 
         Args:
@@ -178,14 +164,13 @@ class Ros2PddlActionDao(PddlActionDao):
         """
 
         if self.get(pddl_action_dto.get_name()):
-            succ = self._ros2_update(
-                pddl_action_dto, UpdateKnowledge.SAVE)
+            succ = self._ros2_update(pddl_action_dto, UpdateKnowledge.SAVE)
             return succ
 
         return False
 
     def save(self, pddl_action_dto: PddlActionDto) -> bool:
-        """ save or update a PddlActionDto
+        """save or update a PddlActionDto
             if the PddlActionDto is not saved it will be saved, else it will be updated
 
         Args:
@@ -203,7 +188,7 @@ class Ros2PddlActionDao(PddlActionDao):
         return succ
 
     def delete(self, pddl_action_dto: PddlActionDto) -> bool:
-        """ delete a PddlActionDto
+        """delete a PddlActionDto
             if the PddlActionDto is not saved return False, else return True
 
         Args:
@@ -213,12 +198,11 @@ class Ros2PddlActionDao(PddlActionDao):
             bool: succeed
         """
 
-        succ = self._ros2_update(
-            pddl_action_dto, UpdateKnowledge.DELETE)
+        succ = self._ros2_update(pddl_action_dto, UpdateKnowledge.DELETE)
         return succ
 
     def delete_all(self) -> bool:
-        """ delete all pddl actions
+        """delete all pddl actions
 
         Returns:
             bool: succeed

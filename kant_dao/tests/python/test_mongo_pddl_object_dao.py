@@ -15,10 +15,7 @@
 
 
 from test_dao_basic.test_pddl_object_dao import TestPddlObjectDao
-from kant_dao.dao_factory import (
-    DaoFactoryMethod,
-    DaoFamilies
-)
+from kant_dao.dao_factory import DaoFactoryMethod, DaoFamilies
 
 
 class TestMongoPddlObjectDao(TestPddlObjectDao):
@@ -27,8 +24,7 @@ class TestMongoPddlObjectDao(TestPddlObjectDao):
         super().setUp()
 
         dao_factory_method = DaoFactoryMethod()
-        dao_factory = dao_factory_method.create_dao_factory(
-            DaoFamilies.MONGO)
+        dao_factory = dao_factory_method.create_dao_factory(DaoFamilies.MONGO)
 
         dao_factory.set_uri("mongodb://localhost:27017/kant_tests")
 
@@ -36,4 +32,4 @@ class TestMongoPddlObjectDao(TestPddlObjectDao):
         self.pddl_type_dao = dao_factory.create_pddl_type_dao()
 
 
-del (TestPddlObjectDao)
+del TestPddlObjectDao

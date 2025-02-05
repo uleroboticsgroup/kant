@@ -1,20 +1,13 @@
 import unittest
-from kant_dao.dao_factory import (
-    DaoFactoryMethod,
-    DaoFamilies
-)
-from kant_dto import (
-    PddlTypeDto,
-    PddlObjectDto
-)
+from kant_dao.dao_factory import DaoFactoryMethod, DaoFamilies
+from kant_dto import PddlTypeDto, PddlObjectDto
 
 
 class TestPddlObjectDao(unittest.TestCase):
 
     def setUp(self):
         dao_factory_method = DaoFactoryMethod()
-        dao_factory = dao_factory_method.create_dao_factory(
-            DaoFamilies.MONGO)
+        dao_factory = dao_factory_method.create_dao_factory(DaoFamilies.MONGO)
 
         self.pddl_object_dao = dao_factory.create_pddl_object_dao()
 

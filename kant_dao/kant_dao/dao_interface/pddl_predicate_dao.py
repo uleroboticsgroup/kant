@@ -14,7 +14,7 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 
-""" Pddl Predicate Dao Interface """
+"""Pddl Predicate Dao Interface"""
 
 from abc import abstractmethod
 from kant_dto import PddlPredicateDto
@@ -22,11 +22,11 @@ from kant_dao.dao_interface import Dao
 
 
 class PddlPredicateDao(Dao):
-    """ Pddl Predicate Dao Abstract Class """
+    """Pddl Predicate Dao Abstract Class"""
 
     @abstractmethod
     def get(self, predicate_name: str) -> PddlPredicateDto:
-        """ get a PddlPredicateDto with a given predicate name
+        """get a PddlPredicateDto with a given predicate name
             return None if there is no pddl with that predicate name
 
         Args:

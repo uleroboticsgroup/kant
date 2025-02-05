@@ -16,14 +16,11 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 
-""" DAO Example Node """
+"""DAO Example Node"""
 
 import rclpy
 
-from kant_dao.dao_factory import (
-    DaoFactoryMethod,
-    DaoFamilies
-)
+from kant_dao.dao_factory import DaoFactoryMethod, DaoFamilies
 
 from kant_dto import (
     PddlTypeDto,
@@ -31,14 +28,14 @@ from kant_dto import (
     PddlPredicateDto,
     PddlPropositionDto,
     PddlConditionEffectDto,
-    PddlActionDto
+    PddlActionDto,
 )
 
 from simple_node import Node
 
 
 class ExampleNode(Node):
-    """ DAO Example Node Class """
+    """DAO Example Node Class"""
 
     def __init__(self):
 
@@ -49,9 +46,9 @@ class ExampleNode(Node):
         uri = "mongodb://localhost:27017/kant"
         dao_family = DaoFamilies.MONGO
 
-        dao_factory = dao_factory_method.create_dao_factory(dao_family,
-                                                            uri=uri,
-                                                            node=self)
+        dao_factory = dao_factory_method.create_dao_factory(
+            dao_family, uri=uri, node=self
+        )
 
         # creating DAOs
         pddl_type_dao = dao_factory.create_pddl_type_dao()
@@ -65,8 +62,7 @@ class ExampleNode(Node):
         wp_type = PddlTypeDto("wp")
 
         # predicates
-        robot_at = PddlPredicateDto(
-            "robot_at", [robot_type, wp_type])
+        robot_at = PddlPredicateDto("robot_at", [robot_type, wp_type])
 
         # objects
         rb1 = PddlObjectDto(robot_type, "rb1")
@@ -82,21 +78,21 @@ class ExampleNode(Node):
         s = PddlObjectDto(wp_type, "s")
         d = PddlObjectDto(wp_type, "d")
 
-        condition_1 = PddlConditionEffectDto(robot_at,
-                                             [r, s],
-                                             time=PddlConditionEffectDto.AT_START)
+        condition_1 = PddlConditionEffectDto(
+            robot_at, [r, s], time=PddlConditionEffectDto.AT_START
+        )
 
-        effect_1 = PddlConditionEffectDto(robot_at,
-                                          [r, s],
-                                          time=PddlConditionEffectDto.AT_START,
-                                          is_negative=True)
+        effect_1 = PddlConditionEffectDto(
+            robot_at, [r, s], time=PddlConditionEffectDto.AT_START, is_negative=True
+        )
 
-        effect_2 = PddlConditionEffectDto(robot_at,
-                                          [r, d],
-                                          time=PddlConditionEffectDto.AT_END)
+        effect_2 = PddlConditionEffectDto(
+            robot_at, [r, d], time=PddlConditionEffectDto.AT_END
+        )
 
         pddl_action_dto = PddlActionDto(
-            "navigation", [r, s, d], [condition_1], [effect_1, effect_2])
+            "navigation", [r, s, d], [condition_1], [effect_1, effect_2]
+        )
 
         # saving all
         pddl_object_dao.save(rb1)

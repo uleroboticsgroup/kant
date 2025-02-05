@@ -14,29 +14,25 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 
-""" Dao Factory of Factories """
+"""Dao Factory of Factories"""
 
 from kant_dao.dao_factory.dao_families import DaoFamilies
 
-from kant_dao.dao_factory.dao_factories import (
-    DaoFactory,
-    Ros2DaoFactory,
-    MongoDaoFactory
-)
+from kant_dao.dao_factory.dao_factories import DaoFactory, Ros2DaoFactory, MongoDaoFactory
 
 
 class DaoFactoryMethod:
-    """ Dao Factory of Factories Class """
+    """Dao Factory of Factories Class"""
 
     def __init__(self):
         self.dao_families = DaoFamilies
         self.__families_to_factory = {
             self.dao_families.ROS2: Ros2DaoFactory,
-            self.dao_families.MONGO: MongoDaoFactory
+            self.dao_families.MONGO: MongoDaoFactory,
         }
 
     def create_dao_factory(self, family: int, **kwargs) -> DaoFactory:
-        """ create a pddl dao factory of a given family
+        """create a pddl dao factory of a given family
 
         Args:
             family (int): number of the pddl dao family to create

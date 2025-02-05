@@ -37,14 +37,14 @@ class TestPddlObjectDto(unittest.TestCase):
 
     def test_pddl_object_dto_eq_true(self):
         pddl_object_dto = PddlObjectDto(self.pddl_type_dto, "rb1")
-        result = (self.pddl_object_dto == pddl_object_dto)
+        result = self.pddl_object_dto == pddl_object_dto
         self.assertTrue(result)
 
     def test_pddl_object_dto_eq_false_bad_object_name(self):
         pddl_object_dto = PddlObjectDto(self.pddl_type_dto, "rb2")
-        result = (self.pddl_object_dto == pddl_object_dto)
+        result = self.pddl_object_dto == pddl_object_dto
         self.assertFalse(result)
 
     def test_pddl_type_dto_eq_false_bad_instance(self):
-        result = (self.pddl_object_dto == 10)
+        result = self.pddl_object_dto == 10
         self.assertFalse(result)

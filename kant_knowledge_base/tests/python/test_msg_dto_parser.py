@@ -134,7 +134,8 @@ class TestMsgDtoParser(unittest.TestCase):
 
     def test_parse_durative_action(self):
         dto = self.parser.action_msg_to_dto(self.navigation_action)
-        self.assertEqual("""\
+        self.assertEqual(
+            """\
 (:durative-action navigation
 \t:parameters ( ?r - robot ?s - wp ?d - wp)
 \t:duration (= ?duration 10)
@@ -146,7 +147,8 @@ class TestMsgDtoParser(unittest.TestCase):
 \t\t(at end (robot_at ?r ?d))
 \t)
 )""",
-                         str(dto))
+            str(dto),
+        )
 
     def test_parse_action(self):
         self.navigation_action.durative = False
@@ -155,7 +157,8 @@ class TestMsgDtoParser(unittest.TestCase):
         self.navigation_action.effects[1].time = ""
 
         dto = self.parser.action_msg_to_dto(self.navigation_action)
-        self.assertEqual("""\
+        self.assertEqual(
+            """\
 (:action navigation
 \t:parameters ( ?r - robot ?s - wp ?d - wp)
 \t:precondition (and
@@ -166,4 +169,5 @@ class TestMsgDtoParser(unittest.TestCase):
 \t\t(robot_at ?r ?d)
 \t)
 )""",
-                         str(dto))
+            str(dto),
+        )

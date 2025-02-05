@@ -14,13 +14,13 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 
-""" Pddl Type Dto """
+"""Pddl Type Dto"""
 
 from kant_dto.dto import Dto
 
 
 class PddlTypeDto(Dto):
-    """ Pddl Type Dto Class """
+    """Pddl Type Dto Class"""
 
     def __init__(self, name: str):
 
@@ -29,7 +29,7 @@ class PddlTypeDto(Dto):
         Dto.__init__(self)
 
     def get_name(self) -> str:
-        """ pddl type name getter
+        """pddl type name getter
 
         Returns:
             str: pddl type name
@@ -38,7 +38,7 @@ class PddlTypeDto(Dto):
         return self._name
 
     def set_name(self, name: str):
-        """ pddl type name setter
+        """pddl type name setter
 
         Args:
             name (str): pddl type name

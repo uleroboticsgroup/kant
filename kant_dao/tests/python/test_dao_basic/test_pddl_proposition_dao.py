@@ -1,8 +1,5 @@
 import unittest
-from kant_dao.dao_factory import (
-    DaoFactoryMethod,
-    DaoFamilies
-)
+from kant_dao.dao_factory import DaoFactoryMethod, DaoFamilies
 from kant_dto import (
     PddlTypeDto,
     PddlObjectDto,
@@ -15,8 +12,7 @@ class TestPddlPropositionDao(unittest.TestCase):
 
     def setUp(self):
         dao_factory_method = DaoFactoryMethod()
-        dao_factory = dao_factory_method.create_dao_factory(
-            DaoFamilies.MONGO)
+        dao_factory = dao_factory_method.create_dao_factory(DaoFamilies.MONGO)
 
         self.pddl_type_dao = dao_factory.create_pddl_type_dao()
         self.pddl_object_dao = dao_factory.create_pddl_object_dao()
@@ -25,13 +21,13 @@ class TestPddlPropositionDao(unittest.TestCase):
 
         self._robot_type = PddlTypeDto("robot")
         self._wp_type = PddlTypeDto("wp")
-        self._robot_at = PddlPredicateDto(
-            "robot_at", [self._robot_type, self._wp_type])
+        self._robot_at = PddlPredicateDto("robot_at", [self._robot_type, self._wp_type])
 
         self._rb1 = PddlObjectDto(self._robot_type, "rb1")
         self._wp1 = PddlObjectDto(self._wp_type, "wp1")
         self.pddl_proposition_dto = PddlPropositionDto(
-            self._robot_at, [self._rb1, self._wp1])
+            self._robot_at, [self._rb1, self._wp1]
+        )
 
     def tearDown(self):
         self.pddl_object_dao.delete_all()
@@ -67,24 +63,22 @@ class TestPddlPropositionDao(unittest.TestCase):
         self.assertFalse(result)
 
     def test_pddl_proposition_dao_get_by_predicate_empty(self):
-        self.pddl_proposition_dto = self.pddl_proposition_dao.get_by_predicate(
-            "robot_at")
+        self.pddl_proposition_dto = self.pddl_proposition_dao.get_by_predicate("robot_at")
         self.assertEqual([], self.pddl_proposition_dto)
 
     def test_pddl_proposition_dao_get_by_predicate(self):
         self.pddl_proposition_dao._save(self.pddl_proposition_dto)
 
-        self.pddl_proposition_dto = self.pddl_proposition_dao.get_by_predicate("robot_at")[
-            0]
-        self.assertEqual("(robot_at rb1 wp1)",
-                         str(self.pddl_proposition_dto))
+        self.pddl_proposition_dto = self.pddl_proposition_dao.get_by_predicate(
+            "robot_at"
+        )[0]
+        self.assertEqual("(robot_at rb1 wp1)", str(self.pddl_proposition_dto))
 
     def test_pddl_proposition_dao_get_goals(self):
         self.pddl_proposition_dto.set_is_goal(True)
         self.pddl_proposition_dao._save(self.pddl_proposition_dto)
         self.pddl_proposition_dto = self.pddl_proposition_dao.get_goals()[0]
-        self.assertEqual("(robot_at rb1 wp1)",
-                         str(self.pddl_proposition_dto))
+        self.assertEqual("(robot_at rb1 wp1)", str(self.pddl_proposition_dto))
 
     def test_pddl_proposition_dao_get_goals_empty(self):
         self.pddl_proposition_dto.set_is_goal(False)
@@ -95,8 +89,7 @@ class TestPddlPropositionDao(unittest.TestCase):
     def test_pddl_proposition_dao_get_no_goals(self):
         self.pddl_proposition_dao._save(self.pddl_proposition_dto)
         self.pddl_proposition_dto = self.pddl_proposition_dao.get_no_goals()[0]
-        self.assertEqual("(robot_at rb1 wp1)",
-                         str(self.pddl_proposition_dto))
+        self.assertEqual("(robot_at rb1 wp1)", str(self.pddl_proposition_dto))
 
     def test_pddl_proposition_dao_get_no_goals_empty(self):
         self.pddl_proposition_dto.set_is_goal(True)
@@ -112,10 +105,10 @@ class TestPddlPropositionDao(unittest.TestCase):
         self.pddl_proposition_dao._save(self.pddl_proposition_dto)
         result = self.pddl_proposition_dao._update(self.pddl_proposition_dto)
         self.assertTrue(result)
-        self.pddl_proposition_dto = self.pddl_proposition_dao.get_by_predicate("robot_at")[
-            0]
-        self.assertEqual("(robot_at rb1 wp1)",
-                         str(self.pddl_proposition_dto))
+        self.pddl_proposition_dto = self.pddl_proposition_dao.get_by_predicate(
+            "robot_at"
+        )[0]
+        self.assertEqual("(robot_at rb1 wp1)", str(self.pddl_proposition_dto))
 
     def test_pddl_proposition_dao_update_flase_proposition_not_exists(self):
         result = self.pddl_proposition_dao._update(self.pddl_proposition_dto)
@@ -143,14 +136,12 @@ class TestPddlPropositionDao(unittest.TestCase):
         self.pddl_proposition_dao.save(self.pddl_proposition_dto)
         result = self.pddl_proposition_dao.delete(self.pddl_proposition_dto)
         self.assertTrue(result)
-        self.pddl_proposition_dto = self.pddl_proposition_dao.get_by_predicate(
-            "robot_at")
+        self.pddl_proposition_dto = self.pddl_proposition_dao.get_by_predicate("robot_at")
         self.assertEqual(0, len(self.pddl_proposition_dto))
 
     def test_pddl_proposition_dao_delete_all(self):
         self.pddl_proposition_dao.save(self.pddl_proposition_dto)
         result = self.pddl_proposition_dao.delete_all()
         self.assertTrue(result)
-        self.pddl_proposition_dto = self.pddl_proposition_dao.get_by_predicate(
-            "robot_at")
+        self.pddl_proposition_dto = self.pddl_proposition_dao.get_by_predicate("robot_at")
         self.assertEqual(0, len(self.pddl_proposition_dto))

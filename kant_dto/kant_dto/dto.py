@@ -14,13 +14,13 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 
-""" Dto Abstract Class """
+"""Dto Abstract Class"""
 
 from abc import ABC, abstractmethod
 
 
 class Dto(ABC):
-    """ Dto Abstract Class """
+    """Dto Abstract Class"""
 
     @abstractmethod
     def __str__(self):

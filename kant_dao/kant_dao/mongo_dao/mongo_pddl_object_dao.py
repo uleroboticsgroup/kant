@@ -14,27 +14,21 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 
-""" Mongo Pddl Object Dao """
+"""Mongo Pddl Object Dao"""
 
 from typing import List
 
 from kant_dao.dao_interface import PddlObjectDao
-from kant_dao.mongo_dao import (
-    MongoDao,
-    MongoPddlTypeDao
-)
+from kant_dao.mongo_dao import MongoDao, MongoPddlTypeDao
 
 from kant_dao.mongo_dao.mongo_models import PddlObjectModel
 
 
-from kant_dto import (
-    PddlObjectDto,
-    PddlTypeDto
-)
+from kant_dto import PddlObjectDto, PddlTypeDto
 
 
 class MongoPddlObjectDao(PddlObjectDao, MongoDao):
-    """ Mongo Pddl Object Dao Class """
+    """Mongo Pddl Object Dao Class"""
 
     def __init__(self, uri: str = None, connect: bool = True):
 
@@ -47,7 +41,7 @@ class MongoPddlObjectDao(PddlObjectDao, MongoDao):
         self._me_pddl_type_dao = MongoPddlTypeDao(uri, connect=False)
 
     def _model_to_dto(self, pddl_object_model: PddlObjectModel) -> PddlObjectDto:
-        """ convert a Mongoengine pddl object document into a PddlObjectDto
+        """convert a Mongoengine pddl object document into a PddlObjectDto
 
         Args:
             pddl_object_model (PddlObjectModel): Mongoengine pddl object document
@@ -56,16 +50,14 @@ class MongoPddlObjectDao(PddlObjectDao, MongoDao):
             PddlObjectDto: PddlObjectDto
         """
 
-        pddl_type_dto = PddlTypeDto(
-            pddl_object_model.type.name)
+        pddl_type_dto = PddlTypeDto(pddl_object_model.type.name)
 
-        pddl_object_dto = PddlObjectDto(pddl_type_dto,
-                                        pddl_object_model.name)
+        pddl_object_dto = PddlObjectDto(pddl_type_dto, pddl_object_model.name)
 
         return pddl_object_dto
 
     def _dto_to_model(self, pddl_object_dto: PddlObjectDto) -> PddlObjectModel:
-        """ convert a PddlObjectDto into a Mongoengine pddl object document
+        """convert a PddlObjectDto into a Mongoengine pddl object document
 
         Args:
             pddl_object_dto (PddlObjectDto): PddlObjectDto
@@ -74,8 +66,7 @@ class MongoPddlObjectDao(PddlObjectDao, MongoDao):
             Document: Mongoengine pddl object document
         """
 
-        pddl_type_model = self._me_pddl_type_dao._dto_to_model(
-            pddl_object_dto.get_type())
+        pddl_type_model = self._me_pddl_type_dao._dto_to_model(pddl_object_dto.get_type())
 
         pddl_object_model = PddlObjectModel()
 
@@ -86,7 +77,7 @@ class MongoPddlObjectDao(PddlObjectDao, MongoDao):
         return pddl_object_model
 
     def _exist_in_mongo(self, pddl_object_dto: PddlObjectDto) -> bool:
-        """ check if PddlObjectDto exists
+        """check if PddlObjectDto exists
 
         Args:
             pddl_object_dto (PddlObjectDto): PddlObjectDto
@@ -100,7 +91,7 @@ class MongoPddlObjectDao(PddlObjectDao, MongoDao):
         return False
 
     def _get_model(self, pddl_object_dto: PddlObjectDto) -> bool:
-        """ get the Mongoengine pddl object document corresponding to a give PddlObjectDto
+        """get the Mongoengine pddl object document corresponding to a give PddlObjectDto
 
         Args:
             pddl_object_dto (PddlObjectDto): PddlObjectDto
@@ -109,8 +100,7 @@ class MongoPddlObjectDao(PddlObjectDao, MongoDao):
             Document: Mongoengine pddl object document
         """
 
-        pddl_object_model = PddlObjectModel.objects(
-            name=pddl_object_dto.get_name())
+        pddl_object_model = PddlObjectModel.objects(name=pddl_object_dto.get_name())
 
         if not pddl_object_model:
             return None
@@ -118,7 +108,7 @@ class MongoPddlObjectDao(PddlObjectDao, MongoDao):
         return pddl_object_model[0]
 
     def get(self, object_name: str) -> PddlObjectDto:
-        """ get a PddlObjectDto with a given object name
+        """get a PddlObjectDto with a given object name
             return None if there is no pddl with that object name
 
         Args:
@@ -128,20 +118,18 @@ class MongoPddlObjectDao(PddlObjectDao, MongoDao):
             PddlObjectDto: PddlObjectDto of the pddl object name
         """
 
-        pddl_object_model = PddlObjectModel.objects(
-            name=object_name)
+        pddl_object_model = PddlObjectModel.objects(name=object_name)
 
         # check if object exists
         if pddl_object_model:
             pddl_object_model = pddl_object_model[0]
-            pddl_object_dto = self._model_to_dto(
-                pddl_object_model)
+            pddl_object_dto = self._model_to_dto(pddl_object_model)
             return pddl_object_dto
 
         return None
 
     def get_all(self) -> List[PddlObjectDto]:
-        """ get all PddlObjectDto
+        """get all PddlObjectDto
 
         Returns:
             List[PddlObjectDto]: list of all PddlObjectDto
@@ -157,7 +145,7 @@ class MongoPddlObjectDao(PddlObjectDao, MongoDao):
         return pddl_object_dto_list
 
     def _save(self, pddl_object_dto: PddlObjectDto) -> bool:
-        """ save a PddlObjectDto
+        """save a PddlObjectDto
             if the PddlObjectDto is already saved return False, else return True
 
         Args:
@@ -170,8 +158,7 @@ class MongoPddlObjectDao(PddlObjectDao, MongoDao):
         if self._exist_in_mongo(pddl_object_dto):
             return False
 
-        pddl_object_model = self._dto_to_model(
-            pddl_object_dto)
+        pddl_object_model = self._dto_to_model(pddl_object_dto)
 
         if pddl_object_model:
             pddl_object_model.save(cascade=True)
@@ -180,7 +167,7 @@ class MongoPddlObjectDao(PddlObjectDao, MongoDao):
         return False
 
     def _update(self, pddl_object_dto: PddlObjectDto) -> bool:
-        """ update a PddlObjectDto
+        """update a PddlObjectDto
             if the PddlObjectDto is not saved return False, else return True
 
         Args:
@@ -194,8 +181,7 @@ class MongoPddlObjectDao(PddlObjectDao, MongoDao):
 
         # check if object exists
         if pddl_object_model:
-            new_pddl_object_model = self._dto_to_model(
-                pddl_object_dto)
+            new_pddl_object_model = self._dto_to_model(pddl_object_dto)
 
             pddl_object_model.name = new_pddl_object_model.name
             pddl_object_model.type = new_pddl_object_model.type
@@ -206,7 +192,7 @@ class MongoPddlObjectDao(PddlObjectDao, MongoDao):
         return False
 
     def save(self, pddl_object_dto: PddlObjectDto) -> bool:
-        """ save or update a PddlObjectDto
+        """save or update a PddlObjectDto
             if the PddlObjectDto is not saved it will be saved, else it will be updated
 
         Args:
@@ -222,7 +208,7 @@ class MongoPddlObjectDao(PddlObjectDao, MongoDao):
         return self._save(pddl_object_dto)
 
     def delete(self, pddl_object_dto: PddlObjectDto) -> bool:
-        """ delete a PddlObjectDto
+        """delete a PddlObjectDto
             if the PddlObjectDto is not saved return False, else return True
 
         Args:
@@ -242,7 +228,7 @@ class MongoPddlObjectDao(PddlObjectDao, MongoDao):
         return False
 
     def delete_all(self) -> bool:
-        """ delete all pddl objects
+        """delete all pddl objects
 
         Returns:
             bool: succeed
